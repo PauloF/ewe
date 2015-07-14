@@ -1,0 +1,42 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <p>Samples</p>
+  <table ng-table="tableParams" show-filter="true" class="table">
+    <tbody>
+    <tr ng-repeat="sample in $data">
+        <td data-title="'Family'" filter="{ 'specieinfo.family': 'text' }" sortable="'specieinfo.family'">
+            {{sample.specieinfo.family}}
+        </td>
+        <td data-title="'Genus'" filter="{ 'specieinfo.genus': 'text' }" sortable="'specieinfo.genus'">
+            {{sample.specieinfo.genus}}
+        </td>
+        <td data-title="'Specie'" filter="{ 'specieinfo.specie': 'text' }" sortable="'specieinfo.specie'">
+            {{sample.specieinfo.specie}}, <i>{{sample.specieinfo.authority}}</i>
+        </td>
+        <td data-title="'Synonym'" filter="{ 'specieinfo.synonim': 'text' }" sortable="'specieinfo.synonim'">
+            {{sample.specieinfo.synonim}}
+        </td>
+        <td data-title="'Reference'" filter="{ 'reference': 'text' }" sortable="'referece'">
+            {{sample.reference}}
+        </td>
+        <td data-title="'Common  Name'" filter="{ 'ethnoinfo.commonname': 'text' }" sortable="'ethnoinfo.commonname'">
+            {{sample.ethnoinfo.commonname}}
+        </td>
+        <td data-title="'WHO'" filter="{ 'usecategory.who': 'text' }" sortable="'usecategory.who'">
+            {{sample.usecategory.who}}
+        </td>
+        <td data-title="'Tradidional use'" filter="{ 'ethnocategory.traditional': 'text' }" sortable="'ethnocategory.traditional'">
+            {{sample.ethnocategory.traditional}}
+        </td>
+        <td data-title="'Part used'" filter="{ 'partused': 'text' }" sortable="'partused'">
+            {{sample.partused}}
+        </td>
+        <td data-title="'Form of use'" filter="{ 'formofuse': 'text' }" sortable="'formofuse'">
+            {{sample.formofuse}}
+        </td>                                                       
+    </tr>
+    </tbody>
+  </table>
+  
+</div>

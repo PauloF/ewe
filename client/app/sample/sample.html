@@ -3,7 +3,10 @@
 <div class="container">
   <p>Samples</p>
   <table ng-table="tableParams" show-filter="true" class="table">
-    <tbody>
+<!--    <thead>
+    <tr> <td column-span=4/> <td column-span=3 title="Reference"/> </tr>
+    </thead>
+-->    <tbody>    
     <tr ng-repeat="sample in $data">
         <td data-title="'Family'" filter="{ 'specieinfo.family': 'text' }" sortable="'specieinfo.family'">
             {{sample.specieinfo.family}}
@@ -17,9 +20,17 @@
         <td data-title="'Synonym'" filter="{ 'specieinfo.synonim': 'text' }" sortable="'specieinfo.synonim'">
             {{sample.specieinfo.synonim}}
         </td>
-        <td data-title="'Reference'" filter="{ 'reference': 'text' }" sortable="'referece'">
-            {{sample.reference}}
-        </td>
+        
+            <td data-title="'Paper'" filter="{'reference.paper':'text'}" sortable="'reference.paper'">
+                {{sample.reference.paper}}
+            </td>
+            <td data-title="'Collector'" filter="{'reference.collector':'text'}" sortable="'reference.collector'">
+                {{sample.reference.collector}}
+            </td>
+            <td data-title="'Origin'" filter="{'reference.origin':'text'}" sortable="'reference.origin'">
+                {{sample.reference.origin}}
+            </td>
+        
         <td data-title="'Common  Name'" filter="{ 'ethnoinfo.commonname': 'text' }" sortable="'ethnoinfo.commonname'">
             {{sample.ethnoinfo.commonname}}
         </td>

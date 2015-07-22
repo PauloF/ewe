@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eweApp')
-  .controller('SampleCtrl', function ($scope, $http, ngTableParams, socket) {
+  .controller('SampleCtrl', function ($scope, $modal, $http, ngTableParams, socket, $log) {
     $scope.tableParams = new ngTableParams ({
         page: 1,
         count: 10,
@@ -21,8 +21,26 @@ angular.module('eweApp')
           });          
         }
       });
+      $scope.open = function(sampleID) {
+        var modalInstance = $modal.open({
+          templateUrl: 'app/sample/modalSample.html',
+          controller: 'modalSampleCtrl',
+          animation: false,
+          backdrop: true
+        });
+        
+        modalInstance.result.then(function (sample) {
+          $scope.newSample = sample;
+          $scope.addSample();
+        }, function () {
+          
+        });
       
-    
+           
+       
+    };
+   
+
     
  /*   
 
@@ -37,16 +55,16 @@ angular.module('eweApp')
 
 
 
-/*
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
+
+    $scope.addSample = function() {
+      if($scope.newSample === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
+      $http.post('/api/samples', $scope.newSample );
+      $scope.newSample = '';
     };
 
-    $scope.deleteThing = function(thing) {
+/*    $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
 
@@ -56,3 +74,21 @@ angular.module('eweApp')
  */
  
   });
+  
+  
+angular.module('eweApp')
+  .controller('modalSampleCtrl', function ($scope, $modalInstance ) {
+    $scope.sample= {};
+/*    $scope.items = items;
+    $scope.selected = {
+      item: $scope.items[0]
+    };
+  */
+    $scope.ok = function () {
+      $modalInstance.close($scope.sample);
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+});

@@ -1,0 +1,197 @@
+<!--<script type='text/ng-template' id='modalSample.html'>-->
+    <style>
+    .common-form .form-control {
+        width: 100% !important;
+    }
+    .common-form legend {
+        text-align: left;
+    }
+    .form-group {
+         margin-bottom: 5px;
+    }
+    .form-group textarea {
+        height: 35px;
+    }
+    .carousel-control, .carousel-indicators {
+        display: none;
+    }
+    .ui-select-container {
+        text-align: left;
+    }
+    .ui-select-match-item {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100%;
+    }
+    .checkbox {
+        text-align: start;
+    }
+    .left-labels label {
+        text-align: left !important;
+    }
+    .checkbox-label {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+    </style>
+    <div class="modal-header">
+        <h3>Sample Form</h3>
+    </div>
+    <div class="modal-body">
+        <!--<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>-->
+        <form name="sampleForm" class="form-horizontal common-form">
+ <!--           <carousel no-transition>
+                <slide>
+ -->
+            <tabset>
+                <tab heading="Ident">
+                    <fieldset>
+                        
+                        <div class="form-group">
+                            <label class="control-label" for="family">Family</label>
+                            <div class="controls">
+                                <input id="family" name="family" ng-model="sample.specieinfo.family" type="text" placeholder="Family" class="form-control" required=""  ng-class="{error: sample.specieinfo.family.$invalid && !sample.specieinfo.family.$pristine}"/>
+                            </div>
+                        </div>
+                        
+                         <div class="form-group">
+                            <label class="control-label" for="genus">Genus</label>
+                            <div class="controls">
+                                <input id="genus" name="genus" ng-model="sample.specieinfo.genus" type="text" placeholder="Genus" class="form-control" required=""  ng-class="{error: sample.specieinfo.genus.$invalid && !sample.specieinfo.genus.$pristine}"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label" for="specie">Specie</label>
+                            <div class="controls">
+                                <input id="specie" name="specie" ng-model="sample.specieinfo.specie" type="text" placeholder="Specie" class="form-control" required=""  ng-class="{error: sample.specieinfo.specie.$invalid && !sample.specieinfo.specie.$pristine}"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label" for="authority">Authorithy</label>
+                            <div class="controls">
+                                <input id="authority" name="authority" ng-model="sample.specieinfo.authority" type="text" placeholder="Authority" class="form-control" required=""  ng-class="{error: sample.specieinfo.authority.$invalid && !sample.specieinfo.authority.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="synonym">Synonym</label>
+                            <div class="controls">
+                                <input id="synonym" name="synonym" ng-model="sample.specieinfo.synonym" type="text" placeholder="Synonym" class="form-control" required=""  ng-class="{error: sample.specieinfo.synonym.$invalid && !sample.specieinfo.synonym.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="commonname">Common Name</label>
+                            <div class="controls">
+                                <input id="commonname" name="commonname" ng-model="sample.ethnoinfo.commonname" type="text" placeholder="Common Name" class="form-control" required=""  ng-class="{error: sample.ethnoinfo.commonname.$invalid && !sample.ethnoinfo.commonname.$pristine}"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </tab>
+                <tab heading="Use" >
+                    <fieldset>
+                        
+                        <div class="form-group">
+                            <label class="control-label" for="who">WHO</label>
+                            <div class="controls">
+                                <input id="who" name="who" ng-model="sample.usecategory.who" type="text" placeholder="WHO" class="form-control" required=""  ng-class="{error: sample.usecategory.who.$invalid && !sample.usecategory.who.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="traditional">Traditional</label>
+                            <div class="controls">
+                                <input id="traditional" name="traditional" ng-model="sample.usecategory.traditional" type="text" placeholder="Traditional" class="form-control" required=""  ng-class="{error: sample.usecategory.traditional.$invalid && !sample.usecategory.traditional.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="partused">Part used</label>
+                            <div class="controls">
+                                <input id="partused" name="partused" ng-model="sample.partused" type="text" placeholder="Part used" class="form-control" required=""  ng-class="{error: sample.partused.$invalid && !sample.partused.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="formofuse">Form of use</label>
+                            <div class="controls">
+                                <input id="formofuse" name="formofuse" ng-model="sample.formofuse" type="text" placeholder="Form of use" class="form-control" required=""  ng-class="{error: sample.formofuse.$invalid && !sample.formofuse.$pristine}"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </tab>
+                <tab heading="Passport">
+                    <fieldset>
+                        
+                        <div class="form-group">
+                            <label class="control-label" for="country">Country</label>
+                            <div class="controls">
+                                <input id="country" name="country" ng-model="sample.passport.country" type="text" placeholder="Country" class="form-control" required=""  ng-class="{error: sample.passport.country.$invalid && !sample.passport.country.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="city">City</label>
+                            <div class="controls">
+                                <input id="city" name="city" ng-model="sample.passport.city" type="text" placeholder="City" class="form-control" required=""  ng-class="{error: sample.passport.city.$invalid && !sample.passport.city.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="biome">Biome</label>
+                            <div class="controls">
+                                <input id="biome" name="biome" ng-model="sample.passport.biome" type="text" placeholder="Biome" class="form-control" required=""  ng-class="{error: sample.passport.biome.$invalid && !sample.passport.biome.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="coordinateslat">Latitude</label>
+                            <div class="controls">
+                                <input id="coordinateslat" name="coordinateslat" ng-model="sample.passport.coordinates.lat" type="text" placeholder="Coordinates Lat" class="form-control" required=""  ng-class="{error: sample.passport.coordinates.lat.$invalid && !sample.passport.coordinates.lat.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="coordinateslon">Longitude</label>
+                            <div class="controls">
+                                <input id="coordinateslon" name="coordinateslon" ng-model="sample.passport.coordinates.lon" type="text" placeholder="Coordinates Lon" class="form-control" required=""  ng-class="{error: sample.passport.coordinates.lon.$invalid && !sample.passport.coordinates.lon.$pristine}"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </tab>
+                <tab heading="Reference">
+                    <fieldset>
+                        
+                        <div class="form-group">
+                            <label class="control-label" for="paper">Paper</label>
+                            <div class="controls">
+                                <input id="paper" name="paper" ng-model="sample.reference.paper" type="text" placeholder="Paper" class="form-control" required=""  ng-class="{error: sample.reference.paper.$invalid && !sample.reference.paper.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="collector">Collector</label>
+                            <div class="controls">
+                                <input id="collector" name="collector" ng-model="sample.reference.Collector" type="text" placeholder="collector" class="form-control" required=""  ng-class="{error: sample.reference.collector.$invalid && !sample.reference.collector.$pristine}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="origin">Origin</label>
+                            <div class="controls">
+                                <input id="origin" name="origin" ng-model="sample.reference.origin" type="text" placeholder="Origin" class="form-control" required=""  ng-class="{error: sample.reference.origin.$invalid && !sample.reference.origin.$pristine}"/>
+                            </div>
+                        </div>
+                        
+                    </fieldset>
+                </tab>
+            </tabset>
+                        
+		</form>
+	</div>
+    <div class="modal-footer">
+<!--        <button class="btn" data-ng-click="prev()">Prev</button>
+        <button class="btn" data-ng-click="next()">Next</button>-->
+        <button class="btn" data-ng-click="cancel()">Cancel</button>
+        <button class="btn btn-primary" data-ng-click="ok()">Create</button>
+ <!--       <button ng-click="save()" ng-if="user.id" ng-disabled="user.$invalid || !user.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Save</button>
+        <button ng-click="add()" type="submit" ng-if="!user.id" ng-disabled="user.$invalid || !user.tnc" class="btn btn-primary"><i class="icon-white icon-plus"></i> Add</button>
+        <button ng-click="cancel()" class="btn">Cancel</button>-->
+    </div>
+<!--</script>-->
+    	

@@ -2,6 +2,9 @@
 
 <div class="container">
   <p>Samples</p>
+  <section>
+    <button ng-click="open()" class="btn btn-primary pull-right"><i class="icon-white icon-plus"></i> Add new Sample</button>
+  </section>  
   <table ng-table="tableParams" show-filter="true" class="table">
 <!--    <thead>
     <tr> <td column-span=4/> <td column-span=3 title="Reference"/> </tr>
@@ -12,10 +15,10 @@
             {{sample.specieinfo.family}}
         </td>
         <td data-title="'Genus'" filter="{ 'specieinfo.genus': 'text' }" sortable="'specieinfo.genus'">
-            {{sample.specieinfo.genus}}
+            <i>{{sample.specieinfo.genus}}</i>
         </td>
         <td data-title="'Specie'" filter="{ 'specieinfo.specie': 'text' }" sortable="'specieinfo.specie'">
-            {{sample.specieinfo.specie}}, <i>{{sample.specieinfo.authority}}</i>
+            <i>{{sample.specieinfo.specie}}</i>, {{sample.specieinfo.authority}}
         </td>
         <td data-title="'Synonym'" filter="{ 'specieinfo.synonim': 'text' }" sortable="'specieinfo.synonim'">
             {{sample.specieinfo.synonim}}
@@ -49,5 +52,5 @@
     </tr>
     </tbody>
   </table>
-  
+
 </div>

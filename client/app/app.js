@@ -9,8 +9,42 @@ angular.module('eweApp', [
   'btford.socket-io',
   'ui.bootstrap',
   'ngMaterial',
-  'ngTable'
+  'ngTable',
+  'ngMdIcons'
 ])
+  .controller('eweAppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog) {
+  
+  $scope.toggleSidenav = function(menuId) {
+    $mdSidenav(menuId).toggle();
+  };
+ 	$scope.menu = [
+    {
+      link : '',
+      title: 'Home',
+      icon: 'home'
+    },
+    {
+      link : '',
+      title: 'Search',
+      icon: 'search'
+    },
+    {
+      link : '',
+      title: 'Add new records',
+      icon: 'add'
+    },
+    {
+      link : '',
+      title: 'Visualize',
+      icon: 'view'
+    },
+    {
+      link : '',
+      title: 'Contact',
+      icon: 'contact'
+    }
+  ];
+  }])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .otherwise({

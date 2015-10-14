@@ -24,7 +24,7 @@ angular.module('eweApp', [
       icon: 'home'
     },
     {
-      link : '',
+      link : 'sample',
       title: 'Search',
       icon: 'search'
     },
@@ -45,7 +45,7 @@ angular.module('eweApp', [
     }
   ];
   }])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
+  .config(function ($routeProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
     $routeProvider
       .otherwise({
         redirectTo: '/'
@@ -53,6 +53,10 @@ angular.module('eweApp', [
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+    
+    $mdThemingProvider.theme('default')
+      .primaryPalette('green')
+      .accentPalette('yellow');
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {

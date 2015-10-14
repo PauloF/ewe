@@ -1,79 +1,75 @@
 <div flex layout="row" ng-cloak>
-    <md-content class="md-padding" flex layout="row" >
-        <div flex layout="column">
-        <div class="md-whiteframe-4dp" class-sm="" flex="25" layout-padding layout="row" layout-sm="row">
-            <form name="searchForm" flex novalidate>
-                <fieldset class="standard">
-                    <legend>Search</legend>
-                    <div layout="column" layout-sm="column">
-                        <md-input-container flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Family</label>
-                            <input ng-model="searchForm.family" ng-required="false">
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Genus</label>
-                            <input ng-model="searchForm.genus" ng-required="false">
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Specie</label>
-                            <input ng-model="searchForm.specie" ng-required="false">
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Popular Name</label>
-                            <input ng-model="searchForm.popularName" ng-required="false">
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Biome</label>
-                            <input ng-model="searchForm.biome" ng-required="false">
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Categories (ICD-10)</label>
-                            <input ng-model="searchForm.categories" ng-required="false">
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Plant part used</label>
-                            <input ng-model="searchForm.partUsed" ng-required="false">
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Mode of application</label>
-                            <input ng-model="searchForm.modeApplication" ng-required="false">
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Traditional use</label>
-                            <input ng-model="searchForm.traditionalUse" ng-required="false">
-                        </md-input-container>
-                    </div>
-                </fieldset>
-<!--                
-                <section layout="row" layout-sm="column">
+    <md-content class="md-padding" flex layout="column">
+        <div flex layout="row">
+            <div class="md-whiteframe-4dp" class-sm="" flex="20" layout="row" layout-align="center start" layout-sm="row">
+                
+                <form name="searchForm" flex novalidate layout="column" layout-align="center start" layout-sm="column">
+                <legend>Search</legend>
+                    <md-input-container class="md-body-1" layout-align="center start" flex>
+                        <label>
+                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Family</label>
+                        <input ng-model="searchForm.family" ng-required="false">
+                    </md-input-container>
+                    <md-input-container class="md-body-1" flex>
+                        <label>
+                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Genus</label>
+                        <input ng-model="searchForm.genus" ng-required="false">
+                    </md-input-container>
+                    <md-input-container class="md-body-1" flex>
+                        <label>
+                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Specie</label>
+                        <input ng-model="searchForm.specie" ng-required="false">
+                    </md-input-container>
+                    <md-input-container class="md-body-1" flex>
+                        <label>
+                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Popular Name</label>
+                        <input ng-model="searchForm.popularName" ng-required="false">
+                    </md-input-container>
+                    <md-input-container  class="md-body-1" flex>
+                        <label>
+                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Biome</label>
+                        <input ng-model="searchForm.biome" ng-required="false">
+                    </md-input-container>
+                    <md-input-container class="md-body-1" flex>
+                        <label>
+                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Categories (ICD-10)</label>
+                        <input ng-model="searchForm.categories" ng-required="false">
+                    </md-input-container>
+                    <md-input-container class="md-body-1" flex>
+                        <label>
+                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Plant part used</label>
+                        <input ng-model="searchForm.partUsed" ng-required="false">
+                    </md-input-container>
+                    <md-input-container class="md-body-1" flex>
+                        <label>
+                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Mode of application</label>
+                        <input ng-model="searchForm.modeApplication" ng-required="false">
+                    </md-input-container>
+                    <md-input-container class="md-body-1" flex>
+                        <label>
+                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Traditional use</label>
+                        <input ng-model="searchForm.traditionalUse" ng-required="false">
+                    </md-input-container>
+                    <!-- <section layout="row" layout-sm="column">
                     <md-button type="button" class="md-raised md-accent" ng-click="resetForm()" ng-show="planningForm.$invalid">Clear</md-button>
                     <md-button class="md-raised md-primary" ng-show="planningForm.$invalid && planningForm.$dirty">Missing Required Fields!</md-button>
                     <md-button class="md-raised md-primary" ng-click="submit(data)" ng-hide="planningForm.$invalid">Submit</md-button>
                 </section>
                 -->
-            </form>
-        </div>
-            <div class="md-whiteframe-4dp" class-sm="" flex="25" layout-padding layout="column">
-            <legend>Results</legend>
-            <p>aaa...</p>
-            <p>aaa...</p>
-            <p>aaa...</p>
-            <p>aaa...</p>
-            <p>aaa...</p>
-            <p>aaa...</p>
-            <p>aaa...</p>
+                </form>
+            </div>
+            <div class="md-whiteframe-4dp" class-sm="" flex="80" layout-padding layout="column">
+                <legend>Results</legend>
+                <p>aaa...</p>
+                <p>aaa...</p>
+                <p>aaa...</p>
+                <p>aaa...</p>
+                <p>aaa...</p>
+                <p>aaa...</p>
+                <p>aaa...</p>
             </div>
         </div>
-        <div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
+        <div class="md-whiteframe-4dp" class-sm="" flex layout-padding layout="column">
             <legend>Sample</legend>
             <p>aaa...</p>
             <p>aaa...</p>

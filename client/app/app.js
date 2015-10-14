@@ -36,12 +36,12 @@ angular.module('eweApp', [
     {
       link : '',
       title: 'Visualize',
-      icon: 'view'
+      icon: 'dashboard'
     },
     {
       link : '',
       title: 'Contact',
-      icon: 'contact'
+      icon: 'contacts'
     }
   ];
   }])

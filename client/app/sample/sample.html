@@ -2,9 +2,8 @@
     <md-content class="md-padding" flex layout="column">
         <div flex layout="row">
             <div class="md-whiteframe-4dp" class-sm="" flex="20" layout="row" layout-align="center start" layout-sm="row">
-                
                 <form name="searchForm" flex novalidate layout="column" layout-align="center start" layout-sm="column">
-                <legend>Search</legend>
+                    <legend>Search</legend>
                     <md-input-container class="md-body-1" layout-align="center start" flex>
                         <label>
                             <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Family</label>
@@ -25,7 +24,7 @@
                             <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Popular Name</label>
                         <input ng-model="searchForm.popularName" ng-required="false">
                     </md-input-container>
-                    <md-input-container  class="md-body-1" flex>
+                    <md-input-container class="md-body-1" flex>
                         <label>
                             <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Biome</label>
                         <input ng-model="searchForm.biome" ng-required="false">

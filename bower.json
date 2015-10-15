@@ -18,7 +18,8 @@
     "angular-material": ">=0.11.4",
     "tr-ng-grid": "~3.1.5",
     "ng-table": "~0.8.3",
-    "angular-material-icons": ">=0.6.0"
+    "angular-material-icons": ">=0.6.0",
+    "angular-material-data-table": "~0.8.14"
   },
   "devDependencies": {
     "angular-mocks": ">=1.4.*",

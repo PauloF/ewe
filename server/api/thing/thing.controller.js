@@ -16,7 +16,7 @@ var Thing = require('./thing.model');
 exports.index = function(req, res) {
   Thing.find(function (err, things) {
     if(err) { return handleError(res, err); }
-    return res.json(200, things);
+    return res.status(200).json(things);
   });
 };
 

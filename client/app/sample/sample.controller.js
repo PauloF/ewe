@@ -92,3 +92,56 @@ angular.module('eweApp')
       $modalInstance.dismiss('cancel');
     };
 });
+
+angular.module('eweApp')
+  .controller('sampleTableCtrl', function($q, $http, $scope, $timeout) {
+  
+  $scope.selected = [];
+  
+  $scope.query = {
+    order: 'name',
+    limit: 5,
+    page: 1
+  };
+  
+  $scope.resSamples = [];
+  $scope.getSamples= function () {
+    $http.get('/api/samples')            
+          .success(function(samples, status) {
+            $scope.resSamples = samples;
+          })
+          .error(function(data,status) {
+            alert("Error: " + status);
+          });          
+        } 
+        
+  $scope.samples = {
+    "count": 1300,
+    "data": $scope.resSamples  
+    
+  };
+  /*
+  $scope.getTypes = function () {
+    return ['Candy', 'Ice cream', 'Other', 'Pastry'];
+  };
+  */
+  $scope.onpagechange = function(page, limit) {
+    var deferred = $q.defer();
+    
+    $timeout(function () {
+      deferred.resolve();
+    }, 2000);
+    
+    return deferred.promise;
+  };
+  
+  $scope.onorderchange = function(order) {
+    var deferred = $q.defer();
+    
+    $timeout(function () {
+      deferred.resolve();
+    }, 2000);
+    
+    return deferred.promise;
+  };
+});

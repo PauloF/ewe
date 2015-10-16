@@ -99,27 +99,26 @@ angular.module('eweApp')
   $scope.selected = [];
   
   $scope.query = {
-    order: 'name',
+    order: 'specie',
     limit: 5,
-    page: 1
+    page: 1,
+    label: {
+      text: ''
+    }
   };
   
-  $scope.resSamples = [];
-  $scope.getSamples= function () {
-    $http.get('/api/samples')            
-          .success(function(samples, status) {
-            $scope.resSamples = samples;
-          })
-          .error(function(data,status) {
-            alert("Error: " + status);
+  $scope.samples = {};
+  $http.get('/api/samples')            
+          .then (function (result) {
+            console.log(result.data.length);
+            $scope.samples = {
+              "count": result.data.length,
+              "data": result.data
+            };              
+            console.log($scope.resSamples);
           });          
-        } 
-        
-  $scope.samples = {
-    "count": 1300,
-    "data": $scope.resSamples  
-    
-  };
+       
+  
   /*
   $scope.getTypes = function () {
     return ['Candy', 'Ice cream', 'Other', 'Pastry'];

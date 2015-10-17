@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eweApp')
-  .controller('SampleCtrl', function ($scope, $modal, $http, ngTableParams, socket, $log) {
+  .controller('SampleCtrl', function ($scope, $uibModal, $http, ngTableParams, socket, $log) {
     $scope.tableParams = new ngTableParams ({
         page: 1,
         count: 10,

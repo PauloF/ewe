@@ -22,7 +22,7 @@ angular.module('eweApp')
         }
       });
       $scope.open = function(sampleID) {
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
           templateUrl: 'app/sample/modalSample.html',
           controller: 'modalSampleCtrl',
           animation: false,
@@ -96,7 +96,12 @@ angular.module('eweApp')
 angular.module('eweApp')
   .controller('sampleTableCtrl', function($q, $http, $scope, $timeout) {
   
-  $scope.selected = [];
+  
+  
+  $scope.filteredSamples = [];
+  $scope.currentPage = 1;
+  $scope.numPerPage = 10;
+  $scope.maxSize = 5;
   
   $scope.query = {
     order: 'specie',
@@ -107,40 +112,41 @@ angular.module('eweApp')
     }
   };
   
-  $scope.samples = {};
-  $http.get('/api/samples')            
+  var begin = (($scope.currentPage -1) * $scope.numPerPage); 
+  var end = begin + $scope.numPerPage;
+  
+  $scope.filteredSamples = [];
+  $scope.getSamples = function() {
+    $http.get('/api/samples')            
           .then (function (result) {
             console.log(result.data.length);
-            $scope.samples = {
-              "count": result.data.length,
-              "data": result.data
-            };              
-            console.log($scope.resSamples);
+            $scope.filteredSamples = result.data.slice(begin,end);
+              
+                      
+            console.log($scope.samples);
           });          
-       
+  };     
+  $scope.getSamples();
+  
+  
+  $scope.$watch('currentPage + numPerPage', function() {
+    begin = (($scope.currentPage -1) * $scope.numPerPage); 
+    end = begin + $scope.numPerPage;
+    console.log(begin, end, $scope.samples);
+    $scope.filteredSamples= $scope.filteredSamples.slice(begin, end);
+    
+  });
+  
+  
+  var sample = $scope.filteredSamples[0]; 
+  $scope.showSample = function (sample) {
+    $scope.selSample = sample;
+  }
   
   /*
   $scope.getTypes = function () {
     return ['Candy', 'Ice cream', 'Other', 'Pastry'];
   };
   */
-  $scope.onpagechange = function(page, limit) {
-    var deferred = $q.defer();
-    
-    $timeout(function () {
-      deferred.resolve();
-    }, 2000);
-    
-    return deferred.promise;
-  };
   
-  $scope.onorderchange = function(order) {
-    var deferred = $q.defer();
-    
-    $timeout(function () {
-      deferred.resolve();
-    }, 2000);
-    
-    return deferred.promise;
-  };
 });

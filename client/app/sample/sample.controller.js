@@ -10,17 +10,32 @@ angular.module('eweApp')
         getData: function($defer, params) {
           $http.get('/api/samples/search',
             {params: {
-              filter: params.filter(),
+              
               page: params.page(),
               limit : params.count(),
               sort: params.sorting()              
               }})            
-          .success(function(samples, status) {
-            params.total(samples.total);
-            $defer.resolve(samples.samples);
+          .then(function(results) {
+            params.total(results.data.total);
+            $defer.resolve(results.data.samples);
           });          
         }
       });
+
+    $scope.applyGlobalSearch = function applyGlobalSearch() {
+      var term = $scope.globalSearchTerm;
+      if (self.isInvertedSearch) {
+        term = "!" + term;
+      }
+      $scope.tableParams.filter({ $: term });
+    }
+
+    $scope.changeFilter = function changeFilter(field, value) {
+      var filter = {};
+      filter[field] = value;
+      angular.extend($scope.tableParams.filter(), filter);
+    }
+    
       $scope.open = function(sampleID) {
         var modalInstance = $uibModal.open({
           templateUrl: 'app/sample/modalSample.html',
@@ -35,10 +50,12 @@ angular.module('eweApp')
         }, function () {
           
         });
+      };
       
-           
-       
-    };
+    $scope.showSample = function(sample) {
+      $scope.selSample = sample;
+      console.log(sample);
+     };
    
 
     
@@ -120,11 +137,9 @@ angular.module('eweApp')
     $http.get('/api/samples')            
           .then (function (result) {
             console.log(result.data.length);
-            $scope.filteredSamples = result.data.slice(begin,end);
-              
-                      
-            console.log($scope.samples);
-          });          
+            return result.data;                    
+          });
+                    
   };     
   $scope.getSamples();
   
@@ -140,9 +155,11 @@ angular.module('eweApp')
   
   var sample = {};
   
-  $scope.showSample = function (sample) {
-    $scope.selSample = sample;
-  }
+  
+  
+  $scope.alerta = function() {
+    console.log('click');
+  };
   
   /*
   $scope.getTypes = function () {

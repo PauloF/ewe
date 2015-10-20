@@ -1,4 +1,4 @@
-<div flex layout="row" ng-cloak>
+<div flex layout="row" ng-controller="SampleCtrl" ng-cloak>
     <md-content class="md-padding" flex layout="row">
         <!-- <div class="md-whiteframe-4dp" class-sm="" flex="20" layout="row" layout-align="center start" layout-sm="row">
                 <form name="searchForm" flex novalidate layout="column" layout-align="center start" layout-sm="column">
@@ -57,21 +57,26 @@
                 </form>
             </div>
             -->
-        <md-card ng-controller="sampleTableCtrl" flex="25">
-            <h2 class="md-title">Results {{samples.count}}</h2>
-            <md-list>
+        <md-card flex="25">
+            <h2 class="md-title">Results </h2>
+            <table ng-table="tableParams" class="table table-condensed table-bordered table-striped">
+                <tr ng-repeat="sample in $data">
+                    <td data-title="'Specie'">
+                        <a href="javascript:void(0);" ng-click="showSample(sample);"> {{sample.specieinfo.genus}} <i>{{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}</a>
+                    </td>
+                </tr>
+            </table>
+            <!-- <md-list>
                 <md-list-item class="md-2-line" ng-repeat="sample in filteredSamples">
                     <div class="md-list-item-text">
                         <a href="javascript:void(0);" ng-click="showSample(sample);">{{sample.specieinfo.genus}} <i>{{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}</a>
-                        <md-button ng-click="$scope.selSample = sample;">View</md-button>
-                        {{selSample.id}}
                     </div>
                 </md-list-item>
             </md-list>
             <md-card-toolbar>
                 <uib-pagination ng-model="currentPage" total-items="filteredSamples.lenght" max-size="max-size" boudary-links="true"></uib-pagination>
             </md-card-toolbar>
-        </md-card>
+            --></md-card>
         <!-- <div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
                 <legend>Results</legend>
                 <p>aaa...</p>
@@ -90,22 +95,21 @@
                     <label>Specie</label>
                 </div>
                 <div flex="65">{{selSample.specieinfo.genus}}
-                    <i>{{selSample.specieinfo.specie}}</i>{{selSsample.specieinfo.authority}}</div>
+                    <i>{{selSample.specieinfo.specie}}</i> {{selSample.specieinfo.authority}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
                     <label>Popular name</label>
                 </div>
-                <div flex="65">{{selSample.popularName}}</div>
+                <div flex="65">{{selSample.ethnoinfo.commonname}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
                     <label>Biomes</label>
                 </div>
-                <div flex="65">{{selSample.biome}}</div>
+                <div flex="65">{{selSample.passport.biome}}</div>
             </div>
         </div>
-        
 </div>
 </md-content>
 </div>

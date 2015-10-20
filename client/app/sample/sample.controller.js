@@ -138,7 +138,8 @@ angular.module('eweApp')
   });
   
   
-  var sample = $scope.filteredSamples[0]; 
+  var sample = {};
+  
   $scope.showSample = function (sample) {
     $scope.selSample = sample;
   }

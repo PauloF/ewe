@@ -62,7 +62,9 @@
             <md-list>
                 <md-list-item class="md-2-line" ng-repeat="sample in filteredSamples">
                     <div class="md-list-item-text">
-                        <a ng-href="#here" ng-click="showSample(sample)">{{sample.specieinfo.genus}} <i>{{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}</a>
+                        <a href="javascript:void(0);" ng-click="showSample(sample);">{{sample.specieinfo.genus}} <i>{{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}</a>
+                        <md-button ng-click="$scope.selSample = sample;">View</md-button>
+                        {{selSample.id}}
                     </div>
                 </md-list-item>
             </md-list>

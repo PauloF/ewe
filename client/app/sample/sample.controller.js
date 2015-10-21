@@ -7,6 +7,7 @@ angular.module('eweApp')
         count: 10,
       }, {
         total: 0,
+        counts: [],
         getData: function($defer, params) {
           $http.get('/api/samples/search',
             {params: {

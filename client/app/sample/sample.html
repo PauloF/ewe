@@ -92,22 +92,57 @@
             <legend>Sample</legend>
             <div layout="row" flex>
                 <div flex="35">
-                    <label>Specie</label>
+                    <label>Specie: </label>
                 </div>
                 <div flex="65">{{selSample.specieinfo.genus}}
                     <i>{{selSample.specieinfo.specie}}</i> {{selSample.specieinfo.authority}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
-                    <label>Popular name</label>
+                    <label>Popular name: </label>
                 </div>
                 <div flex="65">{{selSample.ethnoinfo.commonname}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
-                    <label>Biomes</label>
+                    <label>Biomes:</label>
                 </div>
                 <div flex="65">{{selSample.passport.biome}}</div>
+            </div>
+            <div layout="row" flex>
+                <div flex="35">
+                    <label>Uses</label>
+                </div>
+                
+            </div>
+            <div layout="row" flex>
+                <div flex="35">
+                    <label>ICD-10 categories:</label>
+                </div>
+                <div flex="65">{{selSample.usecategory.who}}</div>
+            </div>
+            <div layout="row" flex>
+                <div flex="35">
+                    <label>Traditional uses:</label>
+                </div>
+                <div flex="65">{{selSample.usecategory.traditional}}</div>
+            </div>
+            <div layout="row" flex>
+                <div flex="35">
+                    <label>Plant parts used:</label>
+                </div>
+                <div flex="65">{{selSample.partused}}</div>
+            </div>
+            <div layout="row" flex>
+                <div flex="35">
+                    <label>Modes of application:</label>
+                </div>
+                <div flex="65">{{selSample.formofuse}}</div>
+            </div><div layout="row" flex>
+                <div flex="35">
+                    <label>References:</label>
+                </div>
+                <div flex="65">{{selSample.reference.paper}} {{selSample.reference.collector}} {{selSample.reference.origin}}</div>
             </div>
         </div>
 </div>

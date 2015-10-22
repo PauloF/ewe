@@ -60,9 +60,16 @@
         <div class="md-whiteframe-4dp" layout-padding layout="column" flex="25">
             <legend class="md-title">Results</legend>
             <table ng-table="tableParams" template-pagination="custom/pager" class="table table-condensed table-bordered table-striped">
-                <tr ng-repeat="sample in $data" class="md-body-1 md-link">
+                <tr ng-repeat="sample in $data" class="md-body-1 md-link" style="line-height:10px">
                     <td data-title="'Specie'">
-                        <a href="javascript:void(0);" ng-click="showSample(sample);" class="md-body-1 md-link"> {{sample.specieinfo.genus}} <i>{{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}</a>
+                        <a href="#" class="md-button" ng-click="showSample(sample);" >
+                            <span class="ng-binding ng-scope" style="text-transform: none">
+                                 {{sample.specieinfo.genus}} <i>{{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}
+                            </span>
+                            <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
+                                current page
+                            </span>    
+                        </a>    
                     </td>
                 </tr>
             </table>
@@ -96,9 +103,9 @@
                     flex  ng-switch="page.type"> 
             
             
-                        <a ng-switch-when="prev" ng-click="params.page(page.number)" href=""><md-button flex>Previous</md-button></a>                       
+                        <span ng-switch-when="prev"><md-button class="md-raised" flex ng-click="params.page(page.number)" href="">Previous</md-button></span>                       
                                                  
-                        <a ng-switch-when="next" ng-click="params.page(page.number)" href=""><md-button flex>Next</md-button></a> 
+                        <span ng-switch-when="next"><md-button class="md-raised" flex ng-click="params.page(page.number)" href="">Next</md-button></span> 
             
                     </div> 
                 </div> 

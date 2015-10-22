@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
     mongoosePaginate = require('mongoose-paginate'),
+    mongooseAggregatePaginate = require('mongoose-aggregate-paginate'),
     Schema = mongoose.Schema;
 
 var SampleSchema = new Schema({
@@ -38,6 +39,14 @@ var SampleSchema = new Schema({
   
 });
 
+SampleSchema
+.virtual("spFullName")
+.get(function() {
+  return this.specieinfo.genus + "|" + this.specieinfo.specie + "|" + this.specieinfo.authority;
+});
+
 SampleSchema.plugin(mongoosePaginate);
+SampleSchema.plugin(mongooseAggregatePaginate);
+console.log(SampleSchema)
 
 module.exports = mongoose.model('Sample', SampleSchema);

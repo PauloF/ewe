@@ -43,6 +43,35 @@ exports.search = function (req, res) {
   });
 };
 
+// Get list of all species full names filtered and paginated
+exports.spFullName = function (req, res) {
+  /*  var conditions = {};
+    for (var key in req.body.filterByFields) {
+      if (req.body.filterByFields.hasOwnProperty(key)) {
+        conditions[key] = req.body.filterByFields[key];
+        console.log(conditions);
+      } 
+    }
+   */
+  var filter = JSON.parse(req.query.filter || '{}');
+  console.log(filter);
+  var aggregate = Sample.aggregate();
+  aggregate
+  .match({"passport.biome": { $regex: /Caatinga/i}})
+  .group({_id: {genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority"}, count: {"$sum" : 1}});
+  console.log(aggregate);
+  var options = { page: req.query.page, limit: req.query.limit, sortBy: req.query.sort };
+  Sample.aggrigatePaginate(aggregate, options , function (err, results, pageCount, itemCount) {
+    if (err) { return handleError(res, err); }
+    var data = {};
+    data.samples = results;
+    //Todo - retornar o número exato de docs
+    data.total = pageCount * req.query.limit;
+    console.log('Data : ', data);
+    return res.json(200, data);
+  });
+};
+
 
 // Get a single sample
 exports.show = function (req, res) {

@@ -9,6 +9,7 @@ router.get('/', controller.index);
 router.get('/search', controller.search);
 router.get("/spFullName", controller.spFullName);
 router.get('/:id', controller.show);
+router.get('spFullName/:spFullName', controller.showspFullName);
 router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);

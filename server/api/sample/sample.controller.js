@@ -82,6 +82,15 @@ exports.show = function (req, res) {
   });
 };
 
+// Get a single sample by spFullName (genus|specie|authority)
+exports.showspFullName = function (req, res) {
+  Sample.find({spFullName: req.params.spFullName}, function (err, sample) {
+    if (err) { return handleError(res, err); }
+    if (!sample) { return res.send(404); }
+    return res.json(sample);
+  });
+};
+
 // Creates a new sample in the DB.
 exports.create = function (req, res) {
   Sample.create(req.body, function (err, sample) {

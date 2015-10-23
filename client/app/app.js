@@ -20,12 +20,12 @@ angular.module('eweApp', [
   };
  	$scope.menu = [
     {
-      link : '',
+      link : '/',
       title: 'Home',
       icon: 'home'
     },
     {
-      link : 'sample',
+      link : '/sample',
       title: 'Search',
       icon: 'search'
     },

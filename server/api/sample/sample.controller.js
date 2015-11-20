@@ -54,13 +54,27 @@ exports.spFullName = function (req, res) {
     }
    */
   var filter = JSON.parse(req.query.filter || '{}');
-  console.log(filter);
+  var matchQ = {};
+  for (var key in filter) {
+    var regex = {};
+    if (filter.hasOwnProperty(key)) {
+      var pattern = filter[key];
+      regex["$regex"] = new RegExp(pattern,'i');
+      //console.log( key, regex);
+      
+      matchQ[key] = regex;
+    }
+  }
+  
+  console.log(matchQ);
   var aggregate = Sample.aggregate();
   aggregate
-  .match({"passport.biome": { $regex: /Caatinga/i}})
-  .group({_id: {genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority"}, count: {"$sum" : 1}});
-  console.log(aggregate);
+  //.match({"passport.biome": { $regex: /Caatinga/i}, "usecategory.who": { $regex: /DBI/i}})
+  .match(matchQ)
+  .group({_id: {genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority"}, count: {"$sum" : 1}, species:{"$addToSet": "$_id"}});
+  //console.log(aggregate);
   var options = { page: req.query.page, limit: req.query.limit, sortBy: req.query.sort };
+
   Sample.aggrigatePaginate(aggregate, options , function (err, results, pageCount, itemCount) {
     if (err) { return handleError(res, err); }
     var data = {};

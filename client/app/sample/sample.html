@@ -60,16 +60,16 @@
         <div class="md-whiteframe-4dp" layout-padding layout="column" flex="25">
             <legend class="md-title">Results</legend>
             <table ng-table="tableParams" template-pagination="custom/pager" class="table table-condensed table-bordered table-striped">
-                <tr ng-repeat="sample in $data" class="md-body-1 md-link" style="line-height:1">
+                <tr ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height:1">
                     <td data-title="'Specie'">
-                        <a href="#" class="md-button"  ng-click="showSample(sample);" >
+                        <a href="#" class="md-button" ng-click="showSample(specie.species);">
                             <span class="ng-binding ng-scope" style="text-transform: none">
-                                 {{sample.specieinfo.genus}} <i>{{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}
+                                 {{specie._id.genus}} <i>{{specie._id.specie}}</i> {{specie._id.author}} ({{specie.count}})
                             </span>
                             <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
                                 current page
                             </span>    
-                        </a>    
+                        </a>
                     </td>
                 </tr>
             </table>
@@ -129,6 +129,7 @@
         -->
         <div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
             <legend class="md-title">Sample</legend>
+            <div ng-repeat="selSample in samples">
             <div layout="row" flex>
                 <div flex="35">
                     <label>Specie:</label>
@@ -182,6 +183,7 @@
                     <label>References:</label>
                 </div>
                 <div flex="65">{{selSample.reference.paper}} {{selSample.reference.collector}} {{selSample.reference.origin}}</div>
+            </div>
             </div>
         </div>
 </div>

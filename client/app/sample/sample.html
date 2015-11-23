@@ -129,25 +129,26 @@
         -->
         <div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
             <legend class="md-title">Sample</legend>
-            <div ng-repeat="selSample in samples">
+            <div ng-repeat="sample in selectedSamples">
+            <div class="md-whiteframe-4dp" layout-padding>    
             <div layout="row" flex>
                 <div flex="35">
                     <label>Specie:</label>
                 </div>
-                <div flex="65">{{selSample.specieinfo.genus}}
-                    <i>{{selSample.specieinfo.specie}}</i>{{selSample.specieinfo.authority}}</div>
+                <div flex="65">{{sample.specieinfo.genus}}
+                    <i>{{sample.specieinfo.specie}}</i>{{sample.specieinfo.authority}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
                     <label>Popular name:</label>
                 </div>
-                <div flex="65">{{selSample.ethnoinfo.commonname}}</div>
+                <div flex="65">{{sample.ethnoinfo.commonname}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
                     <label>Biomes:</label>
                 </div>
-                <div flex="65">{{selSample.passport.biome}}</div>
+                <div flex="65">{{sample.passport.biome}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
@@ -158,31 +159,32 @@
                 <div flex="35">
                     <label>ICD-10 categories:</label>
                 </div>
-                <div flex="65">{{selSample.usecategory.who}}</div>
+                <div flex="65">{{sample.usecategory.who}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
                     <label>Traditional uses:</label>
                 </div>
-                <div flex="65">{{selSample.usecategory.traditional}}</div>
+                <div flex="65">{{sample.usecategory.traditional}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
                     <label>Plant parts used:</label>
                 </div>
-                <div flex="65">{{selSample.partused}}</div>
+                <div flex="65">{{sample.partused}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
                     <label>Modes of application:</label>
                 </div>
-                <div flex="65">{{selSample.formofuse}}</div>
+                <div flex="65">{{sample.formofuse}}</div>
             </div>
             <div layout="row" flex>
                 <div flex="35">
                     <label>References:</label>
                 </div>
-                <div flex="65">{{selSample.reference.paper}} {{selSample.reference.collector}} {{selSample.reference.origin}}</div>
+                <div flex="65">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
+            </div>
             </div>
             </div>
         </div>

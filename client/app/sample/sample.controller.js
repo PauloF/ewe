@@ -5,7 +5,7 @@ angular.module('eweApp')
     $scope.tableParams = new ngTableParams ({
         page: 1,
         count: 10,
-        filter: {"passport.biome": { $regex: /Caatinga/i}, "usecategory.who": { $regex: /DBI/i}}
+        filter: {} //"passport.biome": "Caatinga", "usecategory.who": "DGS"}
       }, {
         total: 0,
         counts: [],
@@ -14,9 +14,8 @@ angular.module('eweApp')
             {params: {
               
               page: params.page(),
-              limit : params.count(),
-              sort: params.sorting(),
-              filter : params.filter(),              
+              limit : params.count(),              
+              filter : params.filter()              
               }})            
           .then(function(results) {
             params.total(results.data.total);
@@ -55,10 +54,22 @@ angular.module('eweApp')
         });
       };
       
-    $scope.showSample = function(sample) {
-      $scope.selSamples = sample;
-      console.log(sample);
-     };
+      $scope.showSample = function (idList) {
+        $scope.selectedSamples = [];
+        var i;
+        var sample;
+        for (i in idList) {
+          $http.get("/api/samples/" + idList[i])
+            .then(function (result) {
+              $scope.selectedSamples.push(result.data);
+            });
+
+
+        };
+
+        console.log($scope.selectedSamples);
+      
+      };
    
 
     

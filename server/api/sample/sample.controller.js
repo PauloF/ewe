@@ -71,7 +71,8 @@ exports.spFullName = function (req, res) {
   aggregate
   //.match({"passport.biome": { $regex: /Caatinga/i}, "usecategory.who": { $regex: /DBI/i}})
   .match(matchQ)
-  .group({_id: {genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority"}, count: {"$sum" : 1}, species:{"$addToSet": "$_id"}});
+  .group({_id: {genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority"}, count: {"$sum" : 1}, species:{"$addToSet": "$_id"}})
+  .sort({_id: 1});
   //console.log(aggregate);
   var options = { page: req.query.page, limit: req.query.limit, sortBy: req.query.sort };
 

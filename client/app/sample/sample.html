@@ -1,78 +1,108 @@
 <div flex layout="row" ng-controller="SampleCtrl" ng-cloak>
-    <md-content class="md-padding" flex layout="row">
-        <!-- <div class="md-whiteframe-4dp" class-sm="" flex="20" layout="row" layout-align="center start" layout-sm="row">
-                <form name="searchForm" flex novalidate layout="column" layout-align="center start" layout-sm="column">
-                    <legend>Search</legend>
-                    <md-input-container class="md-body-1" layout-align="center start" flex>
-                        <label>
-                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Family</label>
-                        <input ng-model="searchForm.family" ng-required="false">
-                    </md-input-container>
-                    <md-input-container class="md-body-1" flex>
-                        <label>
-                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Genus</label>
-                        <input ng-model="searchForm.genus" ng-required="false">
-                    </md-input-container>
-                    <md-input-container class="md-body-1" flex>
-                        <label>
-                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Specie</label>
-                        <input ng-model="searchForm.specie" ng-required="false">
-                    </md-input-container>
-                    <md-input-container class="md-body-1" flex>
-                        <label>
-                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Popular Name</label>
-                        <input ng-model="searchForm.popularName" ng-required="false">
-                    </md-input-container>
-                    <md-input-container class="md-body-1" flex>
-                        <label>
-                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Biome</label>
-                        <input ng-model="searchForm.biome" ng-required="false">
-                    </md-input-container>
-                    <md-input-container class="md-body-1" flex>
-                        <label>
-                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Categories (ICD-10)</label>
-                        <input ng-model="searchForm.categories" ng-required="false">
-                    </md-input-container>
-                    <md-input-container class="md-body-1" flex>
-                        <label>
-                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Plant part used</label>
-                        <input ng-model="searchForm.partUsed" ng-required="false">
-                    </md-input-container>
-                    <md-input-container class="md-body-1" flex>
-                        <label>
-                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Mode of application</label>
-                        <input ng-model="searchForm.modeApplication" ng-required="false">
-                    </md-input-container>
-                    <md-input-container class="md-body-1" flex>
-                        <label>
-                            <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Traditional use</label>
-                        <input ng-model="searchForm.traditionalUse" ng-required="false">
-                    </md-input-container>
-                    <section layout="row" layout-sm="column">
-                    <md-button type="button" class="md-raised md-accent" ng-click="resetForm()" ng-show="planningForm.$invalid">Clear</md-button>
-                    <md-button class="md-raised md-primary" ng-show="planningForm.$invalid && planningForm.$dirty">Missing Required Fields!</md-button>
-                    <md-button class="md-raised md-primary" ng-click="submit(data)" ng-hide="planningForm.$invalid">Submit</md-button>
-                </section>
-                
-                </form>
-            </div>
-            -->
+    <div class="md-padding" flex layout="row">
+
         <div class="md-whiteframe-4dp" layout-padding layout="column" flex="25">
-            <legend class="md-title">Results</legend>
-            <table ng-table="tableParams" template-pagination="custom/pager" class="table table-condensed table-bordered table-striped">
-                <tr ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height:1">
-                    <td data-title="'Specie'">
-                        <a href="#" class="md-button" ng-click="showSample(specie.species);">
-                            <span class="ng-binding ng-scope" style="text-transform: none">
+
+            <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="filtersn">
+
+                <md-toolbar class="md-theme-light">
+                    <h1 class="md-toolbar-tools">Filter species</h1>
+                </md-toolbar>
+                <md-content layout-padding="">
+                    <form name="filter" flex novalidate layout="column" layout-align="center start" layout-sm="column">
+
+                        <md-input-container class="md-body-1" layout-align="center start" flex>
+                            <label>
+                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Family</label>
+                            <input ng-model="filterForm.specieinfo.family" ng-required="false">
+                        </md-input-container>
+                        <md-input-container class="md-body-1" flex>
+                            <label>
+                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Genus</label>
+                            <input ng-model="filterForm.specieinfo.genus" ng-required="false">
+                        </md-input-container>
+                        <md-input-container class="md-body-1" flex>
+                            <label>
+                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Specie</label>
+                            <input ng-model="filterForm.specieinfo.specie" ng-required="false">
+                        </md-input-container>
+                        <md-input-container class="md-body-1" flex>
+                            <label>
+                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Popular Name</label>
+                            <input ng-model="filterForm.ethnoinfo.commonname" ng-required="false">
+                        </md-input-container>
+                        <md-input-container class="md-body-1" flex>
+                            <label>
+                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Biome</label>
+                            <input ng-model="filterForm.passport.biome" ng-required="false">
+                        </md-input-container>
+                        <md-input-container class="md-body-1" flex>
+                            <label>
+                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Categories (ICD-10)</label>
+                            <input ng-model="filterForm.usecategory.who" ng-required="false">
+                        </md-input-container>
+                        <md-input-container class="md-body-1" flex>
+                            <label>
+                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Plant part used</label>
+                            <input ng-model="filterForm.partused" ng-required="false">
+                        </md-input-container>
+                        <md-input-container class="md-body-1" flex>
+                            <label>
+                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Mode of application</label>
+                            <input ng-model="filterForm.formofuse" ng-required="false">
+                        </md-input-container>
+                        <md-input-container class="md-body-1" flex>
+                            <label>
+                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Traditional use</label>
+                            <input ng-model="filterForm.usecategory.traditional" ng-required="false">
+                        </md-input-container>
+                        <section layout="row" layout-sm="column">
+                            <md-button type="button" class="md-raised md-accent" ng-click="resetForm()" ng-show="filter.$invalid">Clear</md-button>
+                            <md-button class="md-raised md-primary" ng-show="filter.$invalid && filter.$dirty">Missing Required Fields!</md-button>
+                            <md-button class="md-raised md-primary" ng-click="changeFilter(filterForm)" ng-hide="planningForm.$invalid">Submit</md-button>
+                        </section>
+                    </form>
+                    <md-button ng-click="togleSidenav('filtesn')" class="md-primary">
+                        Close Filter
+                    </md-button>
+                </md-content>
+
+            </md-sidenav>
+            <div>
+                <md-toolbar ng-show="!showSearch">
+                    <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                        <legend class="md-title">Results</legend>
+                        <md-button ng-click="toggleSidenav('filtersn')" aria-label="FIlter species">
+                            <ng-md-icon icon="filter_list"></ng-md-icon>
+                        </md-button>
+                        <!--
+                        <h3></h3>
+                        <span flex></span>
+                        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+                            <ng-md-icon icon="search"></ng-md-icon>
+                        </md-button>
+                        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+                            <ng-md-icon icon="more_vert"></ng-md-icon>
+                        </md-button>
+ -->
+                    </div>
+                </md-toolbar>
+
+                <table ng-table="tableParams" template-pagination="custom/pager" class="table table-condensed table-bordered table-striped">
+                    <tr ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height:1">
+                        <td data-title="'Specie'">
+                            <a href="#" class="md-button" ng-click="showSample(specie.species);">
+                                <span class="ng-binding ng-scope" style="text-transform: none">
                                  {{specie._id.genus}} <i>{{specie._id.specie}}</i> {{specie._id.author}} ({{specie.count}})
                             </span>
-                            <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
+                                <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
                                 current page
-                            </span>    
-                        </a>
-                    </td>
-                </tr>
-            </table>
+                            </span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <!-- <md-list>
                 <md-list-item class="md-2-line" ng-repeat="sample in filteredSamples">
                     <div class="md-list-item-text">
@@ -87,29 +117,27 @@
         </div>
         <script type="text/ng-template" id="custom/pager">
             <div class="bottom">
-            <div ng-if="params.settings().counts.length" id="allocateCargoTable_length" class="dataTables_length">
-                <label>Show 
-            
-                <select ng-param-directive ng-model="pageCount" ng-options ="count for count in params.settings().counts" ng-change="pageCounter(pageCount)">
-                </select>
-                Rows
-                </label>
-            </div>    
-            <div class="dataTables_paginate paging_bs_normal">
-                <div layout="row"> 
-                    <div ng-repeat="page in pages" 
-                    ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}" 
-                    ng-show="page.type == 'prev' || page.type == 'next'" 
-                    flex  ng-switch="page.type"> 
-            
-            
-                        <span ng-switch-when="prev"><md-button class="md-raised" flex ng-click="params.page(page.number)" href="">Previous</md-button></span>                       
-                                                 
-                        <span ng-switch-when="next"><md-button class="md-raised" flex ng-click="params.page(page.number)" href="">Next</md-button></span> 
-            
-                    </div> 
-                </div> 
-            </div>
+                <div ng-if="params.settings().counts.length" id="allocateCargoTable_length" class="dataTables_length">
+                    <label>Show
+
+                        <select ng-param-directive ng-model="pageCount" ng-options="count for count in params.settings().counts" ng-change="pageCounter(pageCount)">
+                        </select>
+                        Rows
+                    </label>
+                </div>
+                <div class="dataTables_paginate paging_bs_normal">
+                    <div layout="row">
+                        <div ng-repeat="page in pages" ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
+                        ng-show="page.type == 'prev' || page.type == 'next'" flex ng-switch="page.type">
+
+
+                            <span ng-switch-when="prev"><md-button class="md-raised" flex ng-click="params.page(page.number)" href="">Previous</md-button></span>
+
+                            <span ng-switch-when="next"><md-button class="md-raised" flex ng-click="params.page(page.number)" href="">Next</md-button></span>
+
+                        </div>
+                    </div>
+                </div>
         </script>
         <!-- <div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
                 <legend>Results</legend>
@@ -130,68 +158,68 @@
         <div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
             <legend class="md-title">Sample</legend>
             <div ng-repeat="sample in selectedSamples">
-            <div class="md-whiteframe-4dp" layout-padding>    
-            <div layout="row" flex>
-                <div flex="35">
-                    <label>Specie:</label>
+                <div class="md-whiteframe-4dp" layout-padding>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>Specie:</label>
+                        </div>
+                        <div flex="65">{{sample.specieinfo.genus}}
+                            <i>{{sample.specieinfo.specie}}</i>{{sample.specieinfo.authority}}</div>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>Popular name:</label>
+                        </div>
+                        <div flex="65">{{sample.ethnoinfo.commonname}}</div>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>Biomes:</label>
+                        </div>
+                        <div flex="65">{{sample.passport.biome}}</div>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>Uses</label>
+                        </div>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>ICD-10 categories:</label>
+                        </div>
+                        <div flex="65">{{sample.usecategory.who}}</div>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>Traditional uses:</label>
+                        </div>
+                        <div flex="65">{{sample.usecategory.traditional}}</div>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>Plant parts used:</label>
+                        </div>
+                        <div flex="65">{{sample.partused}}</div>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>Modes of application:</label>
+                        </div>
+                        <div flex="65">{{sample.formofuse}}</div>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>References:</label>
+                        </div>
+                        <div flex="65">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
+                    </div>
                 </div>
-                <div flex="65">{{sample.specieinfo.genus}}
-                    <i>{{sample.specieinfo.specie}}</i>{{sample.specieinfo.authority}}</div>
-            </div>
-            <div layout="row" flex>
-                <div flex="35">
-                    <label>Popular name:</label>
-                </div>
-                <div flex="65">{{sample.ethnoinfo.commonname}}</div>
-            </div>
-            <div layout="row" flex>
-                <div flex="35">
-                    <label>Biomes:</label>
-                </div>
-                <div flex="65">{{sample.passport.biome}}</div>
-            </div>
-            <div layout="row" flex>
-                <div flex="35">
-                    <label>Uses</label>
-                </div>
-            </div>
-            <div layout="row" flex>
-                <div flex="35">
-                    <label>ICD-10 categories:</label>
-                </div>
-                <div flex="65">{{sample.usecategory.who}}</div>
-            </div>
-            <div layout="row" flex>
-                <div flex="35">
-                    <label>Traditional uses:</label>
-                </div>
-                <div flex="65">{{sample.usecategory.traditional}}</div>
-            </div>
-            <div layout="row" flex>
-                <div flex="35">
-                    <label>Plant parts used:</label>
-                </div>
-                <div flex="65">{{sample.partused}}</div>
-            </div>
-            <div layout="row" flex>
-                <div flex="35">
-                    <label>Modes of application:</label>
-                </div>
-                <div flex="65">{{sample.formofuse}}</div>
-            </div>
-            <div layout="row" flex>
-                <div flex="35">
-                    <label>References:</label>
-                </div>
-                <div flex="65">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
-            </div>
-            </div>
             </div>
         </div>
-</div>
-</md-content>
-</div>
-<!-- <div ng-include="'components/navbar/navbar.html'"></div>
+        </div>
+    </div>
+
+    <!-- <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container">
   <p>Samples</p>

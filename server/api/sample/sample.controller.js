@@ -11,6 +11,7 @@
 
 var _ = require('lodash');
 var Sample = require('./sample.model');
+var dot = require('dot-object');
 
 // Get list of samples
 exports.index = function (req, res) {
@@ -54,7 +55,10 @@ exports.spFullName = function (req, res) {
     }
    */
   var filter = JSON.parse(req.query.filter || '{}');
+  filter = dot.dot(filter);
+  console.log(filter);
   var matchQ = {};
+  
   for (var key in filter) {
     var regex = {};
     if (filter.hasOwnProperty(key)) {

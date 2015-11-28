@@ -1,11 +1,43 @@
 'use strict';
 
 angular.module('eweApp')
-  .controller('SampleCtrl', function ($scope, $uibModal, $http, ngTableParams, socket, $log) {
+  .controller('SampleCtrl', function ($scope, $uibModal, $http, ngTableParams, socket, $log, $mdSidenav, $mdUtil, $timeout) {
+    
+    /*$scope.toggleFilter = buildToggler('filtersn');
+
+    /**
+     * Build handler to open/close a SideNav; when animation finishes
+     * report completion in console
+     */
+/*    function buildToggler(navID) {
+      var debounceFn =  $mdUtil.debounce(function(){
+            $mdSidenav(navID)
+              .toggle()
+              .then(function () {
+                $log.debug("toggle " + navID + " is done");
+              });
+          },300);
+
+      return debounceFn;
+    };
+*/
+    $scope.filterSpecies = {};
+    $scope.toggleSidenav = function(menuId) {
+      $mdSidenav(menuId).toggle();
+    };
+    
+    $scope.changeFilter = function (filterForm) {
+//      var dot = require('dotobject');
+//      var filter = dot.dot(filterForm);
+      var filter = filterForm;
+      console.log(filter);
+      angular.extend($scope.tableParams.filter(), filter);   
+      console.log($scope.tableParams.filter);      
+    };  
     $scope.tableParams = new ngTableParams ({
         page: 1,
         count: 10,
-        filter: {} //"passport.biome": "Caatinga", "usecategory.who": "DGS"}
+        filter: {} //'{"passport.biome": "Caatinga", "usecategory.who": "DGS"}'
       }, {
         total: 0,
         counts: [],
@@ -15,7 +47,7 @@ angular.module('eweApp')
               
               page: params.page(),
               limit : params.count(),              
-              filter : params.filter()              
+              filter : params.filter()             
               }})            
           .then(function(results) {
             params.total(results.data.total);
@@ -24,7 +56,7 @@ angular.module('eweApp')
         }
       });
 
-    $scope.applyGlobalSearch = function applyGlobalSearch() {
+/*    $scope.applyGlobalSearch = function applyGlobalSearch() {
       var term = $scope.globalSearchTerm;
       if (self.isInvertedSearch) {
         term = "!" + term;
@@ -36,7 +68,7 @@ angular.module('eweApp')
       var filter = {};
       filter[field] = value;
       angular.extend($scope.tableParams.filter(), filter);
-    }
+    }*/
     
       $scope.open = function(sampleID) {
         var modalInstance = $uibModal.open({

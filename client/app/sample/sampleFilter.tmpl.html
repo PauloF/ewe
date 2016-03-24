@@ -1,0 +1,73 @@
+<md-dialog aria-label="Sample Filter" ng-cloak>
+  <form>
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Sample Filter</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          
+          <ng-md-icon icon="close"></ng-md-icon>
+          
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <spam/>
+      <md-input-container class="md-body-1" flex>
+        <label><md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Family</label>
+        <input ng-model="filterForm.specieinfo.family" ng-required="false">
+      </md-input-container>
+      <md-input-container class="md-body-1" flex>
+        <label>
+          <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Genus</label>
+        <input ng-model="filterForm.specieinfo.genus" ng-required="false">
+      </md-input-container>
+      <md-input-container class="md-body-1" flex>
+        <label>
+          <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Specie</label>
+        <input ng-model="filterForm.specieinfo.specie" ng-required="false">
+      </md-input-container>
+      <md-input-container class="md-body-1" flex>
+        <label>
+          <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Popular Name</label>
+        <input ng-model="filterForm.ethnoinfo.commonname" ng-required="false">
+      </md-input-container>
+      <md-input-container class="md-body-1" flex>
+        <label>
+          <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Biome</label>
+        <input ng-model="filterForm.passport.biome" ng-required="false">
+      </md-input-container>
+      <md-input-container class="md-body-1" flex>
+        <label>
+          <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Categories (ICD-10)</label>
+        <input ng-model="filterForm.usecategory.who" ng-required="false">
+      </md-input-container>
+      <md-input-container class="md-body-1" flex>
+        <label>
+          <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Plant part used</label>
+        <input ng-model="filterForm.partused" ng-required="false">
+      </md-input-container>
+      <md-input-container class="md-body-1" flex>
+        <label>
+          <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Mode of application</label>
+        <input ng-model="filterForm.formofuse" ng-required="false">
+      </md-input-container>
+      <md-input-container class="md-body-1" flex>
+        <label>
+          <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Traditional use</label>
+        <input ng-model="filterForm.usecategory.traditional" ng-required="false">
+      </md-input-container>
+      
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button type="button" class="md-raised md-accent" ng-click="resetForm()" ng-show="filter.$invalid">Clear</md-button>
+      <md-button class="md-raised md-primary" ng-show="filter.$invalid && filter.$dirty">Missing Required Fields!</md-button>
+      <md-button class="md-raised md-primary" ng-click="submit(filterForm)" ng-hide="planningForm.$invalid">Submit</md-button>
+
+    </md-dialog-actions>
+  </form>
+</md-dialog>

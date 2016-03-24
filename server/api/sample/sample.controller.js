@@ -62,15 +62,15 @@ exports.spFullName = function (req, res) {
   for (var key in filter) {
     var regex = {};
     if (filter.hasOwnProperty(key)) {
-      var pattern = filter[key];
-      regex["$regex"] = new RegExp(pattern,'i');
-      //console.log( key, regex);
-      
-      matchQ[key] = regex;
+      if (filter[key]) {
+        regex["$regex"] = new RegExp(filter[key], 'i');
+        //console.log( key, regex);      
+        matchQ[key] = regex;
+      }
     }
   }
   
-  console.log(matchQ);
+  console.log('MatchQ : ',matchQ);
   var aggregate = Sample.aggregate();
   aggregate
   //.match({"passport.biome": { $regex: /Caatinga/i}, "usecategory.who": { $regex: /DBI/i}})
@@ -80,7 +80,7 @@ exports.spFullName = function (req, res) {
   //console.log(aggregate);
   var options = { page: req.query.page, limit: req.query.limit, sortBy: req.query.sort };
 
-  Sample.aggrigatePaginate(aggregate, options , function (err, results, pageCount, itemCount) {
+  Sample.aggregatePaginate(aggregate, options , function (err, results, pageCount, itemCount) {
     if (err) { return handleError(res, err); }
     var data = {};
     data.samples = results;

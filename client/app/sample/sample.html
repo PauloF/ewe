@@ -2,7 +2,7 @@
     <div class="md-padding" flex layout="row">
 
         <div class="md-whiteframe-4dp" layout-padding layout="column" flex="25">
-
+            <!--
             <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="filtersn">
 
                 <md-toolbar class="md-theme-light">
@@ -62,19 +62,25 @@
                             <md-button class="md-raised md-primary" ng-click="changeFilter(filterForm)" ng-hide="planningForm.$invalid">Submit</md-button>
                         </section>
                     </form>
-                    <md-button ng-click="togleSidenav('filtesn')" class="md-primary">
+                    <md-button ng-click="togleSidenav('filtersn')" class="md-primary">
                         Close Filter
                     </md-button>
                 </md-content>
 
             </md-sidenav>
+-->
             <div>
                 <md-toolbar ng-show="!showSearch">
-                    <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
-                        <legend class="md-title">Results</legend>
-                        <md-button ng-click="toggleSidenav('filtersn')" aria-label="FIlter species">
-                            <ng-md-icon icon="filter_list"></ng-md-icon>
-                        </md-button>
+                    <div class="md-toolbar-tools" layout="row">
+                        <legend layout-align="left" class="md-title" flex="60">Results</legend>
+                        <div layout="row" layout-align="right" flex>
+                            <md-button ng-click="showFilter($event)" flex aria-label="Filter samples">
+                                <ng-md-icon icon="filter_list"></ng-md-icon>
+                            </md-button>
+                            <md-button ng-click="clearFilter($event)" flex aria-label="Clear Filter">
+                                <ng-md-icon icon="backspace"></ng-md-icon>
+                            </md-button>
+                        </div>
                         <!--
                         <h3></h3>
                         <span flex></span>
@@ -87,12 +93,13 @@
  -->
                     </div>
                 </md-toolbar>
-
-                <table ng-table="tableParams" template-pagination="custom/pager" class="table table-condensed table-bordered table-striped">
-                    <tr ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height:1">
-                        <td data-title="'Specie'">
-                            <a href="#" class="md-button" ng-click="showSample(specie.species);">
-                                <span class="ng-binding ng-scope" style="text-transform: none">
+                <div flex>
+                <table flex ng-table="tableParams" template-pagination="custom/pager" class="table table-condensed table-bordered table-striped">
+                    
+                    <tr flex ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height:1">
+                        <td word-wrap="break-word" layout-wrap flex >
+                            <a flex href="#" class="md-button" ng-click="showSample(specie.species);">
+                                <span flex class="ng-binding ng-scope" style="text-transform: none">
                                  {{specie._id.genus}} <i>{{specie._id.specie}}</i> {{specie._id.author}} ({{specie.count}})
                             </span>
                                 <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
@@ -101,7 +108,9 @@
                             </a>
                         </td>
                     </tr>
+                    
                 </table>
+                </div>
             </div>
             <!-- <md-list>
                 <md-list-item class="md-2-line" ng-repeat="sample in filteredSamples">
@@ -131,9 +140,9 @@
                         ng-show="page.type == 'prev' || page.type == 'next'" flex ng-switch="page.type">
 
 
-                            <span ng-switch-when="prev"><md-button class="md-raised" flex ng-click="params.page(page.number)" href="">Previous</md-button></span>
+                            <span ng-switch-when="prev"><md-button flex ng-click="params.page(page.number)" href=""><ng-md-icon icon="arrow_back"></ng-md-icon></md-button></span>
 
-                            <span ng-switch-when="next"><md-button class="md-raised" flex ng-click="params.page(page.number)" href="">Next</md-button></span>
+                            <span ng-switch-when="next"><md-button flex ng-click="params.page(page.number)" href=""><ng-md-icon icon="arrow_forward"></ng-md-icon></md-button></span>
 
                         </div>
                     </div>

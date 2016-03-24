@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eweApp')
-  .controller('SampleCtrl', function ($scope, $uibModal, $http, ngTableParams, socket, $log, $mdSidenav, $mdUtil, $timeout) {
+  .controller('SampleCtrl', function ($scope, $uibModal, $http, NgTableParams, socket, $log, $mdDialog, $mdSidenav, $mdUtil, $mdMedia, $timeout) {
     
     /*$scope.toggleFilter = buildToggler('filtersn');
 
@@ -26,18 +26,23 @@ angular.module('eweApp')
       $mdSidenav(menuId).toggle();
     };
     
+    $scope.clearFilter = function () {
+      $scope.tableParams.filter({})      
+    }
+    
     $scope.changeFilter = function (filterForm) {
-//      var dot = require('dotobject');
-//      var filter = dot.dot(filterForm);
-      var filter = filterForm;
+      var filter = {};
+      filter = filterForm;
       console.log(filter);
       angular.extend($scope.tableParams.filter(), filter);   
       console.log($scope.tableParams.filter);      
     };  
-    $scope.tableParams = new ngTableParams ({
+    $scope.tableParams = new NgTableParams ({
         page: 1,
         count: 10,
-        filter: {} //'{"passport.biome": "Caatinga", "usecategory.who": "DGS"}'
+        filter: {}
+//        {"specieinfo":{"family":"","genus":"","specie":""},"ethnoinfo":{"commonname":""},"passport":{"biome":""},"usecategory":{"who":"","traditional":""},"partused":"","formofuse":""}
+ //'{"passport.biome": "Caatinga", "usecategory.who": "DGS"}'
       }, {
         total: 0,
         counts: [],
@@ -54,7 +59,47 @@ angular.module('eweApp')
             $defer.resolve(results.data.samples);
           });          
         }
+      }
+    );
+      
+    $scope.showFilter = function (ev) {
+      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+      $mdDialog.show({
+        controller: DialogController,
+//        scope: $scope,
+        templateUrl: 'app/sample/sampleFilter.tmpl.html',               
+        targetEvent: ev,        
+        clickOutsideToClose: true,
+        parent: angular.element(document.body),
+        fullscreen: useFullScreen
+      })
+        .then(function (filterForm) {
+          $scope.changeFilter(filterForm);
+        }, function () {
+          $scope.status = 'You cancelled the dialog.';
+        });
+      $scope.$watch(function () {
+        return $mdMedia('xs') || $mdMedia('sm');
+      }, function (wantsFullScreen) {
+        $scope.customFullscreen = (wantsFullScreen === true);
       });
+    };
+    
+   function DialogController($scope, $mdDialog) {
+      $scope.hide = function () {
+        $mdDialog.hide();              
+      };
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+      $scope.submit = function (filterForm) {
+        $mdDialog.hide(filterForm);
+      };
+    }
+    
+      
+      
+      $scope.changeFilter();
 
 /*    $scope.applyGlobalSearch = function applyGlobalSearch() {
       var term = $scope.globalSearchTerm;
@@ -89,7 +134,7 @@ angular.module('eweApp')
       $scope.showSample = function (idList) {
         $scope.selectedSamples = [];
         var i;
-        var sample;
+        
         for (i in idList) {
           $http.get("/api/samples/" + idList[i])
             .then(function (result) {
@@ -140,7 +185,7 @@ angular.module('eweApp')
   
   
 angular.module('eweApp')
-  .controller('modalSampleCtrl', function ($scope, $modalInstance ) {
+  .controller('modalSampleCtrl', function ($scope, $uibModalInstance ) {
     $scope.sample= {};
 /*    $scope.items = items;
     $scope.selected = {
@@ -148,11 +193,11 @@ angular.module('eweApp')
     };
   */
     $scope.ok = function () {
-      $modalInstance.close($scope.sample);
+      $uibModalInstance.close($scope.sample);
     };
 
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
 });
 
@@ -199,7 +244,7 @@ angular.module('eweApp')
   });
   
   
-  var sample = {};
+  
   
   
   

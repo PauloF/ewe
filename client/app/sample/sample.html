@@ -2,73 +2,7 @@
     <div class="md-padding" flex layout="row">
 
         <div class="md-whiteframe-4dp" layout-padding layout="column" flex="25">
-            <!--
-            <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="filtersn">
-
-                <md-toolbar class="md-theme-light">
-                    <h1 class="md-toolbar-tools">Filter species</h1>
-                </md-toolbar>
-                <md-content layout-padding="">
-                    <form name="filter" flex novalidate layout="column" layout-align="center start" layout-sm="column">
-
-                        <md-input-container class="md-body-1" layout-align="center start" flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Family</label>
-                            <input ng-model="filterForm.specieinfo.family" ng-required="false">
-                        </md-input-container>
-                        <md-input-container class="md-body-1" flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Genus</label>
-                            <input ng-model="filterForm.specieinfo.genus" ng-required="false">
-                        </md-input-container>
-                        <md-input-container class="md-body-1" flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Specie</label>
-                            <input ng-model="filterForm.specieinfo.specie" ng-required="false">
-                        </md-input-container>
-                        <md-input-container class="md-body-1" flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Popular Name</label>
-                            <input ng-model="filterForm.ethnoinfo.commonname" ng-required="false">
-                        </md-input-container>
-                        <md-input-container class="md-body-1" flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Biome</label>
-                            <input ng-model="filterForm.passport.biome" ng-required="false">
-                        </md-input-container>
-                        <md-input-container class="md-body-1" flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Categories (ICD-10)</label>
-                            <input ng-model="filterForm.usecategory.who" ng-required="false">
-                        </md-input-container>
-                        <md-input-container class="md-body-1" flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Plant part used</label>
-                            <input ng-model="filterForm.partused" ng-required="false">
-                        </md-input-container>
-                        <md-input-container class="md-body-1" flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Mode of application</label>
-                            <input ng-model="filterForm.formofuse" ng-required="false">
-                        </md-input-container>
-                        <md-input-container class="md-body-1" flex>
-                            <label>
-                                <md-icon md-svg-src="{{ icPlaceIconURL }}"></md-icon>Traditional use</label>
-                            <input ng-model="filterForm.usecategory.traditional" ng-required="false">
-                        </md-input-container>
-                        <section layout="row" layout-sm="column">
-                            <md-button type="button" class="md-raised md-accent" ng-click="resetForm()" ng-show="filter.$invalid">Clear</md-button>
-                            <md-button class="md-raised md-primary" ng-show="filter.$invalid && filter.$dirty">Missing Required Fields!</md-button>
-                            <md-button class="md-raised md-primary" ng-click="changeFilter(filterForm)" ng-hide="planningForm.$invalid">Submit</md-button>
-                        </section>
-                    </form>
-                    <md-button ng-click="togleSidenav('filtersn')" class="md-primary">
-                        Close Filter
-                    </md-button>
-                </md-content>
-
-            </md-sidenav>
--->
+            
             <div>
                 <md-toolbar ng-show="!showSearch">
                     <div class="md-toolbar-tools" layout="row">
@@ -94,12 +28,12 @@
                     </div>
                 </md-toolbar>
                 <div flex>
-                <table flex ng-table="tableParams" template-pagination="custom/pager" class="table table-condensed table-bordered table-striped">
+                <table width="100%" ng-table="tableParams" template-pagination="custom/pager" class="table table-condensed table-bordered table-striped">
                     
-                    <tr flex ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height:1">
-                        <td word-wrap="break-word" layout-wrap flex >
-                            <a flex href="#" class="md-button" ng-click="showSample(specie.species);">
-                                <span flex class="ng-binding ng-scope" style="text-transform: none">
+                    <tr ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height: 10px">
+                        <td layout-wrap >
+                            <a href="#" class="md-button" ng-click="showSample(specie.species);" style="text-transform: none;display: inline-block; text-overflow:ellipsis; overflow:hidden;width:100%">
+                                <span class="ng-binding ng-scope" style="text-transform: none;">
                                  {{specie._id.genus}} <i>{{specie._id.specie}}</i> {{specie._id.author}} ({{specie.count}})
                             </span>
                                 <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
@@ -135,14 +69,14 @@
                     </label>
                 </div>
                 <div class="dataTables_paginate paging_bs_normal">
-                    <div layout="row">
+                    <div layout="row" layout-align="space-around center">
                         <div ng-repeat="page in pages" ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
                         ng-show="page.type == 'prev' || page.type == 'next'" flex ng-switch="page.type">
 
 
-                            <span ng-switch-when="prev"><md-button flex ng-click="params.page(page.number)" href=""><ng-md-icon icon="arrow_back"></ng-md-icon></md-button></span>
+                            <span style="float:left" ng-switch-when="prev"><md-button  flex ng-click="params.page(page.number)" href=""><ng-md-icon icon="arrow_back"></ng-md-icon></md-button></span>
 
-                            <span ng-switch-when="next"><md-button flex ng-click="params.page(page.number)" href=""><ng-md-icon icon="arrow_forward"></ng-md-icon></md-button></span>
+                            <span style="float:right" ng-switch-when="next"><md-button flex ng-click="params.page(page.number)" href=""><ng-md-icon icon="arrow_forward"></ng-md-icon></md-button></span>
 
                         </div>
                     </div>

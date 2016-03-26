@@ -59,9 +59,9 @@
                 <div>email@domainname.com</div>
               </div>
             </md-toolbar>
-            <md-list>
+            <md-list layout="column">
               <md-item ng-repeat="item in menu">
-                <a ng-href="{{item.link}}">
+                <md-button ng-href="{{item.link}}">
                   <md-item-content md-ink-ripple layout="row" layout-align="start center">
                 
                     <div class="inset">
@@ -70,7 +70,7 @@
                     <div class="inset">{{item.title}}
                     </div>
                   </md-item-content>
-                </a>
+                </md-button>
               </md-item>
             </md-list>
           </md-sidenav>

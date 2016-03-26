@@ -28,13 +28,13 @@
                     </div>
                 </md-toolbar>
                 <div flex>
-                <table width="100%" ng-table="tableParams" template-pagination="custom/pager" class="table table-condensed table-bordered table-striped">
+                <table flex ng-table="tableParams" template-pagination="custom/pager" style="table-layout:fixed;width:100%" class="table table-condensed">
                     
                     <tr ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height: 10px">
                         <td layout-wrap >
                             <a href="#" class="md-button" ng-click="showSample(specie.species);" style="text-transform: none;display: inline-block; text-overflow:ellipsis; overflow:hidden;width:100%">
                                 <span class="ng-binding ng-scope" style="text-transform: none;">
-                                 {{specie._id.genus}} <i>{{specie._id.specie}}</i> {{specie._id.author}} ({{specie.count}})
+                                 <i>{{specie._id.genus}} {{specie._id.specie}}</i> {{specie._id.author}} ({{specie.count}})
                             </span>
                                 <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
                                 current page
@@ -106,8 +106,8 @@
                         <div flex="35">
                             <label>Specie:</label>
                         </div>
-                        <div flex="65">{{sample.specieinfo.genus}}
-                            <i>{{sample.specieinfo.specie}}</i>{{sample.specieinfo.authority}}</div>
+                        <div flex="65"><i>{{sample.specieinfo.genus}}
+                            {{sample.specieinfo.specie}}</i>{{sample.specieinfo.authority}}</div>
                     </div>
                     <div layout="row" flex>
                         <div flex="35">

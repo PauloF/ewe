@@ -42,7 +42,7 @@
           <!-- endbuild -->
         </head>
         
-        <body ng-app="eweApp" layout="row" ng-controller="eweAppCtrl">
+        <body layout="row" ng-controller="eweAppCtrl">
           <!--[if lt IE 7]>
             <p class="browsehappy">You are using an
               <strong>outdated</strong>browser. Please
@@ -122,6 +122,10 @@
             ga('create', 'UA-XXXXX-X');
             ga('send', 'pageview');
           </script>
+           <!-- Google Chart -->
+          <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+          <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+          <!-- end GoogleChart -->
           <!--[if lt IE 9]>
             <script src="bower_components/es5-shim/es5-shim.js"></script>
             <script src="bower_components/json3/lib/json3.min.js"></script>
@@ -146,6 +150,7 @@
           <script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
           <script src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
           <!-- endbower -->
+         
           <script src="socket.io-client/socket.io.js"></script>
           <!-- endbuild -->
           <!-- build:js({.tmp,client}) app/app.js -->
@@ -161,6 +166,8 @@
           <script src="app/main/main.js"></script>
           <script src="app/sample/sample.controller.js"></script>
           <script src="app/sample/sample.js"></script>
+          <script src="app/visualization/visualization.controller.js"></script>
+          <script src="app/visualization/visualization.js"></script>
           <script src="components/auth/auth.service.js"></script>
           <script src="components/auth/user.service.js"></script>
           <script src="components/modal/modal.service.js"></script>

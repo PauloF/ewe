@@ -1,6 +1,14 @@
 /// <reference path="../../typings/angularjs/angular.d.ts"/>
 'use strict';
 
+google.charts.load('current', {
+  packages: ['corechart', 'treemap', 'geochart', 'map' ]
+});
+
+google.charts.setOnLoadCallback(function() {
+  angular.bootstrap(document.body, ['eweApp']);
+});
+
 angular.module('eweApp', [
   'ngCookies',
   'ngResource',
@@ -35,7 +43,7 @@ angular.module('eweApp', [
       icon: 'add'
     },
     {
-      link : '',
+      link : '/visualization',
       title: 'Visualize',
       icon: 'dashboard'
     },

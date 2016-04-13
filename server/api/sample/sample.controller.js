@@ -1,3 +1,4 @@
+/// <reference path="../../../typings/jquery/jquery.d.ts"/>
 /**
  * Using Rails-like standard naming convention for endpoints.
  * GET     /samples              ->  index
@@ -97,8 +98,7 @@ exports.spTreeMap = function (req, res) {
   var filter = JSON.parse(req.query.filter || '{}');
   filter = dot.dot(filter);
   console.log(filter);
-  var matchQ = {};
-
+  var matchQ = {};    
   for (var key in filter) {
     var regex = {};
     if (filter.hasOwnProperty(key)) {
@@ -108,53 +108,64 @@ exports.spTreeMap = function (req, res) {
         matchQ[key] = regex;
       }
     }
-  }
-
-  console.log('MatchQ : ', matchQ);
-  var aggregate = Sample.aggregate(); 
+  };
   
-  aggregate
-    //.match({"passport.biome": { $regex: /Caatinga/i}, "usecategory.who": { $regex: /DBI/i}})
-    .match(matchQ)
-    .group({ _id: { family: "$specieinfo.family", genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority" }, count: { "$sum": 1 } });
-    //.sort({ _id: 1 });
-  console.log('AGGREGATE: ', aggregate._pipeline);
-  
-  
-  Sample.aggregate(aggregate._pipeline, function (err, results ) {
-    if (err) { return handleError(res, err); }
-    var treemap = {cols: [{id: 'id', label: 'ID', type: 'string'},
+  var treemap = {cols: [{id: 'id', label: 'ID', type: 'string'},
          {id: 'parent', label: 'Parent', type: 'string'},
          {id: 'size', label: 'Size', type: 'number'}
          ],
-         rows: [{ c: [{ v: 'familyfake' }, { v: '#' }, { v: 0 }] }]
+         rows: []
     };
-    console.log(results);
-    console.log(treemap);
-    results.forEach( function (item) {
-      // family
-      console.log('item : ', item);
-      console.log(item._id.family);
-      console.log(treemap.rows);
-      //if (treemap.rows.lenght > 0) {
-        var findFamily = $.grep(treemap.rows, function (e) { return e.c[0].v === item._id.family });
-        console.log('ff :', findFamily);
-        if (findFamily.length == 0) {
-          var row = { c: [{ v: item._id.family }, { v: '#' }, { v: 0 }] };
-          treemap.rows.push(row);
-        } else {
-          console.log(findFamily[0]);
-        }
-      //}      
+  //aggregate family
+  var aggregateF = Sample.aggregate();   
+  aggregateF
+    .match(matchQ)
+    .group({ _id: { family: "$specieinfo.family" }, count: { "$sum": 1 } });   
+  
+  Sample.aggregate(aggregateF._pipeline, function (err, results ) {
+    if (err) { return handleError(res, err); }    
+    results.forEach(function (item) {       
+      var row = { c: [{ v: item._id.family }, { v: '#' }, { v: item.count }] };
+      treemap.rows.push(row);
+      console.log ('Family : ', row);
     });
-    
-    data.samples = results;
-    //Todo - retornar o número exato de docs
-    //data.total = pageCount * req.query.limit;
-    console.log('Data : ', data);
-    return res.json(200, data);
+  });
+  //aggregate genus  
+  var aggregateG = Sample.aggregate();
+  aggregateG
+    .match(matchQ)
+    .group({ _id: { family: "$specieinfo.family", genus: "$specieinfo.genus" }, count: { "$sum": 1 } });
+      
+  Sample.aggregate(aggregateG._pipeline, function (err, results) {
+    if (err) { return handleError(res, err); }
+    results.forEach(function (item) {
+      var row = { c: [{ v: item._id.genus }, { v: item._id.family }, { v: item.count }] };
+      treemap.rows.push(row);
+      console.log('Genus : ', row);
+      
+    });
+    //console.log("Treemap :", treemap);
+    //return res.status(200).json(treemap);
+  });
+  //aggregate specie  
+  var aggregateS = Sample.aggregate();
+  aggregateS
+    .match(matchQ)
+    .group({ _id: { genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority" }, count: { "$sum": 1 } });
+      
+  Sample.aggregate(aggregateS._pipeline, function (err, results) {
+    if (err) { return handleError(res, err); }
+    results.forEach(function (item) {
+      var row = { c: [{ v: item._id.genus + " " + item._id.specie + " " + item._id.author }, { v: item._id.genus }, { v: item.count }] };
+      treemap.rows.push(row);
+      console.log('Specie : ', row);
+      
+    });
+    console.log("Treemap :", treemap);
+    return res.status(200).json(treemap);
   });
 };
+
 
 // Get a single sample
 exports.show = function (req, res) {

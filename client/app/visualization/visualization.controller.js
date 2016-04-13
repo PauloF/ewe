@@ -23,17 +23,26 @@ angular.module('eweApp')
     */
 
     $scope.getSamples = function () {
-      $http.get("/api/samples/")
+      $http.get("/api/samples/spTreeMap")
         .then(function (result) {
-          console.log(result.data);
-          return (result.data);
+          console.log(result);
+          $scope.data = new google.visualization.DataTable(result);
+          var tree = new google.visualization.TreeMap(document.getElementById('treemapSpecies'));
+          tree.draw($scope.data, {
+            minColor: '#f00',
+            midColor: '#ddd',
+            maxColor: '#0d0',
+            headerHeight: 15,
+            fontColor: 'black',
+            showScale: true
+          });
         });
     };
-    console.log($scope.getSamples());
+    
 
+    return $scope.getSamples
 
-
-    var data = google.visualization.arrayToDataTable([
+/*    var data = google.visualization.arrayToDataTable([
       ['Location', 'Parent', 'Market trade volume (size)', 'Market increase/decrease (color)'],
       ['Global', null, 0, 0],
       ['America', 'Global', 0, 0],
@@ -63,18 +72,9 @@ angular.module('eweApp')
       ['Sudan', 'Africa', 12, 2],
       ['Congo', 'Africa', 10, 12],
       ['Zaire', 'Africa', 8, 10]
-    ]);
+    ]);*/
 
-    var tree = new google.visualization.TreeMap(document.getElementById('treemapSpecies'));
-
-    tree.draw(data, {
-      minColor: '#f00',
-      midColor: '#ddd',
-      maxColor: '#0d0',
-      headerHeight: 15,
-      fontColor: 'black',
-      showScale: true
-    });
+    
 
   
     

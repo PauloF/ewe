@@ -114,10 +114,14 @@ exports.spTreeMap = function (req, res) {
          {id: 'parent', label: 'Parent', type: 'string'},
          {id: 'size', label: 'Size', type: 'number'}
          ],
-         rows: []
+         rows: [{ c: [{ v: '#' }, { v: '' }] }]
+         //rows: []
     };
-  //aggregate family
-  var aggregateF = Sample.aggregate();   
+    var row = { c: [{ v: 'Leguminosae' }, { v: '#' }, { v: 1 }] };
+    treemap.rows.push(row);
+    console.log ('Family : ', row);
+  // aggregate family
+  /*var aggregateF = Sample.aggregate();   
   aggregateF
     .match(matchQ)
     .group({ _id: { family: "$specieinfo.family" }, count: { "$sum": 1 } });   
@@ -125,21 +129,23 @@ exports.spTreeMap = function (req, res) {
   Sample.aggregate(aggregateF._pipeline, function (err, results ) {
     if (err) { return handleError(res, err); }    
     results.forEach(function (item) {       
-      var row = { c: [{ v: item._id.family }, { v: '#' }, { v: item.count }] };
+      //var row = { c: [{ v: item._id.family }, { v: '#' }, { v: item.count }] };
+      var row = { c: [{ v: 'Leguninosae' }, { v: '#' }, { v: item.count }] };
       treemap.rows.push(row);
       console.log ('Family : ', row);
     });
-  });
+  });*/
   //aggregate genus  
   var aggregateG = Sample.aggregate();
   aggregateG
     .match(matchQ)
-    .group({ _id: { family: "$specieinfo.family", genus: "$specieinfo.genus" }, count: { "$sum": 1 } });
+    .group({ _id: { genus: "$specieinfo.genus" }, count: { "$sum": 1 } });
+    //.group({ _id: { family: "$specieinfo.family", genus: "$specieinfo.genus" }, count: { "$sum": 1 } });
       
   Sample.aggregate(aggregateG._pipeline, function (err, results) {
     if (err) { return handleError(res, err); }
     results.forEach(function (item) {
-      var row = { c: [{ v: item._id.genus }, { v: item._id.family }, { v: item.count }] };
+      var row = { c: [{ v: item._id.genus, f: item._id.genus }, { v: 'Leguminosae' }, { v: item.count }] };
       treemap.rows.push(row);
       console.log('Genus : ', row);
       
@@ -156,10 +162,11 @@ exports.spTreeMap = function (req, res) {
   Sample.aggregate(aggregateS._pipeline, function (err, results) {
     if (err) { return handleError(res, err); }
     results.forEach(function (item) {
+      if (item._id.genus !== null) {
       var row = { c: [{ v: item._id.genus + " " + item._id.specie + " " + item._id.author }, { v: item._id.genus }, { v: item.count }] };
       treemap.rows.push(row);
       console.log('Specie : ', row);
-      
+      }
     });
     console.log("Treemap :", treemap);
     return res.status(200).json(treemap);

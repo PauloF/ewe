@@ -22,11 +22,11 @@ angular.module('eweApp')
         };
     */
 
-    $scope.getSamples = function () {
+    
       $http.get("/api/samples/spTreeMap")
         .then(function (result) {
-          console.log(result);
-          $scope.data = new google.visualization.DataTable(result);
+          console.log(JSON.stringify(result));
+          $scope.data = new google.visualization.DataTable(result.data);
           var tree = new google.visualization.TreeMap(document.getElementById('treemapSpecies'));
           tree.draw($scope.data, {
             minColor: '#f00',
@@ -37,10 +37,10 @@ angular.module('eweApp')
             showScale: true
           });
         });
-    };
+    });
     
 
-    return $scope.getSamples
+   
 
 /*    var data = google.visualization.arrayToDataTable([
       ['Location', 'Parent', 'Market trade volume (size)', 'Market increase/decrease (color)'],
@@ -78,4 +78,4 @@ angular.module('eweApp')
 
   
     
-  });
+  

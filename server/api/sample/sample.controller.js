@@ -117,63 +117,91 @@ exports.spTreeMap = function (req, res) {
          rows: [{ c: [{ v: '#' }, { v: '' }] }]
          //rows: []
     };
-    var row = { c: [{ v: 'Leguminosae' }, { v: '#' }, { v: 1 }] };
-    treemap.rows.push(row);
-    console.log ('Family : ', row);
+    
   // aggregate family
-  /*var aggregateF = Sample.aggregate();   
-  aggregateF
-    .match(matchQ)
-    .group({ _id: { family: "$specieinfo.family" }, count: { "$sum": 1 } });   
+    var aggregateF = Sample.aggregate();
+    aggregateF
+      .match(matchQ)
+      .group({ _id: { family: "$specieinfo.family" }, count: { "$sum": 1 } });
+
+    Sample.aggregate(aggregateF._pipeline, function (err, results) {
+      if (err) { return handleError(res, err); }
+      results.forEach(function (item) {
+        var row = { c: [{ v: item._id.family }, { v: '#' }, { v: item.count }] };
+        treemap.rows.push(row);        
+      });
   
-  Sample.aggregate(aggregateF._pipeline, function (err, results ) {
-    if (err) { return handleError(res, err); }    
-    results.forEach(function (item) {       
-      //var row = { c: [{ v: item._id.family }, { v: '#' }, { v: item.count }] };
-      var row = { c: [{ v: 'Leguninosae' }, { v: '#' }, { v: item.count }] };
-      treemap.rows.push(row);
-      console.log ('Family : ', row);
+      //aggregate genus  
+      var aggregateG = Sample.aggregate();
+      aggregateG
+        .match(matchQ)
+        .group({ _id: { genus: "$specieinfo.genus" }, count: { "$sum": 1 } });      
+      Sample.aggregate(aggregateG._pipeline, function (err, results) {
+        if (err) { return handleError(res, err); }
+        results.forEach(function (item) {
+          var row = { c: [{ v: item._id.genus, f: item._id.genus }, { v: 'Leguminosae' }, { v: item.count }] };
+          treemap.rows.push(row);
+        });
+          
+        //aggregate specie  
+        var aggregateS = Sample.aggregate();
+        aggregateS
+          .match(matchQ)
+          .group({ _id: { genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority" }, count: { "$sum": 1 } });
+        Sample.aggregate(aggregateS._pipeline, function (err, results) {
+          if (err) { return handleError(res, err); }
+          results.forEach(function (item) {
+            if (item._id.genus !== null) {
+              var row = { c: [{ v: item._id.genus + " " + item._id.specie + " " + item._id.author }, { v: item._id.genus }, { v: item.count }] };
+              treemap.rows.push(row);
+            }
+          });
+          return res.status(200).json(treemap);
+        });
+      });
     });
-  });*/
-  //aggregate genus  
-  var aggregateG = Sample.aggregate();
-  aggregateG
-    .match(matchQ)
-    .group({ _id: { genus: "$specieinfo.genus" }, count: { "$sum": 1 } });
-    //.group({ _id: { family: "$specieinfo.family", genus: "$specieinfo.genus" }, count: { "$sum": 1 } });
-      
-  Sample.aggregate(aggregateG._pipeline, function (err, results) {
-    if (err) { return handleError(res, err); }
-    results.forEach(function (item) {
-      var row = { c: [{ v: item._id.genus, f: item._id.genus }, { v: 'Leguminosae' }, { v: item.count }] };
-      treemap.rows.push(row);
-      console.log('Genus : ', row);
-      
-    });
-    //console.log("Treemap :", treemap);
-    //return res.status(200).json(treemap);
-  });
-  //aggregate specie  
-  var aggregateS = Sample.aggregate();
-  aggregateS
-    .match(matchQ)
-    .group({ _id: { genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority" }, count: { "$sum": 1 } });
-      
-  Sample.aggregate(aggregateS._pipeline, function (err, results) {
-    if (err) { return handleError(res, err); }
-    results.forEach(function (item) {
-      if (item._id.genus !== null) {
-      var row = { c: [{ v: item._id.genus + " " + item._id.specie + " " + item._id.author }, { v: item._id.genus }, { v: item.count }] };
-      treemap.rows.push(row);
-      console.log('Specie : ', row);
-      }
-    });
-    console.log("Treemap :", treemap);
-    return res.status(200).json(treemap);
-  });
 };
 
+// Get a google chart formated piechart dataTable for filtered samples by WHO distribuition 
+exports.spWho = function (req, res) {
+  var filter = JSON.parse(req.query.filter || '{}');
+  filter = dot.dot(filter);
+  console.log(filter);
+  var matchQ = {};    
+  for (var key in filter) {
+    var regex = {};
+    if (filter.hasOwnProperty(key)) {
+      if (filter[key]) {
+        regex["$regex"] = new RegExp(filter[key], 'i');
+        //console.log( key, regex);      
+        matchQ[key] = regex;
+      }
+    }
+  };  
+  var data = {cols: [{id: 'id', label: 'ID', type: 'string'},
+         {id: 'size', label: 'Size', type: 'number'}
+         ],
+         //rows: [{ c: [{ v: '#' }, { v: '' }] }]
+         rows: []
+    };
+    
+  // aggregate WHO
+    var aggregateF = Sample.aggregate();
+    aggregateF
+      .match(matchQ)
+      .group({ _id: { who: "$usecategory.who" }, count: { "$sum": 1 } });
 
+    Sample.aggregate(aggregateF._pipeline, function (err, results) {
+      if (err) { return handleError(res, err); }
+      results.forEach(function (item) {
+        var row = { c: [{ v: item._id.who }, { v: item.count }] };
+        data.rows.push(row);
+      });
+      return res.status(200).json(data);
+    });
+  }
+    
+    
 // Get a single sample
 exports.show = function (req, res) {
   Sample.findById(req.params.id, function (err, sample) {

@@ -22,59 +22,47 @@ angular.module('eweApp')
         };
     */
 
-    
-      $http.get("/api/samples/spTreeMap")
-        .then(function (result) {
-          console.log(JSON.stringify(result));
-          $scope.data = new google.visualization.DataTable(result.data);
-          var tree = new google.visualization.TreeMap(document.getElementById('treemapSpecies'));
-          tree.draw($scope.data, {
-            minColor: '#f00',
-            midColor: '#ddd',
-            maxColor: '#0d0',
-            headerHeight: 15,
-            fontColor: 'black',
-            showScale: true
-          });
+
+    $http.get("/api/samples/spTreeMap")
+      .then(function (result) {
+        //console.log(JSON.stringify(result));
+        var dataTree = new google.visualization.DataTable(result.data);
+        var tree = new google.visualization.TreeMap(document.getElementById('treemapSpecies'));
+        function selectHandler() {
+          var selectedItem = tree.getSelection()[0];
+          if (selectedItem) {
+            var value = dataTree.getValue(selectedItem.row, 0);
+            alert('The user selected ' + value);
+          }
+        }
+        // Listen for the 'select' event, and call my function selectHandler() when
+        // the user selects something on the chart.
+        google.visualization.events.addListener(tree, 'select', selectHandler);
+        tree.draw(dataTree, {
+          minColor: '#f00',
+          midColor: '#ddd',
+          maxColor: '#0d0',
+          headerHeight: 30,
+          fontColor: 'black',
+          showScale: true
         });
-    });
-    
+        // The select handler. Call the chart's getSelection() method
+        
+        
+        $http.get("api/samples/spWho")
+          .then(function (result) {
+            var dataWho = new google.visualization.DataTable(result.data);
+            var pieWho = new google.visualization.PieChart(document.getElementById('pieChartWho'));
+            pieWho.draw(dataWho, {
+              chartArea: { left: 20, top: 10, width: '100%', height: '100%' }
+            });
+          })
+      });
+  });
+   
 
    
 
-/*    var data = google.visualization.arrayToDataTable([
-      ['Location', 'Parent', 'Market trade volume (size)', 'Market increase/decrease (color)'],
-      ['Global', null, 0, 0],
-      ['America', 'Global', 0, 0],
-      ['Europe', 'Global', 0, 0],
-      ['Asia', 'Global', 0, 0],
-      ['Australia', 'Global', 0, 0],
-      ['Africa', 'Global', 0, 0],
-      ['Brazil', 'America', 11, 10],
-      ['USA', 'America', 52, 31],
-      ['Mexico', 'America', 24, 12],
-      ['Canada', 'America', 16, -23],
-      ['France', 'Europe', 42, -11],
-      ['Germany', 'Europe', 31, -2],
-      ['Sweden', 'Europe', 22, -13],
-      ['Italy', 'Europe', 17, 4],
-      ['UK', 'Europe', 21, -5],
-      ['China', 'Asia', 36, 4],
-      ['Japan', 'Asia', 20, -12],
-      ['India', 'Asia', 40, 63],
-      ['Laos', 'Asia', 4, 34],
-      ['Mongolia', 'Asia', 1, -5],
-      ['Israel', 'Asia', 12, 24],
-      ['Iran', 'Asia', 18, 13],
-      ['Pakistan', 'Asia', 11, -52],
-      ['Egypt', 'Africa', 21, 0],
-      ['S. Africa', 'Africa', 30, 43],
-      ['Sudan', 'Africa', 12, 2],
-      ['Congo', 'Africa', 10, 12],
-      ['Zaire', 'Africa', 8, 10]
-    ]);*/
-
-    
 
   
     

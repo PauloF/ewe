@@ -28,11 +28,36 @@ angular.module('eweApp')
         //console.log(JSON.stringify(result));
         var dataTree = new google.visualization.DataTable(result.data);
         var tree = new google.visualization.TreeMap(document.getElementById('treemapSpecies'));
+        var filter = {};
+        $scope.filtro = "";
+        var specieinfo = {};
         function selectHandler() {
           var selectedItem = tree.getSelection()[0];
           if (selectedItem) {
             var value = dataTree.getValue(selectedItem.row, 0);
             alert('The user selected ' + value);
+            var level = value.split("|")[0];
+            var key = value.split("|")[1];                 
+            
+            var family = key.split(":")[0];
+            var genus = key.split(":")[1];
+            var specie = key.split(":")[2];
+            var authority = key.split(":")[3];
+            
+            if (family) {
+              specieinfo['family']=family;
+            }              
+            if (genus) {
+              specieinfo['genus']=genus;
+            }              
+            if (specie) {
+              specieinfo['specie']=specie;
+              specieinfo['authority']=authority;              
+            }           
+            filter['specieinfo']=specieinfo;
+            $scope.filtro = JSON.stringify(filter);
+            console.log($scope.filtro);
+            drawWho()
           }
         }
         // Listen for the 'select' event, and call my function selectHandler() when
@@ -47,16 +72,18 @@ angular.module('eweApp')
           showScale: true
         });
         // The select handler. Call the chart's getSelection() method
-        
-        
-        $http.get("api/samples/spWho")
+        var drawWho = function(){ 
+        console.log($scope.filtro);
+        $http.get('api/samples/spWho', {params: {filter:$scope.filtro}})
           .then(function (result) {
             var dataWho = new google.visualization.DataTable(result.data);
             var pieWho = new google.visualization.PieChart(document.getElementById('pieChartWho'));
             pieWho.draw(dataWho, {
-              chartArea: { left: 20, top: 10, width: '100%', height: '100%' }
+              chartArea: { left: 10, top: 1, width: '100%', height: '100%' }
             });
           })
+      }
+      drawWho();
       });
   });
    

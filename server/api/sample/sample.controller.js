@@ -127,7 +127,9 @@ exports.spTreeMap = function (req, res) {
     Sample.aggregate(aggregateF._pipeline, function (err, results) {
       if (err) { return handleError(res, err); }
       results.forEach(function (item) {
-        var row = { c: [{ v: item._id.family }, { v: '#' }, { v: item.count }] };
+        var id = 'Family|'+item._id.family;
+        var parent = '#';
+        var row = { c: [{ v: id, f: item._id.family }, { v: parent }, { v: item.count }] };
         treemap.rows.push(row);        
       });
   
@@ -135,11 +137,13 @@ exports.spTreeMap = function (req, res) {
       var aggregateG = Sample.aggregate();
       aggregateG
         .match(matchQ)
-        .group({ _id: { genus: "$specieinfo.genus" }, count: { "$sum": 1 } });      
+        .group({ _id: { family: "$specieinfo.family", genus: "$specieinfo.genus" }, count: { "$sum": 1 } });      
       Sample.aggregate(aggregateG._pipeline, function (err, results) {
         if (err) { return handleError(res, err); }
         results.forEach(function (item) {
-          var row = { c: [{ v: item._id.genus, f: item._id.genus }, { v: 'Leguminosae' }, { v: item.count }] };
+          var id = 'Genus|'+item._id.family+":"+item._id.genus;
+          var parent = 'Family|'+item._id.family;
+          var row = { c: [{ v: id, f:item._id.genus }, { v: parent }, { v: item.count }] };
           treemap.rows.push(row);
         });
           
@@ -147,12 +151,14 @@ exports.spTreeMap = function (req, res) {
         var aggregateS = Sample.aggregate();
         aggregateS
           .match(matchQ)
-          .group({ _id: { genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority" }, count: { "$sum": 1 } });
+          .group({ _id: { family: "$specieinfo.family", genus: "$specieinfo.genus", specie: "$specieinfo.specie", author: "$specieinfo.authority" }, count: { "$sum": 1 } });
         Sample.aggregate(aggregateS._pipeline, function (err, results) {
           if (err) { return handleError(res, err); }
           results.forEach(function (item) {
             if (item._id.genus !== null) {
-              var row = { c: [{ v: item._id.genus + " " + item._id.specie + " " + item._id.author }, { v: item._id.genus }, { v: item.count }] };
+              var id = 'Specie|'+item._id.family+":"+item._id.genus+":"+item._id.specie +":"+item._id.author;
+              var parent = 'Genus|'+item._id.family+":"+item._id.genus;
+              var row = { c: [{ v: id, f:item._id.genus + " " + item._id.specie + " " + item._id.author }, { v: parent }, { v: item.count }] };
               treemap.rows.push(row);
             }
           });

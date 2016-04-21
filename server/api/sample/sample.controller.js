@@ -178,7 +178,8 @@ exports.spWho = function (req, res) {
     var regex = {};
     if (filter.hasOwnProperty(key)) {
       if (filter[key]) {
-        regex["$regex"] = new RegExp(filter[key], 'i');
+        regex["$eq"] = filter[key];
+        //regex["$regex"] = new RegExp(filter[key], 'i');
         //console.log( key, regex);      
         matchQ[key] = regex;
       }

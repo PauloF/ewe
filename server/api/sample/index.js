@@ -10,6 +10,7 @@ router.get('/search', controller.search);
 router.get("/spFullName", controller.spFullName);
 router.get("/spTreeMap", controller.spTreeMap);
 router.get("/spWho", controller.spWho);
+router.get("/spBiome", controller.spBiome);
 router.get('/:id', controller.show);
 router.get('spFullName/:spFullName', controller.showspFullName);
 router.post('/', controller.create);

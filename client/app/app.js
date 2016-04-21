@@ -2,7 +2,7 @@
 'use strict';
 
 google.charts.load('current', {
-  packages: ['corechart', 'treemap', 'geochart', 'map' ]
+  packages: ['corechart', 'treemap', 'geochart', 'map', 'bar' ]
 });
 
 google.charts.setOnLoadCallback(function() {

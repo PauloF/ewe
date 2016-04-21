@@ -207,7 +207,45 @@ exports.spWho = function (req, res) {
     });
   }
     
+// Get a google chart formated piechart dataTable for filtered samples by WHO distribuition 
+exports.spBiome = function (req, res) {
+  var filter = JSON.parse(req.query.filter || '{}');
+  filter = dot.dot(filter);
+  console.log(filter);
+  var matchQ = {};    
+  for (var key in filter) {
+    var regex = {};
+    if (filter.hasOwnProperty(key)) {
+      if (filter[key]) {
+        regex["$regex"] = new RegExp(filter[key], 'i');
+        //console.log( key, regex);      
+        matchQ[key] = regex;
+      }
+    }
+  };  
+  var data = {cols: [{id: 'id', label: 'ID', type: 'string'},
+         {id: 'size', label: 'Size', type: 'number'}
+         ],
+         //rows: [{ c: [{ v: '#' }, { v: '' }] }]
+         rows: []
+    };
     
+  // aggregate Biome
+    var aggregateF = Sample.aggregate();
+    aggregateF
+      .match(matchQ)
+      .group({ _id: { biome: "$passport.biome" }, count: { "$sum": 1 } });
+
+    Sample.aggregate(aggregateF._pipeline, function (err, results) {
+      if (err) { return handleError(res, err); }
+      results.forEach(function (item) {
+        var row = { c: [{ v: item._id.biome }, { v: item.count }] };
+        data.rows.push(row);
+      });
+      return res.status(200).json(data);
+    });
+  }
+      
 // Get a single sample
 exports.show = function (req, res) {
   Sample.findById(req.params.id, function (err, sample) {

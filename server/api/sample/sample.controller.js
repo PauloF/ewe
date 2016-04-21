@@ -172,7 +172,7 @@ exports.spTreeMap = function (req, res) {
 exports.spWho = function (req, res) {
   var filter = JSON.parse(req.query.filter || '{}');
   filter = dot.dot(filter);
-  console.log(filter);
+  console.log("W : ", filter);
   var matchQ = {};    
   for (var key in filter) {
     var regex = {};
@@ -211,18 +211,20 @@ exports.spWho = function (req, res) {
 exports.spBiome = function (req, res) {
   var filter = JSON.parse(req.query.filter || '{}');
   filter = dot.dot(filter);
-  console.log(filter);
+  console.log("B : ", filter);
   var matchQ = {};    
   for (var key in filter) {
     var regex = {};
     if (filter.hasOwnProperty(key)) {
       if (filter[key]) {
-        regex["$regex"] = new RegExp(filter[key], 'i');
+        regex["$eq"] = filter[key];
+        //regex["$regex"] = new RegExp(filter[key], 'i');
         //console.log( key, regex);      
         matchQ[key] = regex;
       }
     }
-  };  
+  };
+  console.log("b : ", matchQ);  
   var data = {cols: [{id: 'id', label: 'ID', type: 'string'},
          {id: 'size', label: 'Size', type: 'number'}
          ],

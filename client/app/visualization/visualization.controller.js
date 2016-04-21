@@ -35,7 +35,7 @@ angular.module('eweApp')
           var selectedItem = chartSpecies.getSelection()[0];
           if (selectedItem) {
             var value = dataTree.getValue(selectedItem.row, 0);
-            alert('The user selected ' + value);
+            //alert('The user selected ' + value);
             var level = value.split("|")[0];
             var key = value.split("|")[1];
 

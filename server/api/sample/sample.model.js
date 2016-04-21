@@ -23,7 +23,7 @@ var SampleSchema = new Schema({
   formofuse: String,
   partused: String,
   passport: {
-    biome: String,
+    biome: Array,
     country: String,
     city: String,
     coordinates: {

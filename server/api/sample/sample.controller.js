@@ -237,6 +237,7 @@ exports.spBiome = function (req, res) {
     var aggregateF = Sample.aggregate();
     aggregateF
       .match(matchQ)
+      .unwind("$passport.biome")      
       .group({ _id: { biome: "$passport.biome" }, count: { "$sum": 1 } });
 
     Sample.aggregate(aggregateF._pipeline, function (err, results) {

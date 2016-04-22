@@ -28,8 +28,7 @@ angular.module('eweApp')
         //console.log(JSON.stringify(result));
         var dataTree = new google.visualization.DataTable(result.data);
         var chartSpecies = new google.visualization.TreeMap(document.getElementById('chartSpecies'));
-        var filter = {};
-        $scope.filtro = "";
+        var filter = {};       
         var specieinfo = {};
         function selectHandler() {
           var selectedItem = chartSpecies.getSelection()[0];
@@ -55,10 +54,10 @@ angular.module('eweApp')
               specieinfo['authority'] = authority;
             }
             filter['specieinfo'] = specieinfo;
-            $scope.filtro = JSON.stringify(filter);
-            console.log($scope.filtro);
-            drawWho();
-            drawBiome();
+            var filterSp = JSON.stringify(filter);
+            //console.log(filtro);
+            drawWho(filterSp);
+            drawBiome(filterSp);
           }
         }
         // Listen for the 'select' event, and call my function selectHandler() when
@@ -73,12 +72,26 @@ angular.module('eweApp')
           showScale: true
         });
         // The select handler. Call the chart's getSelection() method
-        var drawWho = function () {
-          console.log($scope.filtro);
-          $http.get('api/samples/spWho', { params: { filter: $scope.filtro } })
+        var drawWho = function (filterSp) {
+          console.log(filterSp);
+          var filterWho = {};
+          var usecategory = {};
+          $http.get('api/samples/spWho', { params: { filter: filterSp } })
             .then(function (result) {
               var dataWho = new google.visualization.DataTable(result.data);
               var chartWho = new google.charts.Bar(document.getElementById('chartWho'));
+              function selectHandlerWho() {
+                var selectedWho = chartWho.getSelection()[0];
+                if (selectedWho) {
+                  var value = dataWho.getValue(selectedWho.row, 0);
+                  usecategory['who'] = value;
+                  filterWho['usecategory'] = usecategory;                  
+                } else {
+                  filterWho = {};
+                }
+                drawBiome(JSON.stringify(filterWho));
+              }
+              google.visualization.events.addListener(chartWho, 'select', selectHandlerWho);
               chartWho.draw(dataWho, {
                 //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
                 bars: 'horizontal',
@@ -88,12 +101,26 @@ angular.module('eweApp')
             })
         }
         
-        var drawBiome = function () {
-          console.log($scope.filtro);
-          $http.get('api/samples/spBiome', { params: { filter: $scope.filtro } })
+        var drawBiome = function (filterSp) {
+          console.log(filterSp);
+          var filterBiome = {};
+          var passport = {};
+          $http.get('api/samples/spBiome', { params: { filter: filterSp } })
             .then(function (result) {
               var dataBiome = new google.visualization.DataTable(result.data);
               var chartBiome = new google.visualization.PieChart(document.getElementById('chartBiome'));
+              function selectHandler() {
+                var selectedBiome = chartBiome.getSelection()[0];
+                if (selectedBiome) {
+                  var value = dataBiome.getValue(selectedBiome.row, 0);
+                  passport['biome'] = value;
+                  filterBiome['passport'] = passport;
+                } else {
+                  filterBiome = {};
+                }
+                drawWho(JSON.stringify(filterBiome));
+              }
+              google.visualization.events.addListener(chartBiome, 'select', selectHandler);
               chartBiome.draw(dataBiome, {
                 chartArea: { left: 10, top: 1, width: '100%', height: '100%' }
                 })

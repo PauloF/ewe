@@ -72,10 +72,13 @@ angular.module('eweApp')
           showScale: true
         });
         // The select handler. Call the chart's getSelection() method
+        
+        //Draw WHO graph
         var drawWho = function (filterSp) {
           console.log(filterSp);
-          var filterWho = {};
+          var filterWho = ((filterSp) ? JSON.parse(filterSp) : {});
           var usecategory = {};
+           
           $http.get('api/samples/spWho', { params: { filter: filterSp } })
             .then(function (result) {
               var dataWho = new google.visualization.DataTable(result.data);
@@ -87,8 +90,9 @@ angular.module('eweApp')
                   usecategory['who'] = value;
                   filterWho['usecategory'] = usecategory;                  
                 } else {
-                  filterWho = {};
+                  filterWho = ((filterSp) ? JSON.parse(filterSp) : {});                  
                 }
+                console.log(JSON.stringify(filterWho));
                 drawBiome(JSON.stringify(filterWho));
               }
               google.visualization.events.addListener(chartWho, 'select', selectHandlerWho);
@@ -101,9 +105,12 @@ angular.module('eweApp')
             })
         }
         
+        
+        // Draw Biome Graph
+        //
         var drawBiome = function (filterSp) {
           console.log(filterSp);
-          var filterBiome = {};
+          var filterBiome = ((filterSp) ? JSON.parse(filterSp) : {});
           var passport = {};
           $http.get('api/samples/spBiome', { params: { filter: filterSp } })
             .then(function (result) {
@@ -116,8 +123,8 @@ angular.module('eweApp')
                   passport['biome'] = value;
                   filterBiome['passport'] = passport;
                 } else {
-                  filterBiome = {};
-                }
+                  filterBiome = ((filterSp) ? JSON.parse(filterSp) : {});
+                }                
                 drawWho(JSON.stringify(filterBiome));
               }
               google.visualization.events.addListener(chartBiome, 'select', selectHandler);

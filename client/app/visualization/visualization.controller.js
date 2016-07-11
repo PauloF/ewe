@@ -64,9 +64,9 @@ angular.module('eweApp')
         // the user selects something on the chart.
         google.visualization.events.addListener(chartSpecies, 'select', selectHandler);
         chartSpecies.draw(dataTree, {
-          minColor: '#f00',
-          midColor: '#ddd',
-          maxColor: '#0d0',
+          minColor: '#33691E',
+          midColor: '#8BC34A',
+          maxColor: '#DCEDC8',
           headerHeight: 30,
           fontColor: 'black',
           showScale: true
@@ -97,8 +97,12 @@ angular.module('eweApp')
               }
               google.visualization.events.addListener(chartWho, 'select', selectHandlerWho);
               chartWho.draw(dataWho, {
+                bar: {
+                  groupWidth: 20
+                },
                 //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
                 bars: 'horizontal',
+                colors: ['#B27020'],
                 
                 legend: {position: 'none'}
               });

@@ -119,7 +119,8 @@ angular.module('eweApp')
           $http.get('api/samples/spBiome', { params: { filter: filterSp } })
             .then(function (result) {
               var dataBiome = new google.visualization.DataTable(result.data);
-              var chartBiome = new google.visualization.PieChart(document.getElementById('chartBiome'));
+  //            var chartBiome = new google.visualization.PieChart(document.getElementById('chartBiome'));
+              var chartBiome = new google.charts.Bar(document.getElementById('chartBiome'));
               function selectHandler() {
                 var selectedBiome = chartBiome.getSelection()[0];
                 if (selectedBiome) {

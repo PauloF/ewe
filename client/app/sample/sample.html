@@ -1,64 +1,68 @@
 <div flex layout="row" ng-controller="SampleCtrl" ng-cloak>
     <div class="md-padding" flex layout="row">
 
-        <div class="md-whiteframe-4dp" layout-padding layout="column" flex="25">
-            
-            <div>
-                <md-toolbar ng-show="!showSearch">
-                    <div class="md-toolbar-tools" layout="row">
-                        <legend layout-align="left" class="md-title" flex="60">Results</legend>
-                        <div layout="row" layout-align="right" flex>
-                            <md-button ng-click="showFilter($event)" flex aria-label="Filter samples">
-                                <ng-md-icon icon="filter_list"></ng-md-icon>
-                            </md-button>
-                            <md-button ng-click="clearFilter($event)" flex aria-label="Clear Filter">
-                                <ng-md-icon icon="backspace"></ng-md-icon>
-                            </md-button>
+        <div class="md-whiteframe-4dp" layout-padding flex="25" layout="column">
+            <md-content>
+                <div>
+                    <md-toolbar ng-show="!showSearch">
+                        <div class="md-toolbar-tools" layout="row">
+                            <legend layout-align="left" class="md-title" flex="60">Results</legend>
+                            <div layout="row" layout-align="right" flex>
+                                <md-button ng-click="showFilter($event)" flex aria-label="Filter samples">
+                                    <ng-md-icon icon="filter_list"></ng-md-icon>
+                                </md-button>
+                                <md-button ng-click="clearFilter($event)" flex aria-label="Clear Filter">
+                                    <ng-md-icon icon="backspace"></ng-md-icon>
+                                </md-button>
+                            </div>
                         </div>
-                        <!--
-                        <h3></h3>
-                        <span flex></span>
-                        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
-                            <ng-md-icon icon="search"></ng-md-icon>
-                        </md-button>
-                        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
-                            <ng-md-icon icon="more_vert"></ng-md-icon>
-                        </md-button>
- -->
-                    </div>
-                </md-toolbar>
-                <div flex>
-                <table flex ng-table="tableParams" template-pagination="custom/pager" style="table-layout:fixed;width:100%" class="table table-condensed">
-                    
+                    </md-toolbar>
+                </div>
+                <md-content layout-padding>
+                    <treecontrol class="tree-light" tree-model="treedata" on-selection="showSelected(node)">
+                        <span ng-if="node.type == 'specie'">
+                            <i>{{node.parent}} {{node.id}}</i>
+                        </span>
+                        <span ng-if="node.type != 'specie'">
+                            {{node.id}}
+                        </span>
+                        <!--{{node.id}} {{node.parent}} {{node.type}}-->
+                    </treecontrol>
+                </md-content>
+            </md-content>
+        </div>
+
+        <div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
+            <legend class="md-title">Sample</legend>
+            <div flex>
+                <table flex ng-table="tableSample" template-pagination="custom/pager" style="table-layout:fixed;width:100%" class="table-bordered table-condensed">
+
                     <tr ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height: 10px">
-                        <td layout-wrap >
+                        <td data-title="'Specie'" layout-wrap>
                             <a href="#" class="md-button" ng-click="showSample(specie.species);" style="text-transform: none;display: inline-block; text-overflow:ellipsis; overflow:hidden;width:100%">
                                 <span class="ng-binding ng-scope" style="text-transform: none;">
-                                 <i>{{specie._id.genus}} {{specie._id.specie}}</i> {{specie._id.author}} ({{specie.count}})
-                            </span>
+                                 {{specie.specieinfo.family}} <i> {{specie.specieinfo.genus}} {{specie.specieinfo.specie}}</i> {{specie.specieinfo.authority}} 
+                                 </span>
                                 <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
                                 current page
                             </span>
                             </a>
                         </td>
+                        <td data-title="'WHO'">
+                            <span class="ng-binding ng-scope" style="text-transform: none;">
+                                {{specie.usecategory.who}}
+                            </span>
+                        </td>
+                        <td data-title="'Biome'">
+                            <span class="ng-binding ng-scope" style="text-transform:none;">
+                                {{specie.passport.biome}}
+                            </span>
+                        </td>
                     </tr>
-                    
+
                 </table>
-                </div>
             </div>
-            <!-- <md-list>
-                <md-list-item class="md-2-line" ng-repeat="sample in filteredSamples">
-                    <div class="md-list-item-text">
-                        <a href="javascript:void(0);" ng-click="showSample(sample);">{{sample.specieinfo.genus}} <i>{{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}</a>
-                    </div>
-                </md-list-item>
-            </md-list>
-            <md-card-toolbar>
-                <uib-pagination ng-model="currentPage" total-items="filteredSamples.lenght" max-size="max-size" boudary-links="true"></uib-pagination>
-            </md-card-toolbar>
-            -->
-        </div>
-        <script type="text/ng-template" id="custom/pager">
+            <script type="text/ng-template" id="custom/pager">
             <div class="bottom">
                 <div ng-if="params.settings().counts.length" id="allocateCargoTable_length" class="dataTables_length">
                     <label>Show
@@ -81,26 +85,11 @@
                         </div>
                     </div>
                 </div>
-        </script>
-        <!-- <div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
-                <legend>Results</legend>
-                
-                <a ng-switch-when="first" ng-click="params.page(page.number)" href=""><span ng-bind="page.number"></span></a> 
-                        <a ng-switch-when="page" ng-click="params.page(page.number)" href=""><span ng-bind="page.number"></span></a> 
-                        <a ng-switch-when="more" ng-click="params.page(page.number)" href="">&#8230;</a> 
-                        <a ng-switch-when="last" ng-click="params.page(page.number)" href=""><span ng-bind="page.number"></span></a>
-                <p>aaa...</p>
-                <p>aaa...</p>
-                <p>aaa...</p>
-                <p>aaa...</p>
-                <p>aaa...</p>
-                <p>aaa...</p>
-                <p>aaa...</p>
             </div>
-        -->
-        <div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
-            <legend class="md-title">Sample</legend>
-            <div ng-repeat="sample in selectedSamples">
+            </script>
+
+
+            <!--<div ng-repeat="sample in selectedSamples">
                 <div class="md-whiteframe-4dp" layout-padding>
                     <div layout="row" flex>
                         <div flex="35">
@@ -156,13 +145,13 @@
                         </div>
                         <div flex="65">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div>-->
         </div>
     </div>
+</div>
+</div>
 
-    <!-- <div ng-include="'components/navbar/navbar.html'"></div>
+<!-- <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container">
   <p>Samples</p>

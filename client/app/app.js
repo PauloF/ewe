@@ -19,7 +19,8 @@ angular.module('eweApp', [
   'ngMaterial',
   'ngTable',
   'ngMdIcons',
-  'md.data.table'
+  'md.data.table',
+  'treeControl'
 ])
   .controller('eweAppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog) {
   

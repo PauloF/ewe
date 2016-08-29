@@ -23,7 +23,9 @@ angular.module('eweApp')
           return debounceFn;
         };
     */
-    $scope.filterSpecies = {};
+    var self = this;
+
+    
     $scope.toggleSidenav = function (menuId) {
       $mdSidenav(menuId).toggle();
     };
@@ -32,12 +34,14 @@ angular.module('eweApp')
       $scope.tableParams.filter({})
     }
 
-    $scope.changeFilter = function (filterForm) {
+    self.changeFilter = changeFilter;
+
+    function changeFilter(field, value) {
       var filter = {};
-      filter = filterForm;
+      filter[field] = value;
       console.log(filter);
-      angular.extend($scope.tableParams.filter(), filter);
-      console.log($scope.tableParams.filter);
+      angular.extend(self.tableParams.filter(), filter);
+      console.log(self.tableParams.filter);
     };
 
     //Specie tree
@@ -69,13 +73,33 @@ angular.module('eweApp')
         var filter = {};
         $scope.selectedNode = sel;
         filter = {"specieinfo": $scope.selectedNode.samplesKey}
-        angular.extend($scope.tableSample.filter(), filter)
+        angular.extend(self.tableSample.filter(), filter)
 //        $scope.filterSamples = { "specieinfo": $scope.selectedNode.samplesKey }
-        console.log($scope.tableSample.filter());
+        console.log("Filtro: ", self.tableSample.filter());
       };
-    });   
+    });  
 
-    $scope.tableSample = new NgTableParams({
+
+//Tabela de Samples
+  // versão md-material-tableParams
+  /*  $scope.selSamples = [];
+
+  $scope.query = {
+    order: 'specieinfo.',
+    limit: 10,
+    page: 1
+  };
+
+  function success(desserts) {
+    $scope.desserts = desserts;
+  }
+
+  $scope.getDesserts = function () {
+    $scope.promise = $nutrition.desserts.get($scope.query, success).$promise;
+  };*/
+
+    
+    self.tableSample = new NgTableParams({
       page: 1,
       count: 10,
       filter: {}
@@ -84,8 +108,8 @@ angular.module('eweApp')
     }, {
         total: 0,
         counts: [],
-        getData: function ($defer, params) {
-          $http.get('/api/samples/search',
+        getData: function (params) {
+          return $http.get('/api/samples/search',
             {
               params: {
 
@@ -95,9 +119,10 @@ angular.module('eweApp')
               }
             })
             .then(function (results) {
-              params.total(results.data.total);
-              $defer.resolve(results.data.samples.docs);
-              console.log(results.data.samples.docs);
+              params.total(results.data.samples.total);
+              console.log("Total: ", results.data.samples.total);
+              console.log("Results: ", results.data.samples.docs);
+              return results.data.samples.docs;
             });
         }
       }
@@ -106,7 +131,7 @@ angular.module('eweApp')
 
 
 
-    $scope.tableParams = new NgTableParams({
+    /*$scope.tableParams = new NgTableParams({
       page: 1,
       count: 10,
       filter: {}
@@ -131,7 +156,7 @@ angular.module('eweApp')
             });
         }
       }
-    );
+    );*/
 
     $scope.showFilter = function (ev) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
@@ -170,7 +195,7 @@ angular.module('eweApp')
 
 
 
-    $scope.changeFilter();
+    
 
     /*    $scope.applyGlobalSearch = function applyGlobalSearch() {
           var term = $scope.globalSearchTerm;

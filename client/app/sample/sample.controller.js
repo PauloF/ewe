@@ -102,7 +102,8 @@ angular.module('eweApp')
     self.tableSample = new NgTableParams({
       page: 1,
       count: 10,
-      filter: {}
+      filter: {},
+      sorting: {"specieinfo.genus":"asc","specieinfo.specie":"asc"}
       //        {"specieinfo":{"family":"","genus":"","specie":""},"ethnoinfo":{"commonname":""},"passport":{"biome":""},"usecategory":{"who":"","traditional":""},"partused":"","formofuse":""}
       //'{"passport.biome": "Caatinga", "usecategory.who": "DGS"}'
     }, {
@@ -116,6 +117,7 @@ angular.module('eweApp')
                 page: params.page(),
                 limit: params.count(),
                 filter: params.filter(),
+                sort: params.sorting()
               }
             })
             .then(function (results) {

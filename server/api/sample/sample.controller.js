@@ -34,9 +34,11 @@ exports.search = function (req, res) {
    */
   var filter = JSON.parse(req.query.filter || '{}');
   var dotFilter = dot.dot(filter);
+  var sort = JSON.parse(req.query.sort || '{}');
+  console.log("Sort: ", sort);
 
   console.log(dotFilter);
-  Sample.paginate(dotFilter, { page: req.query.page, limit: req.query.limit, sortBy: req.query.sort }, function (err, samples, pageCount, itemCount) {
+  Sample.paginate(dotFilter, { page: req.query.page, limit: req.query.limit, sort: sort }, function (err, samples, pageCount, itemCount) {
     if (err) { return handleError(res, err); }
     var data = {};
     data.samples = samples;

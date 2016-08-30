@@ -91,13 +91,13 @@
                     <col width="15%" />
                 </colgroup>
 
-                <tr flex ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height: 10px">
+                <tr flex layout-align="center" ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height: 10px">
                     <td flex="10" data-title="'Family'">
                         <span class="ng-binding ng-scope" style="text-transform: none;">
                                 {{specie.specieinfo.family}}
                             </span>
                     </td>
-                    <td flex="30" data-title="'Species'" layout-wrap>
+                    <td flex="30" sortable="'specieinfo'" data-title="'Species'" layout-wrap>
                         <a href="#" class="md-button" ng-click="showSample(specie.species);" style="text-transform: none;display: inline-block; text-overflow:ellipsis; overflow:hidden;width:100%">
                             <span class="ng-binding ng-scope" style="text-transform: none;">
                                  <i> {{specie.specieinfo.genus}} {{specie.specieinfo.specie}}</i> {{specie.specieinfo.authority}} 
@@ -108,15 +108,15 @@
                         </a>
                     </td>
                     <td flex="15" data-title="'Vernacular name'">
-                        {{specie.usecategoryethnoinfo.commonname}}
+                        {{specie.ethnoinfo.commonname}}
                     </td>
-                    <td flex="15" data-title="'WHO-ICD 10'">
+                    <td flex="15" sortable="'usecategory.who'" data-title="'WHO-ICD 10'">
                         {{specie.usecategory.who}}
                     </td>
                     <td flex="15" data-title="'Traditional use'">
                         {{specie.usecategory.traditional}}
                     </td>
-                    <td layout="column" layout-align="center center" flex="15" data-title="'Biome'" layout-wrap ng-repeat="biome in specie.passport.biome">
+                    <td layout="column" flex="15" data-title="'Biome'"  ng-repeat="biome in specie.passport.biome">
                         {{biome}}
                     </td>
                 </tr>

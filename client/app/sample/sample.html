@@ -2,86 +2,39 @@
     <div class="md-padding" flex layout="row">
 
         <div class="md-whiteframe-4dp" layout-padding flex="25" layout="column">
-            <md-content>
-                <div>
-                    <md-toolbar ng-show="!showSearch">
-                        <div class="md-toolbar-tools" layout="row">
-                            <legend layout-align="left" class="md-title" flex="60">Results</legend>
-                            <div layout="row" layout-align="right" flex>
-                                <md-button ng-click="showFilter($event)" flex aria-label="Filter samples">
-                                    <ng-md-icon icon="filter_list"></ng-md-icon>
-                                </md-button>
-                                <md-button ng-click="clearFilter($event)" flex aria-label="Clear Filter">
-                                    <ng-md-icon icon="backspace"></ng-md-icon>
-                                </md-button>
-                            </div>
+            <div>
+                <md-toolbar ng-show="!showSearch">
+                    <div class="md-toolbar-tools" layout="row">
+                        <legend layout-align="left" class="md-title" flex="60">Results</legend>
+                        <div layout="row" layout-align="right" flex>
+                            <md-button ng-click="showFilter($event)" flex aria-label="Filter samples">
+                                <ng-md-icon icon="filter_list"></ng-md-icon>
+                            </md-button>
+                            <md-button ng-click="clearFilter($event)" flex aria-label="Clear Filter">
+                                <ng-md-icon icon="backspace"></ng-md-icon>
+                            </md-button>
                         </div>
-                    </md-toolbar>
-                </div>
-                <md-content layout-padding>
+                    </div>
+                </md-toolbar>
+            </div>
+            <div flex layout-padding>
+                <md-content flex style="max-height: 500px">
                     <treecontrol class="tree-light" tree-model="treedata" on-selection="showSelected(node)">
+
                         <span ng-if="node.type == 'specie'">
                             <i>{{node.parent}} {{node.id}}</i>
                         </span>
                         <span ng-if="node.type != 'specie'">
                             {{node.id}}
                         </span>
-                        <!--{{node.id}} {{node.parent}} {{node.type}}-->
                     </treecontrol>
                 </md-content>
-            </md-content>
+            </div>
         </div>
 
-        <!--<div class="md-whiteframe-4dp" class-sm="" flex="75" layout-padding layout="column">
-            <legend class="md-title">Sample</legend>
-            <div flex>
-                <table flex ng-table="sampleCtrl.tableSample" template-pagination="custom/pager" style="table-layout:fixed;width:100%" class="table-bordered table-condensed">
-
-                    <tr ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height: 10px">
-                        <td data-title="'Family'">
-                            <span flex="10" class="ng-binding ng-scope" style="text-transform: none;">
-                                {{specie.specieinfo.family}}
-                            </span>
-                        </td>
-                        <td data-title="'Species'" layout-wrap>
-                            <a href="#" class="md-button" ng-click="showSample(specie.species);" style="text-transform: none;display: inline-block; text-overflow:ellipsis; overflow:hidden;width:100%">
-                                <span flex="30" class="ng-binding ng-scope" style="text-transform: none;">
-                                 <i> {{specie.specieinfo.genus}} {{specie.specieinfo.specie}}</i> {{specie.specieinfo.authority}} 
-                                 </span>
-                                <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
-                                current page
-                            </span>
-                            </a>
-                        </td>
-                        <td data-title="'Vernacular name'">
-                            <span flex="15" class="ng-binding ng-scope" style="text-transform: none;">
-                                {{specie.usecategoryethnoinfo.commonname}}
-                            </span>
-                        </td>
-                        <td data-title="'WHO-ICD 10'">
-                            <span flex="15" class="ng-binding ng-scope" style="text-transform: none;">
-                                {{specie.usecategory.who}}
-                            </span>
-                        </td>
-                        <td data-title="'Traditional use'">
-                            <span flex="15" class="ng-binding ng-scope" style="text-transform: none;">
-                                {{specie.usecategory.traditional}}
-                            </span>
-                        </td>
-                        <td data-title="'Biome'" >
-                            <td ng-repeat="biome in specie.passport.biome">
-                                <span flex="15" class="ng-binding ng-scope" style="text-transform:none;">                                
-                                {{biome}}  
-                            </span>
-                            </td>
-                        </td>
-                    </tr>
-
-                </table>
-            </div>-->
         <div class="md-whiteframe-4dp" flex="75" layout="column" layout-padding>
 
-            <table flex ng-table="sampleCtrl.tableSample" template-pagination="custom/pager" style="table-layout:fixed;width:100%" class="table table-bordered table-condensed">
+            <table flex ng-table="sampleCtrl.tableSample" template-pagination="custom/pager" style="table-layout:fixed;width:100%" class="table table-striped">
                 <colgroup>
                     <col width="10%" />
                     <col width="30%" />
@@ -91,7 +44,7 @@
                     <col width="15%" />
                 </colgroup>
 
-                <tr flex layout-align="center" ng-repeat="specie in $data" class="md-body-1 md-link" style="line-height: 10px">
+                <tr flex layout-align="center" ng-repeat="specie in $data" class="md-body-1 md-link" >
                     <td flex="10" sortable="'specieinfo.family'" data-title="'Family'">
                         <span class="ng-binding ng-scope" style="text-transform: none;">
                                 {{specie.specieinfo.family}}
@@ -147,10 +100,12 @@
                     </div>
                 </div>
             </div>
-            </script>
+        </script>
+    </div>
+</div>
 
 
-        <!--<div ng-repeat="sample in selectedSamples">
+<!--<div ng-repeat="sample in selectedSamples">
                 <div class="md-whiteframe-4dp" layout-padding>
                     <div layout="row" flex>
                         <div flex="35">
@@ -206,66 +161,13 @@
                         </div>
                         <div flex="65">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
                     </div>
+                </div>            </div>
+                        <div flex="65">{{sample.formofuse}}</div>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex="35">
+                            <label>References:</label>
+                        </div>
+                        <div flex="65">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
+                    </div>
                 </div>-->
-    </div>
-</div>
-</div>
-</div>
-
-<!-- <div ng-include="'components/navbar/navbar.html'"></div>
-
-<div class="container">
-  <p>Samples</p>
-  <section>
-    <button ng-click="open()" class="btn btn-primary pull-right"><i class="icon-white icon-plus"></i> Add new Sample</button>
-  </section>  
-  <table ng-table="tableParams" show-filter="true" class="table">
-<!--    <thead>
-    <tr> <td column-span=4/> <td column-span=3 title="Reference"/> </tr>
-    </thead>
-    <tbody>    
-    <tr ng-repeat="sample in $data">
-        <td data-title="'Family'" filter="{ 'specieinfo.family': 'text' }" sortable="'specieinfo.family'">
-            {{sample.specieinfo.family}}
-        </td>
-        <td data-title="'Genus'" filter="{ 'specieinfo.genus': 'text' }" sortable="'specieinfo.genus'">
-            <i>{{sample.specieinfo.genus}}</i>
-        </td>
-        <td data-title="'Specie'" filter="{ 'specieinfo.specie': 'text' }" sortable="'specieinfo.specie'">
-            <i>{{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}
-        </td>
-        <td data-title="'Synonym'" filter="{ 'specieinfo.synonim': 'text' }" sortable="'specieinfo.synonim'">
-            {{sample.specieinfo.synonim}}
-        </td>
-        
-            <td data-title="'Paper'" filter="{'reference.paper':'text'}" sortable="'reference.paper'">
-                {{sample.reference.paper}}
-            </td>
-            <td data-title="'Collector'" filter="{'reference.collector':'text'}" sortable="'reference.collector'">
-                {{sample.reference.collector}}
-            </td>
-            <td data-title="'Origin'" filter="{'reference.origin':'text'}" sortable="'reference.origin'">
-                {{sample.reference.origin}}
-            </td>
-        
-        <td data-title="'Common  Name'" filter="{ 'ethnoinfo.commonname': 'text' }" sortable="'ethnoinfo.commonname'">
-            {{sample.ethnoinfo.commonname}}
-        </td>
-        <td data-title="'WHO'" filter="{ 'usecategory.who': 'text' }" sortable="'usecategory.who'">
-            {{sample.usecategory.who}}
-        </td>
-        <td data-title="'Tradidional use'" filter="{ 'ethnocategory.traditional': 'text' }" sortable="'ethnocategory.traditional'">
-            {{sample.ethnocategory.traditional}}
-        </td>
-        <td data-title="'Part used'" filter="{ 'partused': 'text' }" sortable="'partused'">
-            {{sample.partused}}
-        </td>
-        <td data-title="'Form of use'" filter="{ 'formofuse': 'text' }" sortable="'formofuse'">
-            {{sample.formofuse}}
-        </td>                                                       
-    </tr>
-    </tbody>
-  </table>
-
-</div>
--->

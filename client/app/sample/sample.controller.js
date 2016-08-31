@@ -39,9 +39,9 @@ angular.module('eweApp')
     function changeFilter(field, value) {
       var filter = {};
       filter[field] = value;
-      console.log(filter);
+//      console.log(filter);
       angular.extend(self.tableParams.filter(), filter);
-      console.log(self.tableParams.filter);
+//      console.log(self.tableParams.filter);
     };
 
     //Specie tree
@@ -74,29 +74,10 @@ angular.module('eweApp')
         $scope.selectedNode = sel;
         filter = {"specieinfo": $scope.selectedNode.samplesKey}
         angular.extend(self.tableSample.filter(), filter)
-//        $scope.filterSamples = { "specieinfo": $scope.selectedNode.samplesKey }
-        console.log("Filtro: ", self.tableSample.filter());
+//        console.log("Filtro: ", self.tableSample.filter());
       };
     });  
 
-
-//Tabela de Samples
-  // versão md-material-tableParams
-  /*  $scope.selSamples = [];
-
-  $scope.query = {
-    order: 'specieinfo.',
-    limit: 10,
-    page: 1
-  };
-
-  function success(desserts) {
-    $scope.desserts = desserts;
-  }
-
-  $scope.getDesserts = function () {
-    $scope.promise = $nutrition.desserts.get($scope.query, success).$promise;
-  };*/
     var parseSort = function (sortParams) {
       var sort = {};
       var keys = Object.keys(sortParams);
@@ -131,8 +112,8 @@ angular.module('eweApp')
             })
             .then(function (results) {
               params.total(results.data.samples.total);
-              console.log("Total: ", results.data.samples.total);
-              console.log("Results: ", results.data.samples.docs);
+ //             console.log("Total: ", results.data.samples.total);
+ //             console.log("Results: ", results.data.samples.docs);
               return results.data.samples.docs;
             });
         }
@@ -251,7 +232,7 @@ angular.module('eweApp')
 
       };
 
-      console.log($scope.selectedSamples);
+ //     console.log($scope.selectedSamples);
 
     };
 
@@ -334,7 +315,7 @@ angular.module('eweApp')
     $scope.getSamples = function () {
       $http.get('/api/samples')
         .then(function (result) {
-          console.log(result.data.length);
+ //         console.log(result.data.length);
           return result.data;
         });
 
@@ -345,7 +326,7 @@ angular.module('eweApp')
     $scope.$watch('currentPage + numPerPage', function () {
       begin = (($scope.currentPage - 1) * $scope.numPerPage);
       end = begin + $scope.numPerPage;
-      console.log(begin, end, $scope.samples);
+//      console.log(begin, end, $scope.samples);
       $scope.filteredSamples = $scope.filteredSamples.slice(begin, end);
 
     });
@@ -356,7 +337,7 @@ angular.module('eweApp')
 
 
     $scope.alerta = function () {
-      console.log('click');
+ //     console.log('click');
     };
 
     /*

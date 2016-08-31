@@ -97,13 +97,22 @@ angular.module('eweApp')
   $scope.getDesserts = function () {
     $scope.promise = $nutrition.desserts.get($scope.query, success).$promise;
   };*/
-
+    var parseSort = function (sortParams) {
+      var sort = {};
+      var keys = Object.keys(sortParams);
+      var value = sortParams[keys[0]];      
+      var keysArray = keys[0].split(",");
+      for (var i in keysArray) {
+        sort[keysArray[i]]=value;
+      };
+      return sort;
+    };
     
     self.tableSample = new NgTableParams({
       page: 1,
       count: 10,
       filter: {},
-      sorting: {"specieinfo.genus":"asc","specieinfo.specie":"asc"}
+      sorting: {"specieinfo.genus,specieinfo.specie":"asc"}
       //        {"specieinfo":{"family":"","genus":"","specie":""},"ethnoinfo":{"commonname":""},"passport":{"biome":""},"usecategory":{"who":"","traditional":""},"partused":"","formofuse":""}
       //'{"passport.biome": "Caatinga", "usecategory.who": "DGS"}'
     }, {
@@ -117,7 +126,7 @@ angular.module('eweApp')
                 page: params.page(),
                 limit: params.count(),
                 filter: params.filter(),
-                sort: params.sorting()
+                sort: parseSort(params.sorting())
               }
             })
             .then(function (results) {

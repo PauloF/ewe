@@ -5,7 +5,7 @@ module.exports = function (grunt) {
   var localConfig;
   try {
     localConfig = require('./server/config/local.env');
-  } catch(e) {
+  } catch (e) {
     localConfig = {};
   }
 
@@ -225,7 +225,8 @@ module.exports = function (grunt) {
             '<%= yeoman.dist %>/public/{,*/}*.js',
             '<%= yeoman.dist %>/public/{,*/}*.css',
             '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/public/assets/fonts/*'
+            '<%= yeoman.dist %>/public/assets/fonts/*',
+            '<%= yeoman.dist %>/public/bower_components/**/*.{png,jpg,jpeg,gif,webp,svg,eot,ttf,woff}'
           ]
         }
       }
@@ -237,7 +238,21 @@ module.exports = function (grunt) {
     useminPrepare: {
       html: ['<%= yeoman.client %>/index.html'],
       options: {
-        dest: '<%= yeoman.dist %>/public'
+        dest: '<%= yeoman.dist %>/public',
+        flow: {
+          html: {
+            steps: {
+              js: ['concat'],
+              css: ['cssmin']
+            },
+            post: {}
+          }
+        }
+      }
+    },
+    cssmin: {
+      options: {
+        root: '<%= yeoman.client %>'
       }
     },
 
@@ -348,18 +363,18 @@ module.exports = function (grunt) {
             'index.html'
           ]
         }, {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/public/assets/images',
-          src: ['generated/*']
-        }, {
-          expand: true,
-          dest: '<%= yeoman.dist %>',
-          src: [
-            'package.json',
-            'server/**/*'
-          ]
-        }]
+            expand: true,
+            cwd: '.tmp/images',
+            dest: '<%= yeoman.dist %>/public/assets/images',
+            src: ['generated/*']
+          }, {
+            expand: true,
+            dest: '<%= yeoman.dist %>',
+            src: [
+              'package.json',
+              'server/**/*'
+            ]
+          }]
       },
       styles: {
         expand: true,
@@ -457,7 +472,7 @@ module.exports = function (grunt) {
       // Inject application script files into index.html (doesn't include bower)
       scripts: {
         options: {
-          transform: function(filePath) {
+          transform: function (filePath) {
             filePath = filePath.replace('/client/', '');
             filePath = filePath.replace('/.tmp/', '');
             return '<script src="' + filePath + '"></script>';
@@ -467,18 +482,18 @@ module.exports = function (grunt) {
         },
         files: {
           '<%= yeoman.client %>/index.html': [
-              ['{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-               '!{.tmp,<%= yeoman.client %>}/app/app.js',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
-            ]
+            ['{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
+              '!{.tmp,<%= yeoman.client %>}/app/app.js',
+              '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
+              '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
+          ]
         }
       },
 
       // Inject component css into index.html
       css: {
         options: {
-          transform: function(filePath) {
+          transform: function (filePath) {
             filePath = filePath.replace('/client/', '');
             filePath = filePath.replace('/.tmp/', '');
             return '<link rel="stylesheet" href="' + filePath + '">';
@@ -507,7 +522,7 @@ module.exports = function (grunt) {
     }, 1500);
   });
 
-  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
+  grunt.registerTask('express-keepalive', 'Keep grunt running', function () {
     this.async();
   });
 
@@ -547,7 +562,7 @@ module.exports = function (grunt) {
     grunt.task.run(['serve']);
   });
 
-  grunt.registerTask('test', function(target) {
+  grunt.registerTask('test', function (target) {
     if (target === 'server') {
       return grunt.task.run([
         'env:all',

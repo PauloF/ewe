@@ -242,7 +242,7 @@ module.exports = function (grunt) {
         flow: {
           html: {
             steps: {
-              js: ['concat'],
+              js: ['concat','uglify'],
               css: ['cssmin']
             },
             post: {}
@@ -252,7 +252,8 @@ module.exports = function (grunt) {
     },
     cssmin: {
       options: {
-        root: '<%= yeoman.client %>'
+        root: '<%= yeoman.client %>',
+        rebase: true        
       }
     },
 
@@ -264,7 +265,8 @@ module.exports = function (grunt) {
       options: {
         assetsDirs: [
           '<%= yeoman.dist %>/public',
-          '<%= yeoman.dist %>/public/assets/images'
+          '<%= yeoman.dist %>/public/assets/images',
+          '<%= yeoman.dist %>/public/bower_components/angular-tree-control/images'
         ],
         // This is so we update image references in our ng-templates
         patterns: {

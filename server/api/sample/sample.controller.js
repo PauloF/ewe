@@ -140,7 +140,7 @@ exports.spTree = function (req, res) {
 
   var filter = JSON.parse(req.query.filter || '{}');
   filter = dot.dot(filter);
-  console.log(filter);
+  console.log("Filtro SPTree: ",filter);
   var matchQ = {};
   for (var key in filter) {
     var regex = {};
@@ -222,7 +222,7 @@ exports.spTreeMap = function (req, res) {
 
   var filter = JSON.parse(req.query.filter || '{}');
   filter = dot.dot(filter);
-  console.log(filter);
+  console.log("filtro treemap: ", filter);
   var matchQ = {};
   for (var key in filter) {
     var regex = {};
@@ -249,9 +249,10 @@ exports.spTreeMap = function (req, res) {
   aggregateF
     .match(matchQ)
     .group({ _id: { family: "$specieinfo.family" }, count: { "$sum": 1 } });
-
+  console.log ("MatchQ :", matchQ);
   Sample.aggregate(aggregateF._pipeline, function (err, results) {
     if (err) { return handleError(res, err); }
+    console.log("ResultsF :", results);
     results.forEach(function (item) {
       var id = 'Family|' + item._id.family;
       var parent = '#';

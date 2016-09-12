@@ -3,7 +3,7 @@
 'use strict';
 
 angular.module('eweApp')
-  .controller('SampleCtrl', function ($scope, $uibModal, $http, NgTableParams, socket, $log, $mdDialog, $mdSidenav, $mdUtil, $mdMedia, $timeout) {
+  .controller('SampleCtrl', function ($scope, $uibModal, $window, $http, NgTableParams, socket, $log, $mdDialog, $mdSidenav, $mdUtil, $mdMedia, $timeout) {
 
     /*$scope.toggleFilter = buildToggler('filtersn');
 
@@ -43,6 +43,22 @@ angular.module('eweApp')
       angular.extend(self.tableParams.filter(), filter);
 //      console.log(self.tableParams.filter);
     };
+
+    $scope.showGraphs = function showGraphs() {
+      var filter = {};      
+      if (typeof $scope.selectedNode != "undefined") {
+        filter = {"specieinfo": $scope.selectedNode.samplesKey}
+      };
+        filter = JSON.stringify(filter);
+        console.log ("Filtro Graph: ", filter);
+        if (filter != "{}") {
+        $window.location.href = "/visualization?"+filter;
+        } else {
+          $window.location.href = "/visualization"
+        }
+      };
+
+    
 
     //Specie tree
 
@@ -345,5 +361,6 @@ angular.module('eweApp')
       return ['Candy', 'Ice cream', 'Other', 'Pastry'];
     };
     */
+    
 
   });

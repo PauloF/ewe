@@ -21,14 +21,14 @@ angular.module('eweApp')
           return debounceFn;
         };
     */
-    
-         
-    
+
+
+
     var drawSpecie = function (filter) {
       //var filterSpecie = ((filterSp) ? JSON.parse(filterSp) : {});
       console.log("Filter Specie: ", filter);
 
-      $http.get("/api/samples/spTreeMap", { params: { filter: filter} })
+      $http.get("/api/samples/spTreeMap", { params: { filter: filter } })
         .then(function (result) {
           //console.log(JSON.stringify(result));
           var dataTree = new google.visualization.DataTable(result.data);
@@ -38,7 +38,7 @@ angular.module('eweApp')
           var selectedItem = chartSpecies.setSelection(selection);*/
           //var filter = {};
           var specieinfo = {};
-          var filterSp = ((filter) ? JSON.parse(filter) : {});
+          var masterFilter = ((filter) ? JSON.parse(filter) : {});
           function selectHandler() {
             var selectedItem = chartSpecies.getSelection()[0];
             if (selectedItem) {
@@ -47,28 +47,36 @@ angular.module('eweApp')
               var level = value.split("|")[0];
               var key = value.split("|")[1];
 
-              var family = key.split(":")[0];
-              var genus = key.split(":")[1];
-              var specie = key.split(":")[2];
-              var authority = key.split(":")[3];
+              var selFamily = key.split(":")[0];
+              var selGenus = key.split(":")[1];
+              var selSpecie = key.split(":")[2];
+              var selAuthority = key.split(":")[3];
+              masterFilter.specieinfo = ((masterFilter.specieinfo) ? masterFilter.specieinfo : {});
 
-              if (family) {
-                specieinfo['family'] = family;
-              }
-              if (genus) {
-                specieinfo['genus'] = genus;
-              }
-              if (specie) {
-                specieinfo['specie'] = specie;
-                specieinfo['authority'] = authority;
-              }
-              filterSp['specieinfo'] = specieinfo;
-              filterSp = JSON.stringify(filterSp);
+              if (!masterFilter.specieinfo.family) {
+                if (selFamily) {
+                  masterFilter.specieinfo.family = selFamily;
+                };
+              };
+
+              if (!masterFilter.specieinfo.genus) {
+                if (selGenus) {
+                  masterFilter.specieinfo.genus = selGenus;
+                };
+              };
+              if (!masterFilter.specieinfo.specie) {
+                if (selSpecie) {
+                  masterFilter.specieinfo.specie = selSpecie;
+                  masterFilter.specieinfo.authority = selAuthority;
+                };
+              };
+              //masterFilter['specieinfo'] = specieinfo;
+              var filterSpStr = JSON.stringify(masterFilter);
               //console.log(filtro);
-              drawWho(filterSp);
-              drawBiome(filterSp);
-            }
-          }
+              drawWho(filterSpStr);
+              drawBiome(filterSpStr);
+            };
+          };
           // Listen for the 'select' event, and call my function selectHandler() when
           // the user selects something on the chart.
           google.visualization.events.addListener(chartSpecies, 'select', selectHandler);
@@ -84,8 +92,8 @@ angular.module('eweApp')
           //Draw WHO graph
           var drawWho = function (filterSp) {
             console.log(filterSp);
-            //var filterWho = ((filterSp) ? JSON.parse(filterSp) : {});
-            var filterWho = ((filterSp) ? filterSp : {});
+            var filterWho = ((filterSp) ? JSON.parse(filterSp) : {});
+            //var filterWho = ((filterSp) ? filterSp : {});
             var usecategory = {};
 
             $http.get('api/samples/spWho', { params: { filter: filterSp } })
@@ -101,8 +109,9 @@ angular.module('eweApp')
                   } else {
                     filterWho = ((filterSp) ? JSON.parse(filterSp) : {});
                   }
-                  console.log(JSON.stringify(filterWho));
-                  drawBiome(filterWho);
+                  var filterWhoStr = JSON.stringify(filterWho);
+                  console.log("FilterWho: ", filterWhoStr);
+                  drawBiome(filterWhoStr);
                 }
                 google.visualization.events.addListener(chartWho, 'select', selectHandlerWho);
                 chartWho.draw(dataWho, {
@@ -123,7 +132,7 @@ angular.module('eweApp')
           //
           var drawBiome = function (filterSp) {
             console.log(filterSp);
-            var filterBiome = ((filterSp) ? filterSp : {});
+            var filterBiome = ((filterSp) ? JSON.parse(filterSp) : {});
             var passport = {};
             $http.get('api/samples/spBiome', { params: { filter: filterSp } })
               .then(function (result) {
@@ -139,7 +148,9 @@ angular.module('eweApp')
                   } else {
                     filterBiome = ((filterSp) ? JSON.parse(filterSp) : {});
                   }
-                  drawWho(filterBiome);
+                  var filterBiomeStr = JSON.stringify(filterBiome);
+                  console.log("filterBiome: ", filterBiomeStr);
+                  drawWho(filterBiomeStr);
                 }
                 google.visualization.events.addListener(chartBiome, 'select', selectHandler);
                 chartBiome.draw(dataBiome, {
@@ -155,10 +166,10 @@ angular.module('eweApp')
 
     var search = $location.search();
     //var filterStr = Json.stringify(filter);
-    console.log ("filtro visual: ", search.filter);
+    //console.log ("filtro visual: ", search.filter);
     //if (filterStr != "{}") {
-      
-    
+
+
 
     drawSpecie(search.filter);
   });

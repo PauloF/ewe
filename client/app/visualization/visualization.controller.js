@@ -36,9 +36,9 @@ angular.module('eweApp')
           /*var selection= [{row:1}];
           console.log(selection);          
           var selectedItem = chartSpecies.setSelection(selection);*/
-          var filter = {};
+          //var filter = {};
           var specieinfo = {};
-          var filterSp = {};
+          var filterSp = ((filter) ? JSON.parse(filter) : {});
           function selectHandler() {
             var selectedItem = chartSpecies.getSelection()[0];
             if (selectedItem) {
@@ -62,8 +62,8 @@ angular.module('eweApp')
                 specieinfo['specie'] = specie;
                 specieinfo['authority'] = authority;
               }
-              filter['specieinfo'] = specieinfo;
-              var filterSp = JSON.stringify(filter);
+              filterSp['specieinfo'] = specieinfo;
+              filterSp = JSON.stringify(filterSp);
               //console.log(filtro);
               drawWho(filterSp);
               drawBiome(filterSp);
@@ -148,19 +148,19 @@ angular.module('eweApp')
               });
           }
 
-          drawWho(filterSp);
-          drawBiome(filterSp);
+          drawWho(filter);
+          drawBiome(filter);
         });
     };
 
-    var filter = $location.search();
-    /*var filterStr = Json.stringify(filter);
-    console.log ("filtro visual: ", filter);
-    if (filterStr != "{}") {*/
+    var search = $location.search();
+    //var filterStr = Json.stringify(filter);
+    console.log ("filtro visual: ", search.filter);
+    //if (filterStr != "{}") {
       
     
 
-    drawSpecie(filter);
+    drawSpecie(search.filter);
   });
 
 

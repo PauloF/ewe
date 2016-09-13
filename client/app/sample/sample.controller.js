@@ -52,7 +52,7 @@ angular.module('eweApp')
         filter = JSON.stringify(filter);
         console.log ("Filtro Graph: ", filter);
         if (filter != "{}") {
-        $window.location.href = "/visualization?"+filter;
+        $window.location.href = "/visualization?filter="+filter;
         } else {
           $window.location.href = "/visualization"
         }

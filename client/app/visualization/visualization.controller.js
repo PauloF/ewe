@@ -112,6 +112,8 @@ angular.module('eweApp')
                   var filterWhoStr = JSON.stringify(filterWho);
                   console.log("FilterWho: ", filterWhoStr);
                   drawBiome(filterWhoStr);
+                  drawPartUsed(filterWhoStr);
+                  drawFormofUse(filterWhoStr);
                 }
                 google.visualization.events.addListener(chartWho, 'select', selectHandlerWho);
                 chartWho.draw(dataWho, {
@@ -150,7 +152,9 @@ angular.module('eweApp')
                   }
                   var filterBiomeStr = JSON.stringify(filterBiome);
                   console.log("filterBiome: ", filterBiomeStr);
-                  drawWho(filterBiomeStr);
+                  drawWho(filterBiomeStr);                  
+                  drawPartUsed(filterBiomeStr);
+                  drawFormofUse(filterBiomeStr);
                 }
                 google.visualization.events.addListener(chartBiome, 'select', selectHandler);
                 chartBiome.draw(dataBiome, {
@@ -159,8 +163,91 @@ angular.module('eweApp')
               });
           }
 
+          // Draw partUsed Graph
+          //
+          var drawPartUsed = function (filterSp) {
+            console.log(filterSp);
+            var filterPartUsed = ((filterSp) ? JSON.parse(filterSp) : {});
+            var passport = {};
+            $http.get('api/samples/spPartUsed', { params: { filter: filterSp } })
+              .then(function (result) {
+                var dataPartUsed = new google.visualization.DataTable(result.data);
+                //            var chartBiome = new google.visualization.PieChart(document.getElementById('chartBiome'));
+                var chartPartUsed = new google.charts.Bar(document.getElementById('chartPartUsed'));
+                function selectHandler() {
+                  var selectedPartUsed = chartPartUsed.getSelection()[0];
+                  if (selectedPartUsed) {
+                    var value = dataPartUsed.getValue(selectedPartUsed.row, 0);
+                    //passport['biome'] = value;
+                    filterPartUsed['partused'] = passport;
+                  } else {
+                    filterPartUsed = ((filterSp) ? JSON.parse(filterSp) : {});
+                  }
+                  var filterPartUsedStr = JSON.stringify(filterPartUsed);
+                  console.log("filterPartUsed: ", filterPartUsedStr);
+                  drawWho(filterPartUsedStr);
+                  drawBiome(filterPartUsedStr);
+                  drawFormofUse(filterPartUsedStr);
+                }
+                google.visualization.events.addListener(chartPartUsed, 'select', selectHandler);
+                chartPartUsed.draw(dataPartUsed, {
+                  //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
+                  bar: {
+                    groupWidth: 20
+                  },
+                  //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
+                  bars: 'horizontal',
+                  colors: ['#B27020'],
+
+                  legend: { position: 'none' }
+                })
+              });
+          }
+          // Draw FormofUsed Graph
+          //
+          var drawFormofUse = function (filterSp) {
+            console.log(filterSp);
+            var filterFormofUse = ((filterSp) ? JSON.parse(filterSp) : {});
+            var passport = {};
+            $http.get('api/samples/spFormofUse', { params: { filter: filterSp } })
+              .then(function (result) {
+                var dataFormofUse = new google.visualization.DataTable(result.data);
+                //            var chartBiome = new google.visualization.PieChart(document.getElementById('chartBiome'));
+                var chartFormofUse = new google.charts.Bar(document.getElementById('chartFormofUse'));
+                function selectHandler() {
+                  var selectedFormofUse = chartFormofUse.getSelection()[0];
+                  if (selectedFormofUse) {
+                    var value = dataFormofUse.getValue(selectedFormofUse.row, 0);
+                    //passport['biome'] = value;
+                    filterFormofUse['formofuse'] = passport;
+                  } else {
+                    filterFormofUse = ((filterSp) ? JSON.parse(filterSp) : {});
+                  }
+                  var filterFormofUseStr = JSON.stringify(filterFormofUse);
+                  console.log("filterFormofUse: ", filterFormofUseStr);
+                  drawWho(filterFormofUseStr);
+                  drawBiome(filterFormofUseStr);
+                  drawPartUsed(filterFormofUseStr);
+                }
+                google.visualization.events.addListener(chartFormofUse, 'select', selectHandler);
+                chartFormofUse.draw(dataFormofUse, {
+                  //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
+                  bar: {
+                    groupWidth: 20
+                  },
+                  //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
+                  bars: 'horizontal',
+                  colors: ['#B27020'],
+
+                  legend: { position: 'none' }
+                })
+              });
+          }
+
           drawWho(filter);
           drawBiome(filter);
+          drawPartUsed(filter);
+          drawFormofUse(filter);
         });
     };
 

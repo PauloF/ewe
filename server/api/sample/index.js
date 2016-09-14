@@ -13,6 +13,8 @@ router.get("/spTree", controller.spTree);
 router.get("/spTreeMap", controller.spTreeMap);
 router.get("/spWho", controller.spWho);
 router.get("/spBiome", controller.spBiome);
+router.get("/spPartUsed", controller.spPartUsed);
+router.get("/spFormofUse", controller.spFormofUse);
 router.get('/:id', controller.show);
 router.get('spFullName/:spFullName', controller.showspFullName);
 router.post('/', controller.create);

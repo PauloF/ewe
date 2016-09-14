@@ -378,6 +378,90 @@ exports.spBiome = function (req, res) {
     return res.status(200).json(data);
   });
 }
+// Get a google chart formated piechart dataTable for filtered samples by partused distribuition 
+exports.spPartUsed = function (req, res) {
+  var filter = JSON.parse(req.query.filter || '{}');
+  filter = dot.dot(filter);
+  console.log("B : ", filter);
+  var matchQ = {};
+  for (var key in filter) {
+    var regex = {};
+    if (filter.hasOwnProperty(key)) {
+      if (filter[key]) {
+        regex["$eq"] = filter[key];
+        //regex["$regex"] = new RegExp(filter[key], 'i');
+        //console.log( key, regex);      
+        matchQ[key] = regex;
+      }
+    }
+  };
+  console.log("b : ", matchQ);
+  var data = {
+    cols: [{ id: 'id', label: 'ID', type: 'string' },
+      { id: 'size', label: 'Size', type: 'number' }
+    ],
+    //rows: [{ c: [{ v: '#' }, { v: '' }] }]
+    rows: []
+  };
+
+  // aggregate Biome
+  var aggregateF = Sample.aggregate();
+  aggregateF
+    .match(matchQ)
+    .unwind("$partused")
+    .group({ _id: { biome: "$partused" }, count: { "$sum": 1 } });
+
+  Sample.aggregate(aggregateF._pipeline, function (err, results) {
+    if (err) { return handleError(res, err); }
+    results.forEach(function (item) {
+      var row = { c: [{ v: item._id.biome }, { v: item.count }] };
+      data.rows.push(row);
+    });
+    return res.status(200).json(data);
+  });
+}
+// Get a google chart formated piechart dataTable for filtered samples by formofuse distribuition 
+exports.spFormofUse = function (req, res) {
+  var filter = JSON.parse(req.query.filter || '{}');
+  filter = dot.dot(filter);
+  console.log("B : ", filter);
+  var matchQ = {};
+  for (var key in filter) {
+    var regex = {};
+    if (filter.hasOwnProperty(key)) {
+      if (filter[key]) {
+        regex["$eq"] = filter[key];
+        //regex["$regex"] = new RegExp(filter[key], 'i');
+        //console.log( key, regex);      
+        matchQ[key] = regex;
+      }
+    }
+  };
+  console.log("b : ", matchQ);
+  var data = {
+    cols: [{ id: 'id', label: 'ID', type: 'string' },
+      { id: 'size', label: 'Size', type: 'number' }
+    ],
+    //rows: [{ c: [{ v: '#' }, { v: '' }] }]
+    rows: []
+  };
+
+  // aggregate Biome
+  var aggregateF = Sample.aggregate();
+  aggregateF
+    .match(matchQ)
+    .unwind("$formofuse")
+    .group({ _id: { biome: "$formofuse" }, count: { "$sum": 1 } });
+
+  Sample.aggregate(aggregateF._pipeline, function (err, results) {
+    if (err) { return handleError(res, err); }
+    results.forEach(function (item) {
+      var row = { c: [{ v: item._id.biome }, { v: item.count }] };
+      data.rows.push(row);
+    });
+    return res.status(200).json(data);
+  });
+}
 
 // Get a single sample
 exports.show = function (req, res) {

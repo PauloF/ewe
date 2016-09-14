@@ -1,17 +1,27 @@
 <div flex layout="row" ng-controller="VisualizationCtrl" ng-cloak>
-    <div class="md-padding" flex layout="column">
+    <div class="md-padding" flex layout="column" layout-padding>
 
-        <legend class="md-title">Visualization</legend>
+        <legend flex class="md-title">Visualization</legend>
 
-        <div style="height:400px" id="chartSpecies"></div>
-        <div layout="row" style="height:400px">
-            <div style="width:50%; height:100%">
+        <div flex style="height:400px" id="chartSpecies"></div>
+        <div flex layout="row" style="height:400px" layout-padding>
+            <div flex layout="column" style="width:50%; height:100%">
                 <legend class="md-title">WHO</legend>
                 <div style="height:100%" id="chartWho"></div>
             </div>
-            <div style="width:50%; height:100%">
+            <div flex layout="column" style="width:50%; height:100%">
                 <legend class="md-title">BIOME</legend>
                 <div style="height:100%" id="chartBiome"></div>
+            </div>
+        </div>
+        <div flex layout="row" style="height:800px" layout-padding>
+            <div flex layout="column" style="width:50%; height:100%">
+                <legend class="md-title">Part used</legend>
+                <div style="height:100%" id="chartPartUsed"></div>
+            </div>
+            <div flex layout="column" style="width:50%; height:100%">
+                <legend class="md-title">Form of use</legend>
+                <div style="height:100%" id="chartFormofUse"></div>
             </div>
         </div>
 

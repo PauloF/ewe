@@ -75,6 +75,8 @@ angular.module('eweApp')
               //console.log(filtro);
               drawWho(filterSpStr);
               drawBiome(filterSpStr);
+              drawPartUsed(filterSpStr);
+              drawFormofUse(filterSpStr);
             };
           };
           // Listen for the 'select' event, and call my function selectHandler() when

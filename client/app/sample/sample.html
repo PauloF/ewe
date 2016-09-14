@@ -4,17 +4,17 @@
         <div class="md-whiteframe-4dp" layout-padding flex="25" layout="column">
             <div>
                 <md-toolbar ng-show="!showSearch">
-                    <div class="md-toolbar-tools" layout="row">
+                    <div flex class="md-toolbar-tools" layout="row" layout-padding layout-margin>
                         <legend class="md-title" flex="30">Results</legend>
-                        <div layout="row" layout-align="end" flex=70>
-                            <md-button ng-click="showFilter($event)" flex="33" aria-label="Filter samples">
+                        <div layout="row" layout-align="end" flex="70">
+                            <md-button class="md-small" ng-click="showFilter($event)" flex="33" aria-label="Filter samples">
                                 <ng-md-icon icon="filter_list"></ng-md-icon>
                             </md-button>
-                            <md-button ng-click="clearFilter($event)" flex="33" aria-label="Clear Filter">
+                            <md-button class="md-small" ng-click="clearFilter($event)" flex="33" aria-label="Clear Filter">
                                 <ng-md-icon icon="backspace"></ng-md-icon>
                             </md-button>
                             <span flex="33" ng-if="selectedNode !== undefined"> 
-                                 <md-button layout-align="end" ng-click="showGraphs();" arial-label="Show Graphs">
+                                 <md-button class="md-small" layout-align="end" ng-click="showGraphs();" arial-label="Show Graphs">
                                      <ng-md-icon icon="dashboard"></ng-md-icon>
                                  </md-button>
                             </span>

@@ -41,3 +41,7 @@
 .header.text-left {
     text-align: left;
 }
+
+.md-button.md-small {
+    min-width: 1%;
+}

@@ -25,7 +25,7 @@ angular.module('eweApp')
     */
     var self = this;
 
-    
+
     $scope.toggleSidenav = function (menuId) {
       $mdSidenav(menuId).toggle();
     };
@@ -39,134 +39,10 @@ angular.module('eweApp')
     function changeFilter(field, value) {
       var filter = {};
       filter[field] = value;
-//      console.log(filter);
-      angular.extend(self.tableParams.filter(), filter);
-//      console.log(self.tableParams.filter);
+      angular.extend(self.tableParams.filter(), filter)
     };
 
-    $scope.showGraphs = function showGraphs() {
-      var filter = {};      
-      if (typeof $scope.selectedNode != "undefined") {
-        filter = {"specieinfo": $scope.selectedNode.samplesKey}
-      };
-        filter = JSON.stringify(filter);
-        console.log ("Filtro Graph: ", filter);
-        if (filter != "{}") {
-        $window.location.href = "/visualization?filter="+filter;
-        } else {
-          $window.location.href = "/visualization"
-        }
-      };
-
-    
-
-    //Specie tree
-
-    var unflatten = function (array, parent, tree) {
-
-      tree = typeof tree !== 'undefined' ? tree : [];
-      parent = typeof parent !== 'undefined' ? parent : { id: 0 };
-
-      var children = _.filter(array, function (child) { return child.parent == parent.id; });
-
-      if (!_.isEmpty(children)) {
-        if (parent.id == 0) {
-          tree = children;
-        } else {
-          parent['children'] = children;
-        }
-        _.each(children, function (child) { unflatten(array, child) });
-      } /*else { parent['children'] = []; }*/
-
-      return tree;
-    }
-
-    $scope.items = [];
-
-    $http.get('/api/samples/spTree').success(function (results) {
-      $scope.treedata = unflatten(results);
-      $scope.showSelected = function (sel) {
-        var filter = {};
-        $scope.selectedNode = sel;
-        filter = {"specieinfo": $scope.selectedNode.samplesKey}
-        angular.extend(self.tableSample.filter(), filter)
-//        console.log("Filtro: ", self.tableSample.filter());
-      };
-    });  
-
-    var parseSort = function (sortParams) {
-      var sort = {};
-      var keys = Object.keys(sortParams);
-      var value = sortParams[keys[0]];      
-      var keysArray = keys[0].split(",");
-      for (var i in keysArray) {
-        sort[keysArray[i]]=value;
-      };
-      return sort;
-    };
-    
-    self.tableSample = new NgTableParams({
-      page: 1,
-      count: 10,
-      filter: {},
-      sorting: {"specieinfo.genus,specieinfo.specie":"asc"}
-      //        {"specieinfo":{"family":"","genus":"","specie":""},"ethnoinfo":{"commonname":""},"passport":{"biome":""},"usecategory":{"who":"","traditional":""},"partused":"","formofuse":""}
-      //'{"passport.biome": "Caatinga", "usecategory.who": "DGS"}'
-    }, {
-        total: 0,
-        counts: [],
-        getData: function (params) {
-          return $http.get('/api/samples/search',
-            {
-              params: {
-
-                page: params.page(),
-                limit: params.count(),
-                filter: params.filter(),
-                sort: parseSort(params.sorting())
-              }
-            })
-            .then(function (results) {
-              params.total(results.data.samples.total);
- //             console.log("Total: ", results.data.samples.total);
- //             console.log("Results: ", results.data.samples.docs);
-              return results.data.samples.docs;
-            });
-        }
-      }
-    );
-
-
-
-
-    /*$scope.tableParams = new NgTableParams({
-      page: 1,
-      count: 10,
-      filter: {}
-      //        {"specieinfo":{"family":"","genus":"","specie":""},"ethnoinfo":{"commonname":""},"passport":{"biome":""},"usecategory":{"who":"","traditional":""},"partused":"","formofuse":""}
-      //'{"passport.biome": "Caatinga", "usecategory.who": "DGS"}'
-    }, {
-        total: 0,
-        counts: [],
-        getData: function ($defer, params) {
-          $http.get('/api/samples/spFullName',
-            {
-              params: {
-
-                page: params.page(),
-                limit: params.count(),
-                filter: params.filter()
-              }
-            })
-            .then(function (results) {
-              params.total(results.data.total);
-              $defer.resolve(results.data.samples);
-            });
-        }
-      }
-    );*/
-
-    $scope.showFilter = function (ev) {
+     $scope.showFilter = function (ev) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
       $mdDialog.show({
         controller: DialogController,
@@ -189,6 +65,102 @@ angular.module('eweApp')
       });
     };
 
+    $scope.showGraphs = function showGraphs() {
+      var filter = {};
+      if (typeof $scope.selectedNode != "undefined") {
+        filter = { "specieinfo": $scope.selectedNode.samplesKey }
+      };
+      filter = JSON.stringify(filter)
+      if (filter != "{}") {
+        $window.location.href = "/visualization?filter=" + filter;
+      } else {
+        $window.location.href = "/visualization"
+      }
+    };
+
+
+
+
+
+    //Specie tree
+    var unflatten = function (array, parent, tree) {
+
+      tree = typeof tree !== 'undefined' ? tree : [];
+      parent = typeof parent !== 'undefined' ? parent : { id: 0 };
+
+      var children = _.filter(array, function (child) { return child.parent == parent.id; });
+
+      if (!_.isEmpty(children)) {
+        if (parent.id == 0) {
+          tree = children;
+        } else {
+          parent['children'] = children;
+        }
+        _.each(children, function (child) { unflatten(array, child) });
+      } /*else { parent['children'] = []; }*/
+
+      return tree;
+    };
+
+    $scope.items = [];
+    $http.get('/api/samples/spTree').success(function (results) {
+      $scope.treedata = unflatten(results);
+      $scope.showSelected = function (sel) {
+        var filter = {};
+        $scope.selectedNode = sel;
+        filter = { "specieinfo": $scope.selectedNode.samplesKey }
+        angular.extend(self.tableSample.filter(), filter)
+        //        console.log("Filtro: ", self.tableSample.filter());
+      }
+    });
+
+    //end specie tree
+
+    var parseSort = function (sortParams) {
+      var sort = {};
+      var keys = Object.keys(sortParams);
+      var value = sortParams[keys[0]];
+      var keysArray = keys[0].split(",");
+      for (var i in keysArray) {
+        sort[keysArray[i]] = value;
+      };
+      return sort;
+    };
+
+    //specie table
+    self.tableSample = new NgTableParams({
+      page: 1,
+      count: 10,
+      filter: {},
+      sorting: { "specieinfo.genus,specieinfo.specie": "asc" }
+      //        {"specieinfo":{"family":"","genus":"","specie":""},"ethnoinfo":{"commonname":""},"passport":{"biome":""},"usecategory":{"who":"","traditional":""},"partused":"","formofuse":""}
+      //'{"passport.biome": "Caatinga", "usecategory.who": "DGS"}'
+    }, {
+        total: 0,
+        counts: [],
+        getData: function (params) {
+          return $http.get('/api/samples/search',
+            {
+              params: {
+
+                page: params.page(),
+                limit: params.count(),
+                filter: params.filter(),
+                sort: parseSort(params.sorting())
+              }
+            })
+            .then(function (results) {
+              params.total(results.data.samples.total);
+              //             console.log("Total: ", results.data.samples.total);
+              //             console.log("Results: ", results.data.samples.docs);
+              return results.data.samples.docs;
+            });
+        }
+      }
+    );
+    //end specie table
+
+//modal filter control
     function DialogController($scope, $mdDialog) {
       $scope.hide = function () {
         $mdDialog.hide();
@@ -200,24 +172,11 @@ angular.module('eweApp')
         $mdDialog.hide(filterForm);
       };
     }
+//end modal filter control
 
 
 
-    
 
-    /*    $scope.applyGlobalSearch = function applyGlobalSearch() {
-          var term = $scope.globalSearchTerm;
-          if (self.isInvertedSearch) {
-            term = "!" + term;
-          }
-          $scope.tableParams.filter({ $: term });
-        }
-    
-        $scope.changeFilter = function changeFilter(field, value) {
-          var filter = {};
-          filter[field] = value;
-          angular.extend($scope.tableParams.filter(), filter);
-        }*/
 
     $scope.open = function (sampleID) {
       var modalInstance = $uibModal.open({
@@ -248,8 +207,7 @@ angular.module('eweApp')
 
       };
 
- //     console.log($scope.selectedSamples);
-
+      
     };
 
 
@@ -331,7 +289,7 @@ angular.module('eweApp')
     $scope.getSamples = function () {
       $http.get('/api/samples')
         .then(function (result) {
- //         console.log(result.data.length);
+          //         console.log(result.data.length);
           return result.data;
         });
 
@@ -342,7 +300,7 @@ angular.module('eweApp')
     $scope.$watch('currentPage + numPerPage', function () {
       begin = (($scope.currentPage - 1) * $scope.numPerPage);
       end = begin + $scope.numPerPage;
-//      console.log(begin, end, $scope.samples);
+      //      console.log(begin, end, $scope.samples);
       $scope.filteredSamples = $scope.filteredSamples.slice(begin, end);
 
     });
@@ -353,7 +311,7 @@ angular.module('eweApp')
 
 
     $scope.alerta = function () {
- //     console.log('click');
+      //     console.log('click');
     };
 
     /*
@@ -361,6 +319,7 @@ angular.module('eweApp')
       return ['Candy', 'Ice cream', 'Other', 'Pastry'];
     };
     */
-    
+
 
   });
+  

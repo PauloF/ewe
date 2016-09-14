@@ -324,7 +324,8 @@ exports.spWho = function (req, res) {
   var aggregateF = Sample.aggregate();
   aggregateF
     .match(matchQ)
-    .group({ _id: { who: "$usecategory.who" }, count: { "$sum": 1 } });
+    .group({ _id: { who: "$usecategory.who" }, count: { "$sum": 1 } })
+    .sort({"_id.who" : 1});
 
   Sample.aggregate(aggregateF._pipeline, function (err, results) {
     if (err) { return handleError(res, err); }
@@ -367,7 +368,8 @@ exports.spBiome = function (req, res) {
   aggregateF
     .match(matchQ)
     .unwind("$passport.biome")
-    .group({ _id: { biome: "$passport.biome" }, count: { "$sum": 1 } });
+    .group({ _id: { biome: "$passport.biome" }, count: { "$sum": 1 } })
+    .sort({"_id.biome" : 1});
 
   Sample.aggregate(aggregateF._pipeline, function (err, results) {
     if (err) { return handleError(res, err); }
@@ -409,12 +411,13 @@ exports.spPartUsed = function (req, res) {
   aggregateF
     .match(matchQ)
     .unwind("$partused")
-    .group({ _id: { biome: "$partused" }, count: { "$sum": 1 } });
+    .group({ _id: { partused: "$partused" }, count: { "$sum": 1 } })
+    .sort({"_id.partused" : 1});
 
   Sample.aggregate(aggregateF._pipeline, function (err, results) {
     if (err) { return handleError(res, err); }
     results.forEach(function (item) {
-      var row = { c: [{ v: item._id.biome }, { v: item.count }] };
+      var row = { c: [{ v: item._id.partused }, { v: item.count }] };
       data.rows.push(row);
     });
     return res.status(200).json(data);
@@ -451,12 +454,13 @@ exports.spFormofUse = function (req, res) {
   aggregateF
     .match(matchQ)
     .unwind("$formofuse")
-    .group({ _id: { biome: "$formofuse" }, count: { "$sum": 1 } });
+    .group({ _id: { formofuse: "$formofuse" }, count: { "$sum": 1 } })
+    .sort({"_id.formofuse" : 1});
 
   Sample.aggregate(aggregateF._pipeline, function (err, results) {
     if (err) { return handleError(res, err); }
     results.forEach(function (item) {
-      var row = { c: [{ v: item._id.biome }, { v: item.count }] };
+      var row = { c: [{ v: item._id.formofuse }, { v: item.count }] };
       data.rows.push(row);
     });
     return res.status(200).json(data);

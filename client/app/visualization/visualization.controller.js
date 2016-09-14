@@ -179,7 +179,7 @@ angular.module('eweApp')
                   if (selectedPartUsed) {
                     var value = dataPartUsed.getValue(selectedPartUsed.row, 0);
                     //passport['biome'] = value;
-                    filterPartUsed['partused'] = passport;
+                    filterPartUsed['partused'] = value;
                   } else {
                     filterPartUsed = ((filterSp) ? JSON.parse(filterSp) : {});
                   }
@@ -219,7 +219,7 @@ angular.module('eweApp')
                   if (selectedFormofUse) {
                     var value = dataFormofUse.getValue(selectedFormofUse.row, 0);
                     //passport['biome'] = value;
-                    filterFormofUse['formofuse'] = passport;
+                    filterFormofUse['formofuse'] = value;
                   } else {
                     filterFormofUse = ((filterSp) ? JSON.parse(filterSp) : {});
                   }

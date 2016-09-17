@@ -25,6 +25,16 @@ angular.module('eweApp')
     */
     var self = this;
 
+    $scope.showDetail = false;
+    $scope.specieDetail = {}
+    $scope.toggleDetail = function (specie) {
+      $scope.showDetail = !$scope.showDetail;
+      if (specie !== $scope.specieDetail) {
+        $scope.specieDetail = specie;
+        $scope.showDetail = true;
+      }
+    }
+
 
     $scope.toggleSidenav = function (menuId) {
       $mdSidenav(menuId).toggle();
@@ -42,7 +52,7 @@ angular.module('eweApp')
       angular.extend(self.tableParams.filter(), filter)
     };
 
-     $scope.showFilter = function (ev) {
+    $scope.showFilter = function (ev) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
       $mdDialog.show({
         controller: DialogController,
@@ -160,7 +170,7 @@ angular.module('eweApp')
     );
     //end specie table
 
-//modal filter control
+    //modal filter control
     function DialogController($scope, $mdDialog) {
       $scope.hide = function () {
         $mdDialog.hide();
@@ -172,7 +182,7 @@ angular.module('eweApp')
         $mdDialog.hide(filterForm);
       };
     }
-//end modal filter control
+    //end modal filter control
 
 
 
@@ -207,7 +217,7 @@ angular.module('eweApp')
 
       };
 
-      
+
     };
 
 
@@ -322,4 +332,3 @@ angular.module('eweApp')
 
 
   });
-  

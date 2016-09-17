@@ -22,87 +22,152 @@
                     </div>
                 </md-toolbar>
             </div>
-            <div layout="row"" layout-align="end">
-               
-            </div>
             <div flex layout-padding>
-                <md-content flex style="max-height:650px">
-                    <treecontrol class="tree-light" tree-model="treedata" on-selection="showSelected(node)">
-
-                        <span ng-if="node.type == 'specie'">
+                <md-content flex style="max-height:650px ">
+                    <treecontrol class="tree-light " tree-model="treedata " on-selection="showSelected(node) ">
+                        <span ng-if="node.type=='specie' ">
                             <i>{{node.parent}} {{node.id}}</i>
                         </span>
-                            <span ng-if="node.type != 'specie'">
+                        <span ng-if="node.type !='specie' ">
                             {{node.id}}
                         </span>
-                            </treecontrol>
-                            </md-content>
-                        </div>
-                    </div>
+                    </treecontrol>
+                </md-content>
+            </div>
+        </div>
 
-                    <div class="md-whiteframe-4dp" flex="75" layout="column" layout-padding>
+        <div class="md-whiteframe-4dp " flex="75 " layout="column " layout-padding>
+            <div class="md-whiteframe-4dp" flex layout="column" layout-padding>
+                <table flex ng-table="sampleCtrl.tableSample " template-pagination="custom/pager " style="table-layout:fixed;width:100%
+                " class="table table-striped ">
+                    <colgroup>
+                        <col width="10% " />
+                        <col width="30% " />
+                        <col width="15% " />
+                        <col width="15% " />
+                        <col width="15% " />
+                        <col width="15% " />
+                    </colgroup>
 
-                        <table flex ng-table="sampleCtrl.tableSample" template-pagination="custom/pager" style="table-layout:fixed;width:100%" class="table table-striped">
-                            <colgroup>
-                                <col width="10%" />
-                                <col width="30%" />
-                                <col width="15%" />
-                                <col width="15%" />
-                                <col width="15%" />
-                                <col width="15%" />
-                            </colgroup>
-
-                            <tr flex layout-align="center" ng-repeat="specie in $data" class="md-body-1 md-link">
-                                <td flex="10" data-sortable="'specieinfo.family'" data-title="'Family'" header-class="'text-left'">
-                                    <span class="ng-binding ng-scope" style="text-transform: none;">
+                    <tr flex layout-align="center " ng-repeat="specie in $data " class="md-body-1 md-link ">
+                        <td flex="10 " data-sortable=" 'specieinfo.family' " data-title=" 'Family'
+                " header-class=" 'text-left' ">
+                            <span class="ng-binding ng-scope " style="text-transform: none; ">
                                 {{specie.specieinfo.family}}
                             </span>
-                                </td>
-                                <td flex="30" data-sortable="['specieinfo.genus','specieinfo.specie']" data-title="'Species'" layout-wrap>
-                                    <a href="#" class="md-button" ng-click="showSample(specie.species);" style="text-transform: none;display: inline-block; text-overflow:ellipsis; overflow:hidden;width:100%">
-                                        <span class="ng-binding ng-scope" style="text-transform: none;">
+                        </td>
+                        <td flex="30 " data-sortable="[ 'specieinfo.genus', 'specieinfo.specie'] " data-title="
+                'Species' " layout-wrap>
+                            <md-button class="md-button " ng-click="toggleDetail(specie); " style="text-transform: none;display:
+                inline-block; text-overflow:ellipsis; overflow:hidden;width:100% ">
+                                <span class="ng-binding ng-scope " style="text-transform: none; ">
                                  <i> {{specie.specieinfo.genus}} {{specie.specieinfo.specie}}</i> {{specie.specieinfo.authority}} 
                                  </span>
-                                        <span class="md-visually-hidden ng-scope" ng-if="isSelected()">
+                                <span class="md-visually-hidden ng-scope " ng-if="isSelected() ">
                                 current page
                             </span>
-                                    </a>
-                                </td>
-                                <td flex="15" data-sortable="'ethnoinfo.commonname'" data-title="'Vernacular name'" header-class="'text-left'">
-                                    {{specie.ethnoinfo.commonname}}
-                                </td>
-                                <td flex="15" data-sortable="'usecategory.who'" data-title="'WHO-ICD 10'" header-class="'text-left'">
-                                    {{specie.usecategory.who}}
-                                </td>
-                                <td flex="15" data-sortable="'usecategory.traditional'" data-title="'Traditional use'" header-class="'text-left'">
-                                    {{specie.usecategory.traditional}}
-                                </td>
-                                <td layout="column" flex="15" data-sortable="'passport.biome'" data-title="'Biome'" header-class="'text-left'" ng-repeat="biome in specie.passport.biome">
-                                    {{biome}}
-                                </td>
-                            </tr>
-
-                        </table>
+                                </a>
+                        </td>
+                        <td flex="15 " data-sortable=" 'ethnoinfo.commonname' " data-title=" 'Vernacular name'
+                " header-class=" 'text-left' ">
+                            {{specie.ethnoinfo.commonname}}
+                        </td>
+                        <td flex="15 " data-sortable=" 'usecategory.who' " data-title=" 'WHO-ICD 10'
+                " header-class=" 'text-left' ">
+                            {{specie.usecategory.who}}
+                        </td>
+                        <td flex="15 " data-sortable=" 'usecategory.traditional' " data-title="
+                'Traditional use' " header-class=" 'text-left' ">
+                            {{specie.usecategory.traditional}}
+                        </td>
+                        <td layout="column " flex="15 " data-sortable=" 'passport.biome' " data-title=" 'Biome'
+                " header-class=" 'text-left' ">
+                            {{specie.passport.biome.toString()}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-if="showDetail" class="md-whiteframe-4dp sample-detail" flex layout="column" layout-padding>
+                <div flex layout="row" class="sample-detail" layout-align="start">
+                    <div flex="20">
+                        <label>Family </label></br>
+                        {{specieDetail.specieinfo.family}}
                     </div>
-                    <script type="text/ng-template" id="custom/pager">
-            <div class="bottom">
-                <div ng-if="params.settings().counts.length" id="allocateCargoTable_length" class="dataTables_length">
+                    <div flex="60">
+                        <label>Specie </label></br>
+                        <i>{{specieDetail.specieinfo.genus}} {{specieDetail.specieinfo.specie}}</i> {{specieDetail.specieinfo.authority}}     
+                    </div>
+                    <div flex="20">
+                        <label>Vernacular name </label></br>
+                         {{specieDetail.ethnoinfo.commonname}}    
+                    </div>                
+                </div>
+                <div flex layout="row" layout-align="start">
+                    <div flex="20">
+                        <label>WHO-ICD 10</label></br>
+                        {{specieDetail.usecategory.WHO}}
+                    </div>
+                    <div flex="80">
+                        <label>Traditional Use</label></br>
+                        {{specieDetail.usecategory.traditional.toString()}}
+                    </div>
+                </div>
+                <div flex layout="row" layout-align="start">
+                    <div flex="40"">
+                        <label>Biome</label></br> 
+                        {{specieDetail.passport.biome.toString()}}
+                    </div>
+                    <div flex="20">
+                        <label>Country</label></br>
+                        {{specieDetail.ethnoinfo.passport.country}}
+                    </div>
+                    <div flex="20">
+                        <label>City</label></br>
+                        {{specieDetail.ethnoinfo.passport.city}}
+                    </div>
+                    <div flex="20">
+                        <label>Coordinates</label></br>
+                        <label>Lat: </label>{{specieDetail.passport.coordinates.lat}}</br>
+                        <label>Lon: </label>{{specieDetail.passport.coordinates.lon}}
+                    </div>                    
+                </div>
+                <div flex layout="row" layout-align="start">
+                    <div flex="33"">
+                        <label>Paper</label></br> 
+                        {{specieDetail.reference.paper}}
+                    </div>
+                    <div flex="33">
+                        <label>Collector</label></br>
+                        {{specieDetail.reference.collector}}
+                    </div>
+                    <div flex="33">
+                        <label>Origin</label></br>
+                        {{specieDetail.reference.origin}}
+                    </div>
+                </div>
+            </div>
+                <script type="text/ng-template " id="custom/pager ">
+            <div class="bottom ">
+                <div ng-if="params.settings().counts.length " id="allocateCargoTable_length " class="dataTables_length ">
                     <label>Show
 
-                        <select ng-param-directive ng-model="pageCount" ng-options="count for count in params.settings().counts" ng-change="pageCounter(pageCount)">
+                        <select ng-param-directive ng-model="pageCount " ng-options="count for count in params.settings().counts
+                " ng-change="pageCounter(pageCount) ">
                         </select>
                         Rows
                     </label>
                 </div>
-                <div class="dataTables_paginate paging_bs_normal">
-                    <div layout="row" layout-align="space-around center">
-                        <div ng-repeat="page in pages" ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
-                        ng-show="page.type == 'prev' || page.type == 'next'" flex ng-switch="page.type">
+                <div class="dataTables_paginate paging_bs_normal ">
+                    <div layout="row " layout-align="space-around center ">
+                        <div ng-repeat="page in pages " ng-class="{ 'disabled': !page.active, 'previous': page.type=='prev'
+                , 'next': page.type=='next' } " ng-show="page.type=='prev' || page.type=='next' " flex ng-switch="page.type ">
 
 
-                            <span style="float:left" ng-switch-when="prev"><md-button  flex ng-click="params.page(page.number)" href=""><ng-md-icon icon="arrow_back"></ng-md-icon></md-button></span>
+                            <span style="float:left " ng-switch-when="prev "><md-button  flex ng-click="params.page(page.number)
+                " href=" "><ng-md-icon icon="arrow_back "></ng-md-icon></md-button></span>
 
-                            <span style="float:right" ng-switch-when="next"><md-button flex ng-click="params.page(page.number)" href=""><ng-md-icon icon="arrow_forward"></ng-md-icon></md-button></span>
+                            <span style="float:right " ng-switch-when="next "><md-button flex ng-click="params.page(page.number)
+                " href=" "><ng-md-icon icon="arrow_forward "></ng-md-icon></md-button></span>
 
                         </div>
                     </div>
@@ -113,69 +178,69 @@
         </div>
 
 
-        <!--<div ng-repeat="sample in selectedSamples">
-                <div class="md-whiteframe-4dp" layout-padding>
-                    <div layout="row" flex>
-                        <div flex="35">
+        <!--<div ng-repeat="sample in selectedSamples ">
+                <div class="md-whiteframe-4dp " layout-padding>
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>Species:</label>
                         </div>
-                        <div flex="65"><i>{{sample.specieinfo.genus}}
+                        <div flex="65 "><i>{{sample.specieinfo.genus}}
                             {{sample.specieinfo.specie}}</i> {{sample.specieinfo.authority}}</div>
                     </div>
-                    <div layout="row" flex>
-                        <div flex="35">
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>Popular name:</label>
                         </div>
-                        <div flex="65">{{sample.ethnoinfo.commonname}}</div>
+                        <div flex="65 ">{{sample.ethnoinfo.commonname}}</div>
                     </div>
-                    <div layout="row" flex>
-                        <div flex="35">
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>Biomes:</label>
                         </div>
-                        <div flex="65">{{sample.passport.biome}}</div>
+                        <div flex="65 ">{{sample.passport.biome}}</div>
                     </div>
-                    <div layout="row" flex>
-                        <div flex="35">
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>Uses</label>
                         </div>
                     </div>
-                    <div layout="row" flex>
-                        <div flex="35">
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>ICD-10 categories:</label>
                         </div>
-                        <div flex="65">{{sample.usecategory.who}}</div>
+                        <div flex="65 ">{{sample.usecategory.who}}</div>
                     </div>
-                    <div layout="row" flex>
-                        <div flex="35">
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>Traditional uses:</label>
                         </div>
-                        <div flex="65">{{sample.usecategory.traditional}}</div>
+                        <div flex="65 ">{{sample.usecategory.traditional}}</div>
                     </div>
-                    <div layout="row" flex>
-                        <div flex="35">
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>Plant parts used:</label>
                         </div>
-                        <div flex="65">{{sample.partused}}</div>
+                        <div flex="65 ">{{sample.partused}}</div>
                     </div>
-                    <div layout="row" flex>
-                        <div flex="35">
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>Modes of application:</label>
                         </div>
-                        <div flex="65">{{sample.formofuse}}</div>
+                        <div flex="65 ">{{sample.formofuse}}</div>
                     </div>
-                    <div layout="row" flex>
-                        <div flex="35">
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>References:</label>
                         </div>
-                        <div flex="65">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
+                        <div flex="65 ">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
                     </div>
                 </div>            </div>
-                        <div flex="65">{{sample.formofuse}}</div>
+                        <div flex="65 ">{{sample.formofuse}}</div>
                     </div>
-                    <div layout="row" flex>
-                        <div flex="35">
+                    <div layout="row " flex>
+                        <div flex="35 ">
                             <label>References:</label>
                         </div>
-                        <div flex="65">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
+                        <div flex="65 ">{{sample.reference.paper}} {{sample.reference.collector}} {{sample.reference.origin}}</div>
                     </div>
                 </div>-->

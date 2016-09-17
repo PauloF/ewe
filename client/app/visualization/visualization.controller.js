@@ -125,7 +125,6 @@ angular.module('eweApp')
                   //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
                   bars: 'horizontal',
                   colors: ['#000000'],
-
                   legend: { position: 'none' }
                 });
               })

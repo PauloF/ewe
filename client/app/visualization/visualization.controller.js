@@ -124,7 +124,7 @@ angular.module('eweApp')
                   },
                   //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
                   bars: 'horizontal',
-                  colors: ['#B27020'],
+                  colors: ['#000000'],
 
                   legend: { position: 'none' }
                 });
@@ -199,8 +199,7 @@ angular.module('eweApp')
                   },
                   //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
                   bars: 'horizontal',
-                  colors: ['#B27020'],
-
+                  colors: ['#616161'],
                   legend: { position: 'none' }
                 })
               });
@@ -239,7 +238,7 @@ angular.module('eweApp')
                   },
                   //chartArea: { left: 10, top: 1, width: '100%', height: '100%' },
                   bars: 'horizontal',
-                  colors: ['#B27020'],
+                  colors: ['#0D47A1'],
 
                   legend: { position: 'none' }
                 })

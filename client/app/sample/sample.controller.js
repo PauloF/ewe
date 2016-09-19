@@ -26,14 +26,26 @@ angular.module('eweApp')
     var self = this;
 
     $scope.showDetail = false;
-    $scope.specieDetail = {}
+    $scope.showMap = false;
+    $scope.specieDetail = {};
+
     $scope.toggleDetail = function (specie) {
       $scope.showDetail = !$scope.showDetail;
+      $scope.showMap = !$scope.showMap;
       if (specie !== $scope.specieDetail) {
         $scope.specieDetail = specie;
         $scope.showDetail = true;
+        if (specie.passport.coordinates) {
+          var lat = specie.passport.coordinates.lat;
+          var lng = specie.passport.coordinates.lon;
+          var message = specie.specieinfo.genus + " " + specie.specieinfo.specie + " " + specie.specieinfo.authority;
+          drawSpMap(lat, lng, message);
+          $scope.showMap = true;
+        } else {
+          $scope.showMap = false;
+        }
       }
-    }
+    };
 
 
     $scope.toggleSidenav = function (menuId) {
@@ -169,6 +181,31 @@ angular.module('eweApp')
       }
     );
     //end specie table
+
+    //Map selected specie controller
+    function drawSpMap(lat, lng, message) {
+      angular.extend($scope, {
+        bsbCenter: {
+          lat: -15.7797200,
+          lng: -47.9297200,
+          zoom: 4
+        },
+        markers: {
+          specieMarker: {
+            lat: lat,
+            lng: lng,
+            message: message,
+            focus: true,
+            draggable: false
+          }
+        },
+        defaults: {
+            scrollWheelZoom: false
+        }
+      });
+    }
+
+
 
     //modal filter control
     function DialogController($scope, $mdDialog) {

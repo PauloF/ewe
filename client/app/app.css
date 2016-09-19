@@ -49,3 +49,7 @@
 label {
     font-weight: bold;
 }
+
+.specie-map {
+    min-height: 500px;
+}

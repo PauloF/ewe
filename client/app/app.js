@@ -18,9 +18,10 @@ angular.module('eweApp', [
   'ui.bootstrap',
   'ngMaterial',
   'ngTable',
-  'ngMdIcons',
-  'md.data.table',
-  'treeControl'
+  'ngMdIcons',  
+  'treeControl',
+  'nemLogging',
+  'ui-leaflet'  
 ])
   .controller('eweAppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog) {
   

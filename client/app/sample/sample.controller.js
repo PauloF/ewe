@@ -38,7 +38,7 @@ angular.module('eweApp')
         if (specie.passport.coordinates) {
           var lat = specie.passport.coordinates.lat;
           var lng = specie.passport.coordinates.lon;
-          var message = specie.specieinfo.genus + " " + specie.specieinfo.specie + " " + specie.specieinfo.authority;
+          var message = "<i>"+specie.specieinfo.genus + " " + specie.specieinfo.specie + "</i> " + specie.specieinfo.authority;
           drawSpMap(lat, lng, message);
           $scope.showMap = true;
         } else {

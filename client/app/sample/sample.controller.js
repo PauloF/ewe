@@ -38,7 +38,7 @@ angular.module('eweApp')
         if (specie.passport.coordinates) {
           var lat = specie.passport.coordinates.lat;
           var lng = specie.passport.coordinates.lon;
-          var message = "<i>"+specie.specieinfo.genus + " " + specie.specieinfo.specie + "</i> " + specie.specieinfo.authority;
+          var message = "<i>" + specie.specieinfo.genus + " " + specie.specieinfo.specie + "</i> " + specie.specieinfo.authority;
           drawSpMap(lat, lng, message);
           $scope.showMap = true;
         } else {
@@ -199,8 +199,54 @@ angular.module('eweApp')
             draggable: false
           }
         },
+        layers: {
+          baselayers: {
+            agsBase: {
+					    	name: "AGSBase",
+					        type: "agsBase",
+					        layer: "Streets",
+					        visible: true
+				    	},
+            xyz: {
+              name: 'OpenStreetMap (XYZ)',
+              url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              type: 'xyz',
+              visible: false
+            }
+          },
+          overlays: {
+            biome: {
+              name: "Biome",
+              type: "agsFeature",
+              //url: "http://mapasinterativos.ibge.gov.br/arcgis/rest/services/BIOMA/MapServer/0",
+              url: "http://gis-gfw.wri.org/arcgis/rest/services/country_data/south_america/MapServer/4",
+              visible: true,
+              layerOptions: {
+                simplifyFactor: 0.5,
+                precision: 5,
+                style: function (feature) {
+                  if (feature.properties.name === "Amazônia") {
+                    return { color: "olive", weight: 2 };
+                  } else if (feature.properties.name === "Caatinga") {
+                    return { color: "sandybrown", weight: 2 };
+                  } else if (feature.properties.name === "Mata Atlântica") {
+                    return { color: "green", weight: 2 };
+                  } else if (feature.properties.name === "Cerrado") {
+                    return {color: "yellow", weight: 2};
+                  }  else if (feature.properties.name === "Pampa") {
+                    return {color: "red", weight: 2};
+                  }  else if (feature.properties.name === "Pantanal") {
+                    return {color: "blue", weight: 2};
+                  } else {
+                    return {color:"gray", weight:2}
+                  }
+                }
+              }
+            }
+          }
+        },
         defaults: {
-            scrollWheelZoom: false
+          scrollWheelZoom: false
         }
       });
     }

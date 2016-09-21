@@ -202,11 +202,18 @@ angular.module('eweApp')
         layers: {
           baselayers: {
             agsBase: {
-					    	name: "AGSBase",
-					        type: "agsBase",
-					        layer: "Streets",
-					        visible: true
-				    	},
+              name: "Street",
+              type: "agsBase",
+              layer: "Streets",
+              visible: true
+            },
+            Sattelite: {
+              name:"Sattelite",
+              type: "agsBase",
+              layer: "Imagery",
+              //url: "http://imagery.arcgisonline.com/arcgis/rest/services/LandsatGLS/LandsatShadedBasemap/ImageServer",
+              visible: false
+            },
             xyz: {
               name: 'OpenStreetMap (XYZ)',
               url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -230,15 +237,15 @@ angular.module('eweApp')
                   } else if (feature.properties.name === "Caatinga") {
                     return { color: "sandybrown", weight: 2 };
                   } else if (feature.properties.name === "Mata Atlântica") {
-                    return { color: "green", weight: 2 };
+                    return { color: "seagreen", weight: 2 };
                   } else if (feature.properties.name === "Cerrado") {
-                    return {color: "yellow", weight: 2};
-                  }  else if (feature.properties.name === "Pampa") {
-                    return {color: "red", weight: 2};
-                  }  else if (feature.properties.name === "Pantanal") {
-                    return {color: "blue", weight: 2};
+                    return { color: "yellow", weight: 2 };
+                  } else if (feature.properties.name === "Pampa") {
+                    return { color: "red", weight: 2 };
+                  } else if (feature.properties.name === "Pantanal") {
+                    return { color: "blue", weight: 2 };
                   } else {
-                    return {color:"gray", weight:2}
+                    return { color: "gray", weight: 2 }
                   }
                 }
               }

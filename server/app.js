@@ -23,7 +23,7 @@ if(config.seedDB) { require('./config/seed'); }
 var app = express();
 
 app.use(paginate.middleware(50,200));
-app.use(express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/public'));
 
 var server = require('http').createServer(app);
 var socketio = require('socket.io')(server, {

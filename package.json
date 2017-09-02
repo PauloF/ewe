@@ -34,12 +34,7 @@
     "socket.io-client": "^1.0.6",
     "socketio-jwt": "^4.2.1",
     "tr-ng-grid": "^3.1.5",
-    "jit-grunt": "^0.10.0"
-  },
-  "devDependencies": {
-    "connect-livereload": "~0.5.3",
-    "grunt": "~1.0.1",
-    "grunt-angular-templates": "^1.0.3",
+    "jit-grunt": "^0.10.0","grunt-angular-templates": "^1.0.3",
     "grunt-asset-injector": "^0.1.0",
     "grunt-autoprefixer": "~3.0.3",
     "grunt-build-control": "DaftMonk/grunt-build-control",
@@ -89,6 +84,11 @@
     "should": "~11.1.0",
     "supertest": "~2.0.0",
     "time-grunt": "~1.4.0"
+  },
+  "devDependencies": {
+    "connect-livereload": "~0.5.3",
+    "grunt": "~1.0.1"
+    
   },
   "engines": {
     "node": "^6.9.1"

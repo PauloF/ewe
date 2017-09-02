@@ -34,6 +34,7 @@
     "tr-ng-grid": "^3.1.5"
   },
   "devDependencies": {
+    "bower": "^1.8.0",
     "connect-livereload": "~0.5.3",
     "grunt": "~1.0.1",
     "grunt-angular-templates": "^1.0.3",
@@ -88,7 +89,7 @@
     "time-grunt": "~1.4.0"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": "^6.9.1"
   },
   "scripts": {
     "start": "node server/app.js",

@@ -87,7 +87,7 @@
                         {{specieDetail.specieinfo.family}}
                     </div>
                     <div flex="60">
-                        <label>Specie </label></br>
+                        <label>Species</label></br>
                         <i>{{specieDetail.specieinfo.genus}} {{specieDetail.specieinfo.specie}}</i> {{specieDetail.specieinfo.authority}}
                     </div>
                     <div flex="20">
@@ -116,30 +116,39 @@
                     </div>
                 </div>
                 <div flex layout="row" layout-align="start">
-                    <div flex="40" ">
+                    <div flex="40" >
                         <label>Biome</label></br> 
                         {{specieDetail.passport.biome.toString()}}
                     </div>
-                    <div flex="20 ">
+                    <div flex="20">
                         <label>Country</label></br>
                         {{specieDetail.passport.country}}
                     </div>
-                    <div flex="20 ">
+                    <div flex="20">
                         <label>City</label></br>
                         {{specieDetail.passport.city}}
                     </div>
-                    <div flex="20 ">
+                    <div flex="20">
                         <label>Coordinates</label></br>
                         <label>Lat: </label>{{specieDetail.passport.coordinates.lat}}</br>
                         <label>Lon: </label>{{specieDetail.passport.coordinates.lon}}
                     </div>                    
                 </div>
                 <div flex layout="row " layout-align="start ">
-                    <div flex="20 "">
-                        <label>Paper</label></br>
-                        {{specieDetail.reference.paper}}
+                    <div flex="100">
+                        <label>Publication/Collection</label></br>
+                        <div ng-if="isHerbarium">
+                            <label>Collector: </label>
+                            {{specieDetail.reference.collector}}</br>
+                            <label>Herbarium: </label>
+                            {{specieDetail.reference.paper}}
+                        </div>
+                        <div ng-if="!isHerbarium">
+                                <label>Publication: </label>
+                                {{specieDetail.reference.paper}}
+                            </div>
                     </div>
-                    <div flex="60">
+ <!--                    <div flex="60">
                         <label>Collector</label></br>
                         {{specieDetail.reference.collector}}
                     </div>
@@ -147,7 +156,7 @@
                         <label>Origin</label></br>
                         {{specieDetail.reference.origin}}
                     </div>
-                </div>
+                </div> -->
             </div>
             <ng-if
             <div ng-if="showMap" layout-padding>

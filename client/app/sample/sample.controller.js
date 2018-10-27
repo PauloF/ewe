@@ -208,25 +208,29 @@ angular.module('eweApp')
         },
         layers: {
           baselayers: {
-            agsBase: {
+            OpenStreetMapnik: {
               name: "Street",
-              type: "agsBase",
-              layer: "Streets",
+              type: "xyz",
+              url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              layerOptions: {
+                  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              },
               visible: true
             },
-            Sattelite: {
-              name:"Sattelite",
-              type: "agsBase",
-              layer: "Imagery",
-              //url: "http://imagery.arcgisonline.com/arcgis/rest/services/LandsatGLS/LandsatShadedBasemap/ImageServer",
-              visible: false
-            },
-            xyz: {
-              name: 'OpenStreetMap (XYZ)',
-              url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              type: 'xyz',
-              visible: false
-            }
+            StamenOpenStreet: {
+              name: "Terrain",
+              type: "xyz",
+              url: 'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}',
+              layerOptions: {
+                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                  subdomains: 'abcd',
+                  minZoom: 0,
+                  maxZoom: 18,
+                  ext: 'png'
+                },
+              visible: true
+            }            
+            
           },
           overlays: {
             biome: {

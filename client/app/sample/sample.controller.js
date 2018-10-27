@@ -34,6 +34,13 @@ angular.module('eweApp')
       $scope.showMap = !$scope.showMap;
       if (specie !== $scope.specieDetail) {
         $scope.specieDetail = specie;
+        if (specie.reference.origin === "Herbarium") {
+          $scope.isHerbarium= true;
+        } else {
+            $scope.isHerbarium = false;
+          }
+        
+
         $scope.showDetail = true;
         if (specie.passport.coordinates) {
           var lat = specie.passport.coordinates.lat;
